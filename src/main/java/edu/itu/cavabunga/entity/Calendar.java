@@ -1,7 +1,6 @@
-package edu.itu.cavabunga.entities;
+package edu.itu.cavabunga.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Calendar {
@@ -22,17 +21,6 @@ public class Calendar {
     private String user_name;
 
     private String calendar_name;
-
-    private List<Component> component_list;
-
-    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL)
-    public void setComponent_list(List<Component> component_list) {
-        this.component_list = component_list;
-    }
-
-    public List<Component> getComponent_list() {
-        return component_list;
-    }
 
     public String getCalendar_name() {
         return calendar_name;

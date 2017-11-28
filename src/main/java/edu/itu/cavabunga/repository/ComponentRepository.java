@@ -1,6 +1,6 @@
-package edu.itu.cavabunga.repositories;
+package edu.itu.cavabunga.repository;
 
-import edu.itu.cavabunga.entities.Component;
+import edu.itu.cavabunga.entity.Component;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ComponentRepository extends CrudRepository<Component, Integer> {

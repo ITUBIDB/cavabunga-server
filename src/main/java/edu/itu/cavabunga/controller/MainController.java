@@ -1,7 +1,7 @@
-package edu.itu.cavabunga.controllers;
+package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.entities.Calendar;
-import edu.itu.cavabunga.repositories.CalendarRepository;
+import edu.itu.cavabunga.entity.Calendar;
+import edu.itu.cavabunga.repository.CalendarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
