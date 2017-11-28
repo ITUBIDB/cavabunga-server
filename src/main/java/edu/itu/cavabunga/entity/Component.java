@@ -10,6 +10,18 @@ public class Component {
 
     private String component_type;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "calendar_id")
+    private Calendar calendar;
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
     public Long getId() {
         return id;
     }

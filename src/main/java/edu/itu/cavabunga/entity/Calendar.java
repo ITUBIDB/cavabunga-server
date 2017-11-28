@@ -1,6 +1,8 @@
 package edu.itu.cavabunga.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Calendar {
@@ -21,6 +23,27 @@ public class Calendar {
     private String user_name;
 
     private String calendar_name;
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "calendar")
+    private List<Component> components = new ArrayList<Component>();
+
+    public List<Component> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<Component> components) {
+        this.components = components;
+    }
+
+    public void addComponent(Component component){
+        components.add(component);
+        component.setCalendar(this);
+    }
+
+    public void removeComponent(Component component){
+        components.remove(component);
+        component.setCalendar(null);
+    }
 
     public String getCalendar_name() {
         return calendar_name;
