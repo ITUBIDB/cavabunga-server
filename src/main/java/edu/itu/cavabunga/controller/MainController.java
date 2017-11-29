@@ -1,10 +1,9 @@
 package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.entity.Calendar;
 import edu.itu.cavabunga.entity.Component;
 import edu.itu.cavabunga.entity.Property;
-import edu.itu.cavabunga.repository.CalendarRepository;
 import edu.itu.cavabunga.repository.ComponentRepository;
+import edu.itu.cavabunga.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path="/calendar")
 public class MainController {
     @Autowired
-    private CalendarRepository calendarRepository;
+    private PropertyRepository propertyRepository;
 
     @Autowired
     private ComponentRepository componentRepository;
@@ -31,22 +30,24 @@ public class MainController {
         p.setP_value(property_key);
         p.setP_key(property_key);
 
+        Component e2 = new Component();
+        e2.setComponent_type(component_type);
+
         Component e = new Component();
-        e.setComponent_type(component_type);
+        e.setComponent_type("CALENDAR");
+        e.setOwner(user_name);
+
         e.addProperty(p);
+        e.addComponent(e2);
 
-        Calendar c = new Calendar();
-        c.setCalendar_name(calendar_name);
-        c.setUser_name(user_name);
-        c.addComponent(e);
-
+        propertyRepository.save(p);
         componentRepository.save(e);
-        calendarRepository.save(c);
+        componentRepository.save(e2);
         return "kayit tamamlandi";
     }
 
     @GetMapping(path="/showcalendars")
-    public @ResponseBody Iterable<Calendar> getAllCalendars(){
-        return calendarRepository.findAll();
+    public @ResponseBody Iterable<Component> getAllComponents(){
+        return componentRepository.findAll();
     }
 }

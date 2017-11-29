@@ -1,5 +1,7 @@
 package edu.itu.cavabunga.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,11 +22,10 @@ public class Property {
         this.p_key = p_key;
     }
 
-
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "component_id")
-    private Component component;
+    @JsonBackReference
+    private Component parent_component;
 
     public Long getId() {
         return id;
@@ -42,13 +43,11 @@ public class Property {
         this.p_value = p_value;
     }
 
-
-
-    public Component getComponent() {
-        return component;
+    public Component getParent_component() {
+        return parent_component;
     }
 
-    public void setComponent(Component component) {
-        this.component = component;
+    public void setParent_component(Component parent_component) {
+        this.parent_component = parent_component;
     }
 }
