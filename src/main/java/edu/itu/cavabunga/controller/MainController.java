@@ -1,8 +1,10 @@
 package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.entity.Component;
+import edu.itu.cavabunga.entity.Parameter;
 import edu.itu.cavabunga.entity.Property;
 import edu.itu.cavabunga.repository.ComponentRepository;
+import edu.itu.cavabunga.repository.ParameterRepository;
 import edu.itu.cavabunga.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +22,23 @@ public class MainController {
     @Autowired
     private ComponentRepository componentRepository;
 
+    @Autowired
+    private ParameterRepository parameterRepository;
+
     @GetMapping(path="/add")
     public @ResponseBody String addNewCalendar(@RequestParam String calendar_name,
                                                @RequestParam String user_name,
                                                @RequestParam String component_type,
-                                               @RequestParam String property_value,
-                                               @RequestParam String property_key){
+                                               @RequestParam String property_name,
+                                               @RequestParam String property_value){
+        Parameter r = new Parameter();
+        r.setName("pr1");
+        r.setValue("rrr");
+
         Property p = new Property();
-        p.setP_value(property_key);
-        p.setP_key(property_key);
+        p.setName(property_name);
+        p.setValue(property_value);
+        p.addParameter(r);
 
         Component e2 = new Component();
         e2.setComponent_type(component_type);
@@ -40,6 +50,7 @@ public class MainController {
         e.addProperty(p);
         e.addComponent(e2);
 
+        parameterRepository.save(r);
         propertyRepository.save(p);
         componentRepository.save(e);
         componentRepository.save(e2);

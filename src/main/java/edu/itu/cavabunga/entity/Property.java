@@ -1,8 +1,11 @@
 package edu.itu.cavabunga.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Property {
@@ -10,22 +13,39 @@ public class Property {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String p_value;
+    private String name;
 
-    private String p_key;
+    private String value;
 
-    public String getP_key() {
-        return p_key;
+    public String getValue() {
+        return value;
     }
 
-    public void setP_key(String p_key) {
-        this.p_key = p_key;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "component_id")
     @JsonBackReference
     private Component parent_component;
+
+    @OneToMany(mappedBy = "parent_property")
+    @JsonManagedReference
+    private List<Parameter> parameters = new ArrayList<Parameter>();
+
+    public List<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<Parameter> parameters) {
+        this.parameters = parameters;
+    }
+
+    public void addParameter(Parameter parameter){
+        parameter.setParent_property(this);
+        parameters.add(parameter);
+    }
 
     public Long getId() {
         return id;
@@ -35,12 +55,12 @@ public class Property {
         this.id = id;
     }
 
-    public String getP_value() {
-        return p_value;
+    public String getName() {
+        return name;
     }
 
-    public void setP_value(String p_value) {
-        this.p_value = p_value;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Component getParent_component() {
