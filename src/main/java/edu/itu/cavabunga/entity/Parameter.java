@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 @Entity
-public class Parameter {
+public abstract class Parameter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

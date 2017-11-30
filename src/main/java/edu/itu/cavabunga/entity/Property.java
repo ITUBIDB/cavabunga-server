@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Property {
+public abstract class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

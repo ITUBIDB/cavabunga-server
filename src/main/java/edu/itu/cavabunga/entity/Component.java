@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Component {
+public abstract class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
