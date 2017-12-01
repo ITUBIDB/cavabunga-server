@@ -28,9 +28,9 @@ public abstract class Property {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "component_id")
     @JsonBackReference
-    private Component parent_component;
+    private Component componentToPropertyMap;
 
-    @OneToMany(mappedBy = "parent_property")
+    @OneToMany(mappedBy = "propertyToParameterMap")
     @JsonManagedReference
     private List<Parameter> parameters = new ArrayList<Parameter>();
 
@@ -43,7 +43,7 @@ public abstract class Property {
     }
 
     public void addParameter(Parameter parameter){
-        parameter.setParent_property(this);
+        parameter.setPropertyToParameterMap(this);
         parameters.add(parameter);
     }
 
@@ -63,11 +63,11 @@ public abstract class Property {
         this.name = name;
     }
 
-    public Component getParent_component() {
-        return parent_component;
+    public Component getComponentToPropertyMap() {
+        return componentToPropertyMap;
     }
 
-    public void setParent_component(Component parent_component) {
-        this.parent_component = parent_component;
+    public void setComponentToPropertyMap(Component componentToPropertyMap) {
+        this.componentToPropertyMap = componentToPropertyMap;
     }
 }

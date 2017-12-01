@@ -13,20 +13,20 @@ public abstract class Component {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String component_type;
+    private String componentType;
 
     private String owner;
 
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
     @JsonBackReference
-    private Component sub_component;
+    private Component componentToComponentMap;
 
-    @OneToMany(mappedBy = "sub_component")
+    @OneToMany(mappedBy = "componentToComponentMap")
     @JsonManagedReference
     private List<Component> components = new ArrayList<Component>();
 
-    @OneToMany(mappedBy = "parent_component")
+    @OneToMany(mappedBy = "componentToPropertyMap")
     @JsonManagedReference
     private List<Property> properties = new ArrayList<Property>();
 
@@ -38,12 +38,12 @@ public abstract class Component {
         this.id = id;
     }
 
-    public String getComponent_type() {
-        return component_type;
+    public String getComponentType() {
+        return componentType;
     }
 
-    public void setComponent_type(String component_type) {
-        this.component_type = component_type;
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
     }
 
     public String getOwner() {
@@ -54,12 +54,12 @@ public abstract class Component {
         this.owner = owner;
     }
 
-    public Component getSub_component() {
-        return sub_component;
+    public Component getComponentToComponentMap() {
+        return componentToComponentMap;
     }
 
-    public void setSub_component(Component sub_component) {
-        this.sub_component = sub_component;
+    public void setComponentToComponentMap(Component componentToComponentMap) {
+        this.componentToComponentMap = componentToComponentMap;
     }
 
     public List<Component> getComponents() {
@@ -71,7 +71,7 @@ public abstract class Component {
     }
 
     public void addComponent(Component component){
-        component.setSub_component(this);
+        component.setComponentToComponentMap(this);
         components.add(component);
     }
 
@@ -84,7 +84,7 @@ public abstract class Component {
     }
 
     public void addProperty(Property property){
-        property.setParent_component(this);
+        property.setComponentToPropertyMap(this);
         properties.add(property);
     }
 }

@@ -17,7 +17,7 @@ public abstract class Parameter {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "property_id")
     @JsonBackReference
-    private Property parent_property;
+    private Property propertyToParameterMap;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public abstract class Parameter {
         this.value = value;
     }
 
-    public Property getParent_property() {
-        return parent_property;
+    public Property getPropertyToParameterMap() {
+        return propertyToParameterMap;
     }
 
-    public void setParent_property(Property parent_property) {
-        this.parent_property = parent_property;
+    public void setPropertyToParameterMap(Property propertyToParameterMap) {
+        this.propertyToParameterMap = propertyToParameterMap;
     }
 }
