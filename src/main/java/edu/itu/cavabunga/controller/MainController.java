@@ -1,11 +1,9 @@
 package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.entity.Component;
-import edu.itu.cavabunga.entity.ComponentFactory;
-import edu.itu.cavabunga.entity.component.ComponentType;
-import edu.itu.cavabunga.repository.ComponentRepository;
-import edu.itu.cavabunga.repository.ParameterRepository;
-import edu.itu.cavabunga.repository.PropertyRepository;
+import edu.itu.cavabunga.caldav.entity.Component;
+import edu.itu.cavabunga.caldav.service.CalendarService;
+import edu.itu.cavabunga.user.User;
+import edu.itu.cavabunga.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,25 +14,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path="/calendar")
 public class MainController {
     @Autowired
-    private PropertyRepository propertyRepository;
+    private CalendarService calendarService;
 
     @Autowired
-    private ComponentRepository componentRepository;
-
-    @Autowired
-    private ParameterRepository parameterRepository;
-
-    @Autowired
-    private ComponentFactory componentFactory;
+    private UserService userService;
 
     @GetMapping(path="/add")
+    public @ResponseBody String test(){
+        User user = userService.createUser("ali veli");
+        calendarService.createCalendar();
+        return "tamam";
+    }
+
+    @GetMapping(path = "/")
+    public @ResponseBody Iterable<Component> createNewUser(){
+        return calendarService.getAllCalendars();
+    }
+    /*
     public @ResponseBody String addNewCalendar(){
         componentFactory.createComponent(ComponentType.CALENDAR);
         return "kayit tamamlandi";
     }
 
+
+
+
     @GetMapping(path="/showcalendars")
     public @ResponseBody Iterable<Component> getAllComponents(){
         return componentRepository.findAll();
-    }
+    } */
+
 }
