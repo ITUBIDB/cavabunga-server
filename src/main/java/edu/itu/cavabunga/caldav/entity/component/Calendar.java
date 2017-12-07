@@ -10,7 +10,7 @@ public class Calendar extends Component {
         this.setComponentType("VCALENDAR");
     }
 
-    public void validate(){
-
+    public boolean validate(){
+        return true;
     }
 }

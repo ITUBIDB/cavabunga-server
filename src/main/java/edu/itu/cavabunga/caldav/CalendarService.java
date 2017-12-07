@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.caldav.service;
+package edu.itu.cavabunga.caldav;
 
 import edu.itu.cavabunga.caldav.entity.Component;
 import edu.itu.cavabunga.caldav.entity.ComponentFactory;

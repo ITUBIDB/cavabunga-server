@@ -1,0 +1,10 @@
+language: java
+services:
+  - mysql
+dist: trusty
+sudo: required
+jdk:
+  - oraclejdk8
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'

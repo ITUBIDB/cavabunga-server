@@ -1,7 +1,7 @@
-package edu.itu.cavabunga.controller;
+package edu.itu.cavabunga.caldav.controller;
 
 import edu.itu.cavabunga.caldav.entity.Component;
-import edu.itu.cavabunga.caldav.service.CalendarService;
+import edu.itu.cavabunga.caldav.CalendarService;
 import edu.itu.cavabunga.user.User;
 import edu.itu.cavabunga.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
