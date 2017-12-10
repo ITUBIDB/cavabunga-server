@@ -5,7 +5,7 @@ import edu.itu.cavabunga.caldav.entity.ComponentFactory;
 import edu.itu.cavabunga.caldav.entity.component.Calendar;
 import edu.itu.cavabunga.caldav.entity.component.ComponentType;
 import edu.itu.cavabunga.caldav.repository.ComponentRepository;
-import edu.itu.cavabunga.user.User;
+import edu.itu.cavabunga.participant.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +22,9 @@ public class CalendarService {
         componentRepository.save(componentFactory.createComponent(ComponentType.CALENDAR));
     }
 
-    public Component createCalendar(User user){
+    public Component createCalendar(Participant participant){
         Component calendar = componentFactory.createComponent(ComponentType.CALENDAR);
-        calendar.setOwner(user);
+        calendar.setOwner(participant);
         componentRepository.save(calendar);
         return calendar;
     }

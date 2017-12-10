@@ -5,9 +5,9 @@ import edu.itu.cavabunga.caldav.entity.Component;
 import javax.persistence.Entity;
 
 @Entity
-public class Calendar extends Component {
-    public Calendar(){
-        this.setComponentType(ComponentType.CALENDAR.name());
+public class Standard extends Component {
+    public Standard(){
+        this.setComponentType(ComponentType.STANDARD.name());
     }
 
     @Override

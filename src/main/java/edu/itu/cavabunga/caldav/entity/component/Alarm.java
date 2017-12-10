@@ -2,12 +2,16 @@ package edu.itu.cavabunga.caldav.entity.component;
 
 import edu.itu.cavabunga.caldav.entity.Component;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Alarm extends Component{
     public Alarm(){
-        this.setComponentType("VALARM");
+        this.setComponentType(ComponentType.ALARM.name());
     }
 
-    public void validate(){
-
+    @Override
+    public boolean validate(){
+        return true;
     }
 }

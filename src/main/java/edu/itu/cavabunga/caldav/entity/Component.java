@@ -2,7 +2,7 @@ package edu.itu.cavabunga.caldav.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import edu.itu.cavabunga.user.User;
+import edu.itu.cavabunga.participant.Participant;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ public abstract class Component {
 
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="owner_uuid")
-    @JsonBackReference
-    private User owner;
+    @JsonBackReference(value = "participantAndComponent")
+    private Participant owner;
 
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
@@ -51,11 +51,11 @@ public abstract class Component {
         this.componentType = componentType;
     }
 
-    public User getOwner() {
+    public Participant getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Participant owner) {
         this.owner = owner;
     }
 
@@ -91,5 +91,9 @@ public abstract class Component {
     public void addProperty(Property property){
         property.setComponentToPropertyMap(this);
         properties.add(property);
+    }
+
+    public boolean validate(){
+        return true;
     }
 }

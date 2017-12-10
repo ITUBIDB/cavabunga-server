@@ -2,12 +2,16 @@ package edu.itu.cavabunga.caldav.entity.component;
 
 import edu.itu.cavabunga.caldav.entity.Component;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Journal extends Component {
     public Journal(){
-        this.setComponentType("VJOURNAL");
+        this.setComponentType(ComponentType.JOURNAL.name());
     }
 
-    public void validate(){
-
+    @Override
+    public boolean validate(){
+        return true;
     }
 }

@@ -2,8 +2,8 @@ package edu.itu.cavabunga.caldav.controller;
 
 import edu.itu.cavabunga.caldav.entity.Component;
 import edu.itu.cavabunga.caldav.CalendarService;
-import edu.itu.cavabunga.user.User;
-import edu.itu.cavabunga.user.UserService;
+import edu.itu.cavabunga.participant.Participant;
+import edu.itu.cavabunga.participant.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +17,11 @@ public class MainController {
     private CalendarService calendarService;
 
     @Autowired
-    private UserService userService;
+    private ParticipantService participantService;
 
     @GetMapping(path="/add")
     public @ResponseBody String test(){
-        User user = userService.createUser("ali veli");
+        Participant participant = participantService.createParticipant("ali veli");
         calendarService.createCalendar();
         return "tamam";
     }
