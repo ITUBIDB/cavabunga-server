@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(path="/calendar")
-public class MainController {
+public class CaldavController {
     @Autowired
     private CalendarService calendarService;
 

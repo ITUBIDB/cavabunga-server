@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.caldav.rest;
+package edu.itu.cavabunga.rest;
 
 public class DaylightRest extends ComponentRest{
     public DaylightRest(){
