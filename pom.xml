@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.7.9</version>
+            <version>0.7.x</version>
 		</dependency>
 
 	</dependencies>
@@ -60,6 +60,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>0.7.x</version>
 			</plugin>
 			<!-- JaCoCo configuration -->
 			<plugin>
@@ -80,7 +81,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
