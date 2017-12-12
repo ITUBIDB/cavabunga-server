@@ -1,9 +1,7 @@
 package edu.itu.cavabunga.rest;
 
-import edu.itu.cavabunga.caldav.CalendarService;
-import edu.itu.cavabunga.rest.CalendarRest;
-import edu.itu.cavabunga.rest.ParticipantRest;
-import edu.itu.cavabunga.participant.ParticipantService;
+import edu.itu.cavabunga.core.CalendarService;
+import edu.itu.cavabunga.core.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
