@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,16 @@ public abstract class Component {
     @OneToMany(mappedBy = "componentToPropertyMap")
     @JsonManagedReference
     private List<Property> properties = new ArrayList<Property>();
+
+    private Date creationDate;
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public Long getId() {
         return id;

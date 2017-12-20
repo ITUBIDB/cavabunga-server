@@ -4,11 +4,11 @@ import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.factory.ParticipantFactory;
 import edu.itu.cavabunga.core.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Configuration
+@Service
 public class ParticipantStorageService {
     @Autowired
     private ParticipantRepository participantRepository;
