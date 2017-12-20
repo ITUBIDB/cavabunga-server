@@ -28,4 +28,11 @@ public class ParticipantService {
         participantRepository.save(participant);
     }
 
+    public Participant getParticipantByUserName(String user_name){
+        return participantRepository.findByUserName(user_name);
+    }
+
+    public Participant getParticipantByUuid(String uuid){
+        return participantRepository.findByUuid(uuid);
+    }
 }
