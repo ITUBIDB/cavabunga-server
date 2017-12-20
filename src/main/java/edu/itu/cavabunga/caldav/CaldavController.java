@@ -1,7 +1,7 @@
 package edu.itu.cavabunga.caldav;
 
-import edu.itu.cavabunga.core.CalendarService;
-import edu.itu.cavabunga.core.ParticipantService;
+import edu.itu.cavabunga.core.IcalStorageService;
+import edu.itu.cavabunga.core.ParticipantStorageService;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,42 +17,42 @@ import java.util.List;
 @RequestMapping(path="/calendar")
 public class CaldavController {
     @Autowired
-    private CalendarService calendarService;
+    private IcalStorageService icalStorageService;
 
     @Autowired
-    private ParticipantService participantService;
+    private ParticipantStorageService participantStorageService;
 
     @GetMapping(path="/add")
     public @ResponseBody String test(){
-        Participant participant = participantService.createParticipant("ali veli");
-        calendarService.createCalendar();
+        Participant participant = participantStorageService.createParticipant("ali veli");
+        icalStorageService.createCalendar();
         return "tamam";
     }
 
     @GetMapping(path="/get/i")
     public @ResponseBody Component getCalendarById(@RequestParam Long id){
-        return calendarService.getCalendarById(id);
+        return icalStorageService.getCalendarById(id);
     }
 
     @GetMapping(path="/get/u")
     public @ResponseBody
     List<Component> getCalendarByUser(@RequestParam String user_name){
-        return calendarService.getCalendarByOwner(user_name);
+        return icalStorageService.getCalendarByOwner(user_name);
     }
 
     @GetMapping(path="/participant/u")
     public @ResponseBody Participant getParticipantByUserName(@RequestParam String user_name){
-        return participantService.getParticipantByUserName(user_name);
+        return participantStorageService.getParticipantByUserName(user_name);
     }
 
     @GetMapping(path="/participant/i")
     public @ResponseBody Participant getParticipantById(@RequestParam String uuid){
-        return participantService.getParticipantByUuid(uuid);
+        return participantStorageService.getParticipantByUuid(uuid);
     }
 
     @GetMapping(path = "/")
     public @ResponseBody Iterable<Component> createNewUser(){
-        return calendarService.getAllCalendars();
+        return icalStorageService.getAllCalendars();
     }
     /*
     public @ResponseBody String addNewCalendar(){

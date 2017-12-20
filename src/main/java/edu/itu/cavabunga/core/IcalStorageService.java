@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CalendarService {
+public class IcalStorageService {
     @Autowired
     public ComponentFactory componentFactory;
 
@@ -20,7 +20,7 @@ public class CalendarService {
     public ComponentRepository componentRepository;
 
     @Autowired
-    public ParticipantService participantService;
+    public ParticipantStorageService participantStorageService;
 
     public void createCalendar(){
         componentRepository.save(componentFactory.createComponent(ComponentType.CALENDAR));
@@ -43,7 +43,7 @@ public class CalendarService {
     }
 
     public List<Component> getCalendarByOwner(String user_name){
-        return componentRepository.findByOwnerAndComponentToComponentMapIsNull(participantService.getParticipantByUserName(user_name));
+        return componentRepository.findByOwnerAndComponentToComponentMapIsNull(participantStorageService.getParticipantByUserName(user_name));
     }
 
     public Iterable<Component> getAllCalendars(){

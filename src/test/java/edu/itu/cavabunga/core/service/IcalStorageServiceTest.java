@@ -1,6 +1,6 @@
 package edu.itu.cavabunga.core.service;
 
-import edu.itu.cavabunga.core.CalendarService;
+import edu.itu.cavabunga.core.IcalStorageService;
 import edu.itu.cavabunga.core.factory.ComponentFactory;
 import edu.itu.cavabunga.core.entity.component.Calendar;
 import edu.itu.cavabunga.core.repository.ComponentRepository;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CalendarServiceTest {
+public class IcalStorageServiceTest {
 
     @MockBean
     private ComponentFactory mockComponentFactory;
@@ -24,14 +24,14 @@ public class CalendarServiceTest {
     private ComponentRepository mockComponentRepository;
 
     @Autowired
-    private CalendarService calendarService;
+    private IcalStorageService icalStorageService;
 
 
     @Test
     public void testSaveCalendar() {
         Calendar mockCalendar = mock(Calendar.class);
         when(mockCalendar.validate()).thenReturn(true);
-        calendarService.saveCalendar(mockCalendar);
+        icalStorageService.saveCalendar(mockCalendar);
 
         //check a minimum 1 call count
         verify(mockCalendar, only()).validate();

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Date;
 
 @Configuration
-public class ParticipantService {
+public class ParticipantStorageService {
     @Autowired
     private ParticipantRepository participantRepository;
 
