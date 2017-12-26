@@ -1,7 +1,7 @@
 package edu.itu.cavabunga.rest;
 
-import edu.itu.cavabunga.core.CalendarService;
-import edu.itu.cavabunga.core.ParticipantService;
+import edu.itu.cavabunga.core.IcalStorageService;
+import edu.itu.cavabunga.core.ParticipantStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path="/api")
 public class CalendarRestController {
     @Autowired
-    CalendarService calendarService;
+    IcalStorageService icalStorageService;
 
     @Autowired
-    ParticipantService participantService;
+    ParticipantStorageService participantStorageService;
 
     @RequestMapping(path = "/participant", method = RequestMethod.POST)
     public @ResponseBody String createParticipant(@RequestBody ParticipantRest participant){

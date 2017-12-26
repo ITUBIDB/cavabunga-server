@@ -4,12 +4,12 @@ import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.factory.ParticipantFactory;
 import edu.itu.cavabunga.core.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Configuration
-public class ParticipantService {
+@Service
+public class ParticipantStorageService {
     @Autowired
     private ParticipantRepository participantRepository;
 
@@ -28,4 +28,11 @@ public class ParticipantService {
         participantRepository.save(participant);
     }
 
+    public Participant getParticipantByUserName(String user_name){
+        return participantRepository.findByUserName(user_name);
+    }
+
+    public Participant getParticipantByUuid(String uuid){
+        return participantRepository.findByUuid(uuid);
+    }
 }
