@@ -1,21 +1,20 @@
 package edu.itu.cavabunga.core;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-import edu.itu.cavabunga.core.entity.Participant;
-import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.exception.IcalStorageException;
-import edu.itu.cavabunga.core.factory.ComponentFactory;
-import edu.itu.cavabunga.core.entity.component.Calendar;
-import edu.itu.cavabunga.core.repository.ComponentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.mockito.Mockito.*;
+import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.entity.component.ComponentType;
+import edu.itu.cavabunga.core.exception.IcalStorageException;
+import edu.itu.cavabunga.core.factory.ComponentFactory;
+import edu.itu.cavabunga.core.entity.component.Calendar;
+import edu.itu.cavabunga.core.repository.ComponentRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -80,7 +79,6 @@ public class IcalStorageServiceTest {
     public void testSaveComponent() {
         icalStorageService.saveComponent(mockCalendar);
 
-        //check a minimum 1 call count
         verify(mockComponentRepository, only()).save(mockCalendar);
     }
 }

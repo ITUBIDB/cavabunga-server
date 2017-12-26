@@ -11,66 +11,13 @@ public class ComponentFactory {
 
     public Component createComponent(ComponentType componentType) throws IcalStorageException {
         Component result;
-        switch (componentType){
-            case CALENDAR:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case TODO:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case ALARM:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case EVENT:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case JOURNAL:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case DAYLIGHT:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case FREEBUSY:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case STANDARD:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            case TIMEZONE:
-                result = componentType.create();
-                result.setCreationDate(new Date());
-                result.setComponentType(componentType.toString());
-                return result;
-
-            default:
-                throw new IcalStorageException("Undefined component type tried to create by factory : " + componentType.toString());
+        result = componentType.create();
+        if(result == null) {
+            throw new IcalStorageException("Undefined component type tried to create by factory : " + componentType.toString());
         }
 
-
-
+        result.setCreationDate(new Date());
+        result.setComponentType(componentType.toString());
+        return result;
     }
 }
