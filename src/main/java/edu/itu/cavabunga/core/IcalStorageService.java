@@ -78,7 +78,7 @@ public class IcalStorageService {
             throw new IcalStorageException("Cant reach participant object in IcalStorageService");
         }
 
-        if(result == null || result.size() == 0){
+        if(result.isEmpty()){
             throw new IcalStorageException("Cant find components with given participant: " + participant.getUserName()
             );
         }
@@ -92,7 +92,7 @@ public class IcalStorageService {
         }
 
         List<Component> result = componentRepository.findByComponentTypeAndOwner(componentType.toString(), participant);
-        if(result == null || result.size() == 0){
+        if(result.isEmpty()){
             throw new IcalStorageException("Cant find specific object: " + componentType.toString() + " for participant: " + participant.getUserName());
         }
         return result;
@@ -120,7 +120,7 @@ public class IcalStorageService {
 
     public List<Property> getPropertyByComponent(Component component){
         List<Property> result = propertyRepository.findByComponentToPropertyMap(component);
-        if(result == null || result.size() == 0){
+        if(result.isEmpty()){
             throw new IcalStorageException("Cant get object from reposityory in IcalStorageService");
         }
 
