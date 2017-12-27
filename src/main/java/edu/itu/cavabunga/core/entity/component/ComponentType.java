@@ -5,7 +5,7 @@ import edu.itu.cavabunga.core.entity.Component;
 public enum ComponentType {
 
     CALENDAR {
-        private final String name = "VCALENDAR";
+        private final static String name = "VCALENDAR";
 
         public String toString(){
             return this.name;
@@ -16,7 +16,7 @@ public enum ComponentType {
         }
     },
     ALARM {
-        private final String name = "VALARM";
+        private final static String name = "VALARM";
 
         public String toString(){
             return this.name;
@@ -27,7 +27,7 @@ public enum ComponentType {
         }
     },
     DAYLIGHT {
-        private final String name = "VDAYLIGHT";
+        private final static String name = "VDAYLIGHT";
 
         public String toString(){
             return this.name;
@@ -37,7 +37,7 @@ public enum ComponentType {
         }
     },
     EVENT {
-        private final String name = "VEVENT";
+        private final static String name = "VEVENT";
 
         public String toString(){
             return this.name;
@@ -48,7 +48,7 @@ public enum ComponentType {
         }
     },
     FREEBUSY {
-        private final String name = "VFREEBUSY";
+        private final static String name = "VFREEBUSY";
 
         public String toString(){
             return this.name;
@@ -58,7 +58,7 @@ public enum ComponentType {
         }
     },
     JOURNAL {
-        private final String name = "VJOURNAL";
+        private final static String name = "VJOURNAL";
 
         public String toString(){
             return this.name;
@@ -69,7 +69,7 @@ public enum ComponentType {
         }
     },
     STANDARD {
-        private final String name = "VSTANDARD";
+        private final static String name = "VSTANDARD";
 
         public String toString(){
             return this.name;
@@ -80,7 +80,7 @@ public enum ComponentType {
         }
     },
     TIMEZONE {
-        private final String name = "VTIMEZONE";
+        private final static String name = "VTIMEZONE";
 
         public String toString(){
             return this.name;
@@ -91,7 +91,7 @@ public enum ComponentType {
         }
     },
     TODO {
-        private final String name = "VTODO";
+        private final static String name = "VTODO";
 
         public String toString(){
             return this.name;
