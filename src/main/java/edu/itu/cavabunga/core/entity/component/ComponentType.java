@@ -8,7 +8,7 @@ public enum ComponentType {
         private final static String name = "VCALENDAR";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create() {
@@ -19,7 +19,7 @@ public enum ComponentType {
         private final static String name = "VALARM";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create(){
@@ -30,7 +30,7 @@ public enum ComponentType {
         private final static String name = "VDAYLIGHT";
 
         public String toString(){
-            return this.name;
+            return name;
         }
         public Component create(){
             return new Daylight();
@@ -40,7 +40,7 @@ public enum ComponentType {
         private final static String name = "VEVENT";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create() {
@@ -51,7 +51,7 @@ public enum ComponentType {
         private final static String name = "VFREEBUSY";
 
         public String toString(){
-            return this.name;
+            return name;
         }
         public Component create(){
             return new Freebusy();
@@ -61,7 +61,7 @@ public enum ComponentType {
         private final static String name = "VJOURNAL";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create(){
@@ -72,7 +72,7 @@ public enum ComponentType {
         private final static String name = "VSTANDARD";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create(){
@@ -83,7 +83,7 @@ public enum ComponentType {
         private final static String name = "VTIMEZONE";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create(){
@@ -94,14 +94,13 @@ public enum ComponentType {
         private final static String name = "VTODO";
 
         public String toString(){
-            return this.name;
+            return name;
         }
 
         public Component create(){
             return new Todo();
         }
     };
-
 
     public Component create() {
         return null;
