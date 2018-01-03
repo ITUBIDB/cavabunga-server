@@ -3,11 +3,17 @@ package edu.itu.cavabunga.core.factory;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
 import edu.itu.cavabunga.core.exception.IcalStorageException;
-
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component
 public class ComponentFactory {
+
+    @Autowired
+    TimeFactory timeFactory;
+
+    public ComponentFactory(TimeFactory timeFactoryIn) {
+        timeFactory = timeFactoryIn;
+    }
 
     public Component createComponent(ComponentType componentType) throws IcalStorageException {
         Component result;
@@ -16,7 +22,7 @@ public class ComponentFactory {
             throw new IcalStorageException("Undefined component type tried to create by factory : " + componentType.toString());
         }
 
-        result.setCreationDate(new Date());
+        result.setCreationDate(timeFactory.getTime());
         result.setComponentType(componentType.toString());
         return result;
     }

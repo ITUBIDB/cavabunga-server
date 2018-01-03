@@ -9,8 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
-
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
@@ -22,7 +20,7 @@ public class ComponentFactoryTest {
 
     @Before
     public void setup() {
-        componentFactory = new ComponentFactory();
+        componentFactory = new ComponentFactory(new TimeFactory());
     }
 
     @DataProvider

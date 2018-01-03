@@ -2,11 +2,10 @@ package edu.itu.cavabunga.core;
 
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.factory.ParticipantFactory;
+import edu.itu.cavabunga.core.factory.TimeFactory;
 import edu.itu.cavabunga.core.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class ParticipantStorageService {
@@ -16,15 +15,18 @@ public class ParticipantStorageService {
     @Autowired
     private ParticipantFactory participantFactory;
 
+    @Autowired
+    private TimeFactory timeFactory;
+
     public Participant createParticipant(String user_name){
         Participant temp = participantFactory.createUser(user_name);
-        temp.setCreationDate(new Date());
+        temp.setCreationDate(timeFactory.getTime());
         participantRepository.save(temp);
         return temp;
     }
 
     public void saveParticipant(Participant participant){
-        participant.setCreationDate(new Date());
+        participant.setCreationDate(timeFactory.getTime());
         participantRepository.save(participant);
     }
 
