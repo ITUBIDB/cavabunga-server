@@ -8,5 +8,5 @@ import java.util.List;
 
 @Component
 public interface PropertyRepository extends CrudRepository<Property, Long> {
-    public List<Property> findByComponentToPropertyMap(edu.itu.cavabunga.core.entity.Component component);
+    List<Property> findByComponentToPropertyMap(edu.itu.cavabunga.core.entity.Component component);
 }

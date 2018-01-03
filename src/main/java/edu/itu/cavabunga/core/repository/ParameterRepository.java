@@ -6,6 +6,4 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface ParameterRepository extends CrudRepository<Parameter, Long> {
-
-
 }

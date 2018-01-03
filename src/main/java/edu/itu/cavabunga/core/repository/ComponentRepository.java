@@ -8,12 +8,12 @@ import java.util.List;
 
 @org.springframework.stereotype.Component
 public interface ComponentRepository extends CrudRepository<Component, Long> {
-    public Component findById (Long id);
+    Component findById (Long id);
 
     //Calendar component's parent_id column will be null(componentToComponentMap attribute)
-    public List<Component> findByOwnerAndComponentToComponentMapIsNull(Participant owner);
+    List<Component> findByOwnerAndComponentToComponentMapIsNull(Participant owner);
 
-    public List<Component> findByOwner(Participant owner);
+    List<Component> findByOwner(Participant owner);
 
-    public List<Component> findByComponentTypeAndOwner(String componentType, Participant owner);
+    List<Component> findByComponentTypeAndOwner(String componentType, Participant owner);
 }
