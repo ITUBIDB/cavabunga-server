@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Journal extends Component {
-    public Journal(){
-        this.setComponentType(ComponentType.JOURNAL.name());
-    }
 
     @Override
     public boolean validate(){

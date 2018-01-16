@@ -37,7 +37,6 @@ public class ParticipantStorageServiceTest {
         assertEquals(participantStorageService.createParticipant("testUsername"), mockParticipant);
 
         verify(mockParticipantFactory, only()).createUser("testUsername");
-        verify(mockParticipant, only()).setCreationDate(any());
         verify(mockParticipantRepository, only()).save(mockParticipant);
     }
 
@@ -45,7 +44,6 @@ public class ParticipantStorageServiceTest {
     public void testSaveParticipant(){
         participantStorageService.saveParticipant(mockParticipant);
 
-        verify(mockParticipant, only()).setCreationDate(any());
         verify(mockParticipantRepository, only()).save(mockParticipant);
     }
 

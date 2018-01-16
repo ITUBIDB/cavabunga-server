@@ -17,13 +17,6 @@ public abstract class Property {
 
     private String value;
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "component_id")
@@ -55,6 +48,14 @@ public abstract class Property {
         this.id = id;
     }
 
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
     public String getName() {
         return name;
     }

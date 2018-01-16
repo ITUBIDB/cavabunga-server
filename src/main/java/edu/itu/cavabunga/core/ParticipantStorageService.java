@@ -15,18 +15,13 @@ public class ParticipantStorageService {
     @Autowired
     private ParticipantFactory participantFactory;
 
-    @Autowired
-    private TimeFactory timeFactory;
-
     public Participant createParticipant(String user_name){
         Participant temp = participantFactory.createUser(user_name);
-        temp.setCreationDate(timeFactory.getTime());
         participantRepository.save(temp);
         return temp;
     }
 
     public void saveParticipant(Participant participant){
-        participant.setCreationDate(timeFactory.getTime());
         participantRepository.save(participant);
     }
 

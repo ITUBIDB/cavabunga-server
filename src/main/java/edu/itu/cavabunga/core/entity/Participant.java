@@ -2,6 +2,8 @@ package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Participant implements java.io.Serializable{
     @Id
     @GeneratedValue(generator = "uuid")
@@ -20,6 +23,7 @@ public class Participant implements java.io.Serializable{
     private String userName;
 
     @Column(name = "creation_date")
+    @CreatedDate
     private Date creationDate;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
