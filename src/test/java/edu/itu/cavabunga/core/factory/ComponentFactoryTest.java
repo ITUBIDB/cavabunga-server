@@ -20,7 +20,7 @@ public class ComponentFactoryTest {
 
     @Before
     public void setup() {
-        componentFactory = new ComponentFactory(new TimeFactory());
+        componentFactory = new ComponentFactory();
     }
 
     @DataProvider

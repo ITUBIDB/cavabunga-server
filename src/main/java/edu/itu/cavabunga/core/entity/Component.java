@@ -2,6 +2,8 @@ package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@EntityListeners(AuditingEntityListener.class)
 public abstract class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,17 +20,17 @@ public abstract class Component {
 
     private String componentType;
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="owner_uuid")
     @JsonBackReference(value = "participantAndComponent")
     private Participant owner;
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
     @JsonBackReference
-    private Component componentToComponentMap;
+    private Component parent;
 
-    @OneToMany(mappedBy = "componentToComponentMap")
+    @OneToMany(mappedBy = "parent")
     @JsonManagedReference
     private List<Component> components = new ArrayList<Component>();
 
@@ -35,6 +38,7 @@ public abstract class Component {
     @JsonManagedReference
     private List<Property> properties = new ArrayList<Property>();
 
+    @CreatedDate
     private Date creationDate;
 
     public Date getCreationDate() {
@@ -69,12 +73,12 @@ public abstract class Component {
         this.owner = owner;
     }
 
-    public Component getComponentToComponentMap() {
-        return componentToComponentMap;
+    public Component getParent() {
+        return parent;
     }
 
-    public void setComponentToComponentMap(Component componentToComponentMap) {
-        this.componentToComponentMap = componentToComponentMap;
+    public void setParent(Component parent) {
+        this.parent = parent;
     }
 
     public List<Component> getComponents() {
@@ -86,7 +90,7 @@ public abstract class Component {
     }
 
     public void addComponent(Component component){
-        component.setComponentToComponentMap(this);
+        component.setParent(this);
         components.add(component);
     }
 
