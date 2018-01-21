@@ -12,7 +12,6 @@ public class ComponentFactory {
         if(result == null) {
             throw new IcalStorageException("Undefined component type tried to create by factory : " + componentType.toString());
         }
-        result.setComponentType(componentType.toString());
         return result;
     }
 }

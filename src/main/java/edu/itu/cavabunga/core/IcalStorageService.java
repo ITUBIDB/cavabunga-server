@@ -86,18 +86,6 @@ public class IcalStorageService {
         return result;
     }
 
-    public List<Component> getSpecificComponentsOfParticipant(ComponentType componentType, Participant participant) throws IcalStorageException{
-        if(componentType == null || participant == null){
-            throw new IcalStorageException("Cant reach componentType or participant in IcalStorageService");
-        }
-
-        List<Component> result = componentRepository.findByComponentTypeAndOwner(componentType.toString(), participant);
-        if(result.isEmpty()){
-            throw new IcalStorageException("Cant find specific object: " + componentType.toString() + " for participant: " + participant.getUserName());
-        }
-        return result;
-    }
-
     public void saveComponent(Component component) throws IcalStorageException{
         componentRepository.save(component);
     }

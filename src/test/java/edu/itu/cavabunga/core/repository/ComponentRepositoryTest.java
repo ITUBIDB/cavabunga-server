@@ -52,20 +52,4 @@ public class ComponentRepositoryTest {
         assertEquals(1, componentRepository.findByOwner(testParticipant).size());
     }
 
-    @Test
-    public void findByComponentTypeAndOwnerTest() {
-        Component testComponent1 = componentFactory.createComponent(ComponentType.CALENDAR);
-        Component testComponent2 = componentFactory.createComponent(ComponentType.CALENDAR);
-        Participant testParticipant = participantRepository.findByUserName("testuser");
-        testComponent1.setOwner(testParticipant);
-        componentRepository.save(testComponent1);
-        testComponent2.setOwner(testParticipant);
-        componentRepository.save(testComponent2);
-        assertEquals(2,
-                componentRepository.findByComponentTypeAndOwner(
-                ComponentType.CALENDAR.name(),
-                testParticipant).size()
-        );
-    }
-
 }

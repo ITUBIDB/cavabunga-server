@@ -6,10 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Freebusy extends Component {
-    public Freebusy(){
-        this.setComponentType(ComponentType.FREEBUSY.name());
-    }
-
     @Override
     public boolean validate(){
         return true;

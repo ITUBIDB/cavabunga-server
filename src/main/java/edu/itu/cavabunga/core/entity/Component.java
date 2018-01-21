@@ -18,8 +18,6 @@ public abstract class Component {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String componentType;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="owner_uuid")
     @JsonBackReference(value = "participantAndComponent")
@@ -55,14 +53,6 @@ public abstract class Component {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getComponentType() {
-        return componentType;
-    }
-
-    public void setComponentType(String componentType) {
-        this.componentType = componentType;
     }
 
     public Participant getOwner() {

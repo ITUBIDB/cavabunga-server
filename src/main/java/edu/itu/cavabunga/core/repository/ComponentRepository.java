@@ -11,6 +11,4 @@ public interface ComponentRepository extends CrudRepository<Component, Long> {
     Component findById (Long id);
 
     List<Component> findByOwner(Participant owner);
-
-    List<Component> findByComponentTypeAndOwner(String componentType, Participant owner);
 }
