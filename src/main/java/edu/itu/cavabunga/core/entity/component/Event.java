@@ -6,10 +6,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Event extends Component {
-    public Event(){
-        this.setComponentType(ComponentType.EVENT.name());
-    }
-
+    @Override
     public boolean validate(){
         return true;
     }

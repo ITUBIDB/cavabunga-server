@@ -3,7 +3,6 @@ package edu.itu.cavabunga.core.factory;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
 import edu.itu.cavabunga.core.exception.IcalStorageException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @org.springframework.stereotype.Component
 public class ComponentFactory {
