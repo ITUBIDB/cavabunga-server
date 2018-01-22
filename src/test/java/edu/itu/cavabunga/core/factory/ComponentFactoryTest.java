@@ -26,15 +26,15 @@ public class ComponentFactoryTest {
     @DataProvider
     public static Object[][] dataProviderComponentType() {
         return new Object[][] {
-                { ComponentType.ALARM, Alarm.class},
-                { ComponentType.CALENDAR, Calendar.class},
-                { ComponentType.DAYLIGHT, Daylight.class},
-                { ComponentType.EVENT, Event.class},
-                { ComponentType.FREEBUSY, Freebusy.class},
-                { ComponentType.JOURNAL, Journal.class},
-                { ComponentType.STANDARD, Standard.class},
-                { ComponentType.TIMEZONE, Timezone.class},
-                { ComponentType.TODO, Todo.class},
+                { ComponentType.Alarm, Alarm.class},
+                { ComponentType.Calendar, Calendar.class},
+                { ComponentType.Daylight, Daylight.class},
+                { ComponentType.Event, Event.class},
+                { ComponentType.Freebusy, Freebusy.class},
+                { ComponentType.Journal, Journal.class},
+                { ComponentType.Standard, Standard.class},
+                { ComponentType.Timezone, Timezone.class},
+                { ComponentType.Todo, Todo.class},
         };
     }
 
