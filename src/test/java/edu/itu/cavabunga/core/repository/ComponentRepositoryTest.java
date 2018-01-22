@@ -50,6 +50,10 @@ public class ComponentRepositoryTest {
         assertEquals(0, componentRepository.findByOwner(testParticipant).size());
         componentRepository.save(testComponent);
         assertEquals(1, componentRepository.findByOwner(testParticipant).size());
+        assertEquals(
+                componentRepository.findByOwner(testParticipant).get(0),
+                componentRepository.findById(componentRepository.findByOwner(testParticipant).get(0).getId())
+        );
     }
 
 }

@@ -3,6 +3,7 @@ package edu.itu.cavabunga.core;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import edu.itu.cavabunga.core.entity.Component;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import edu.itu.cavabunga.core.exception.IcalStorageException;
 import edu.itu.cavabunga.core.factory.ComponentFactory;
 import edu.itu.cavabunga.core.entity.component.Calendar;
 import edu.itu.cavabunga.core.repository.ComponentRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -72,6 +76,17 @@ public class IcalStorageServiceTest {
         assertEquals(
                 icalStorageService.getComponentById((long)1),
                 mockCalendar
+        );
+    }
+
+    @Test
+    public void getComponentByParticipant() {
+        List<Component> expected = new ArrayList<>();
+        expected.add(mockCalendar);
+        when(mockComponentRepository.findByOwner(mockParticipant)).thenReturn(expected);
+        assertEquals(
+                icalStorageService.getComponentByParticipant(mockParticipant).size(),
+                1
         );
     }
 
