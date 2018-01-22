@@ -12,7 +12,7 @@ public enum ComponentRestType {
 
     private final String name;
 
-    private ComponentRestType(String s){
+    ComponentRestType(String s){
         name = s;
     }
 

@@ -5,7 +5,6 @@ import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
 import edu.itu.cavabunga.core.factory.ComponentFactory;
 import edu.itu.cavabunga.core.factory.ParticipantFactory;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +43,7 @@ public class ComponentRepositoryTest {
 
     @Test
     public void saveTest() {
-        Component testComponent = componentFactory.createComponent(ComponentType.CALENDAR);
+        Component testComponent = componentFactory.createComponent(ComponentType.Calendar);
         Participant testParticipant = participantRepository.findByUserName("testuser");
         testComponent.setOwner(testParticipant);
         assertEquals(0, componentRepository.findByOwner(testParticipant).size());
@@ -53,6 +52,32 @@ public class ComponentRepositoryTest {
         assertEquals(
                 componentRepository.findByOwner(testParticipant).get(0),
                 componentRepository.findById(componentRepository.findByOwner(testParticipant).get(0).getId())
+        );
+    }
+
+    @Test
+    public void findByOwnerAndTypeTest() {
+        Component testComponent1 = componentFactory.createComponent(ComponentType.Calendar);
+        Component testComponent2 = componentFactory.createComponent(ComponentType.Event);
+        Component testComponent3 = componentFactory.createComponent(ComponentType.Event);
+        Participant testParticipant = participantRepository.findByUserName("testuser");
+        testComponent1.setOwner(testParticipant);
+        testComponent2.setOwner(testParticipant);
+        testComponent3.setOwner(testParticipant);
+        componentRepository.save(testComponent1);
+        componentRepository.save(testComponent2);
+        componentRepository.save(testComponent3);
+        assertEquals(
+                "Event",
+                ComponentType.Event.name()
+        );
+        assertEquals(
+                1,
+                componentRepository.findByOwnerAndType(testParticipant, ComponentType.Calendar.name()).size()
+        );
+        assertEquals(
+                2,
+                componentRepository.findByOwnerAndType(testParticipant, ComponentType.Event.name()).size()
         );
     }
 

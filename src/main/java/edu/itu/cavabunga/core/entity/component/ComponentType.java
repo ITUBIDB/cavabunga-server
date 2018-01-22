@@ -4,47 +4,47 @@ import edu.itu.cavabunga.core.entity.Component;
 
 public enum ComponentType {
 
-    CALENDAR {
+    Calendar {
         public Component create() {
             return new Calendar();
         }
     },
-    ALARM {
+    Alarm {
         public Component create(){
             return new Alarm();
         }
     },
-    DAYLIGHT {
+    Daylight {
         public Component create(){
             return new Daylight();
         }
     },
-    EVENT {
+    Event {
         public Component create() {
             return new Event();
         }
     },
-    FREEBUSY {
+    Freebusy {
         public Component create(){
             return new Freebusy();
         }
     },
-    JOURNAL {
+    Journal {
         public Component create(){
             return new Journal();
         }
     },
-    STANDARD {
+    Standard {
         public Component create(){
             return new Standard();
         }
     },
-    TIMEZONE {
+    Timezone {
         public Component create(){
             return new Timezone();
         }
     },
-    TODO {
+    Todo {
         public Component create(){
             return new Todo();
         }

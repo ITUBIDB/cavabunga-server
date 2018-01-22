@@ -42,32 +42,32 @@ public class IcalStorageServiceTest {
 
     @Test(expected = IcalStorageException.class)
     public void testCreateComponentFail() {
-        when(mockComponentFactory.createComponent(ComponentType.CALENDAR)).thenReturn(null);
-        icalStorageService.createComponent(ComponentType.CALENDAR);
+        when(mockComponentFactory.createComponent(ComponentType.Calendar)).thenReturn(null);
+        icalStorageService.createComponent(ComponentType.Calendar);
     }
 
     @Test
     public void testCreateComponentSuccess() {
-        when(mockComponentFactory.createComponent(ComponentType.CALENDAR)).thenReturn(mockCalendar);
-        assertEquals(icalStorageService.createComponent(ComponentType.CALENDAR), mockCalendar);
-        verify(mockComponentFactory, only()).createComponent(ComponentType.CALENDAR);
+        when(mockComponentFactory.createComponent(ComponentType.Calendar)).thenReturn(mockCalendar);
+        assertEquals(icalStorageService.createComponent(ComponentType.Calendar), mockCalendar);
+        verify(mockComponentFactory, only()).createComponent(ComponentType.Calendar);
     }
 
     @Test(expected = IcalStorageException.class)
     public void testCreateComponentForParticipantFail() {
-        when(mockComponentFactory.createComponent(ComponentType.CALENDAR)).thenReturn(null);
-        icalStorageService.createComponentForParticipant(ComponentType.CALENDAR, mockParticipant);
+        when(mockComponentFactory.createComponent(ComponentType.Calendar)).thenReturn(null);
+        icalStorageService.createComponentForParticipant(ComponentType.Calendar, mockParticipant);
     }
 
     @Test
     public void testCreateComponentForParticipantSuccess() {
-        when(mockComponentFactory.createComponent(ComponentType.CALENDAR)).thenReturn(mockCalendar);
+        when(mockComponentFactory.createComponent(ComponentType.Calendar)).thenReturn(mockCalendar);
         assertEquals(
-                icalStorageService.createComponentForParticipant(ComponentType.CALENDAR, mockParticipant),
+                icalStorageService.createComponentForParticipant(ComponentType.Calendar, mockParticipant),
                 mockCalendar
         );
         verify(mockCalendar, only()).setOwner(mockParticipant);
-        verify(mockComponentFactory, only()).createComponent(ComponentType.CALENDAR);
+        verify(mockComponentFactory, only()).createComponent(ComponentType.Calendar);
     }
 
     @Test

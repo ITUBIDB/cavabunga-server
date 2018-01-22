@@ -4,5 +4,5 @@ import java.util.Date;
 
 interface ITimeFactory {
 
-    public Date getTime();
+    Date getTime();
 }
