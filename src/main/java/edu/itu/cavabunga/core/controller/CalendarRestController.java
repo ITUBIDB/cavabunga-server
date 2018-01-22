@@ -62,7 +62,7 @@ public class CalendarRestController {
         return icalStorageService.getComponentByParticipant(participant);
     }
 
-    @RequestMapping(value = "/postcalendar", method = RequestMethod.POST)
+    @RequestMapping(value = "/calendar", method = RequestMethod.POST)
     public @ResponseBody String postCalendar(@RequestBody Component calendar){
         icalStorageService.saveComponent(calendar);
         return "ok";

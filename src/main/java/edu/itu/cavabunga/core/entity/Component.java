@@ -1,8 +1,6 @@
 package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import edu.itu.cavabunga.core.entity.component.Calendar;
-import edu.itu.cavabunga.core.entity.component.Event;
 import org.hibernate.annotations.DiscriminatorOptions;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,10 +17,6 @@ import java.util.List;
 @DiscriminatorOptions(force=true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Calendar.class, name = "Calendar"),
-        @JsonSubTypes.Type(value = Event.class, name = "Event")
-})
 public abstract class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
