@@ -21,8 +21,8 @@ import java.util.List;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Calendar.class, name = "Calendar"),
-        @JsonSubTypes.Type(value = Event.class, name = "Event"),
-             })
+        @JsonSubTypes.Type(value = Event.class, name = "Event")
+})
 public abstract class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

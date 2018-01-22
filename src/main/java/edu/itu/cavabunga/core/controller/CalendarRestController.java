@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.core.rest;
+package edu.itu.cavabunga.core.controller;
 
 import edu.itu.cavabunga.core.IcalStorageService;
 import edu.itu.cavabunga.core.ParticipantStorageService;
