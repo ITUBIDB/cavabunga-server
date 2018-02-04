@@ -1,7 +1,7 @@
 package edu.itu.cavabunga.core.controller;
 
-import edu.itu.cavabunga.core.services.IcalServiceImpl;
-import edu.itu.cavabunga.core.services.ParticipantServiceImpl;
+import edu.itu.cavabunga.core.services.IcalService;
+import edu.itu.cavabunga.core.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path="/api")
 public class CalendarController {
     @Autowired
-    IcalServiceImpl icalServiceImpl;
+    IcalService icalService;
 
     @Autowired
-    ParticipantServiceImpl participantServiceImpl;
+    ParticipantService participantService;
 
 
 }
