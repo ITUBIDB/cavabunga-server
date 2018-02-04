@@ -6,6 +6,8 @@ import edu.itu.cavabunga.core.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ParticipantServiceImpl implements ParticipantService {
     @Autowired
@@ -35,5 +37,10 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public Participant getParticipantByUuid(String uuid){
         return participantRepository.findByUuid(uuid);
+    }
+
+    @Override
+    public List<Participant> getAllParticipant(){
+        return participantRepository.findAll();
     }
 }

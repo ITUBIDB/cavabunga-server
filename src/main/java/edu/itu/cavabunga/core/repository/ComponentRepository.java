@@ -2,13 +2,13 @@ package edu.itu.cavabunga.core.repository;
 
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Participant;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 @org.springframework.stereotype.Component
-public interface ComponentRepository extends CrudRepository<Component, Long> {
+public interface ComponentRepository extends JpaRepository<Component, Long> {
     List<Component> findByOwner(Participant owner);
 
     List<Component> findByParent(Component component);

@@ -2,14 +2,14 @@ package edu.itu.cavabunga.core.repository;
 
 import edu.itu.cavabunga.core.entity.Parameter;
 import edu.itu.cavabunga.core.entity.Property;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public interface ParameterRepository extends CrudRepository<Parameter, Long> {
+public interface ParameterRepository extends JpaRepository<Parameter, Long> {
     List<Parameter> findByProperty(Property property);
 
     @Query("select a from Parameter a where type = ?1")

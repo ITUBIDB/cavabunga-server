@@ -84,7 +84,7 @@ public class IcalServiceImpl implements IcalService {
     }
 
     @Override
-    public Iterable<Component> getAllComponent(){
+    public List<Component> getAllComponent(){
         return componentRepository.findAll();
     }
 
@@ -137,7 +137,7 @@ public class IcalServiceImpl implements IcalService {
     }
 
     @Override
-    public Iterable<Property> getAllProperty(){
+    public List<Property> getAllProperty(){
         return propertyRepository.findAll();
     }
 
@@ -190,7 +190,7 @@ public class IcalServiceImpl implements IcalService {
     }
 
     @Override
-    public Iterable<Parameter> getAllParameter(){
+    public List<Parameter> getAllParameter(){
         return parameterRepository.findAll();
     }
 
