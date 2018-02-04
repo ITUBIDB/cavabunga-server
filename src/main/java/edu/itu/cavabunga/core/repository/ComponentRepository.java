@@ -15,4 +15,7 @@ public interface ComponentRepository extends CrudRepository<Component, Long> {
 
     @Query("select a from Component a where owner=?1 and type = ?2")
     List<Component> findByOwnerAndType(Participant owner, String type);
+
+    @Query("select b from Component b where type = ?1")
+    List<Component> findByType(String type);
 }

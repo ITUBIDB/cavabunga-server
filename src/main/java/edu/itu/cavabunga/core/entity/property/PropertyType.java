@@ -3,247 +3,247 @@ package edu.itu.cavabunga.core.entity.property;
 import edu.itu.cavabunga.core.entity.Property;
 
 public enum PropertyType {
-    ACKNOWLEDGED {
+    Acknowledged {
         public Property create() {
             return new Acknowledged();
         }
     },
-    ACTION {
+    Action {
         public Property create() {
             return new Action();
         }
     },
-    ATTACH {
+    Attach {
         public Property create() {
             return new Attach();
         }
     },
-    ATTENDEE {
+    Attendee {
         public Property create() {
             return new Attendee();
         }
     },
-    CALSCALE {
+    Calscale {
         public Property create() {
             return new Calscale();
         }
     },
-    CATAGORIES {
+    Catagories {
         public Property create() {
             return new Catagories();
         }
     },
-    CLASS {
+    Class {
         public Property create() {
             return new Class();
         }
     },
-    COMMENT {
+    Comment {
         public Property create() {
             return new Comment();
         }
     },
-    COMPLETED {
+    Completed {
         public Property create() {
             return new Completed();
         }
     },
-    CONTACT {
+    Contact {
         public Property create() {
             return new Contact();
         }
     },
-    COUNTRY {
+    Country {
         public Property create() {
             return new Country();
         }
     },
-    CREATED {
+    Created {
         public Property create() {
             return new Created();
         }
     },
-    DESCRIPTION {
+    Description {
         public Property create() {
             return new Description();
         }
     },
-    DTEND {
+    Dtend {
         public Property create() {
             return new Dtend();
         }
     },
-    DTSTAMP {
+    Dtstamp {
         public Property create() {
             return new Dtstamp();
         }
     },
-    DTSTART {
+    Dtstart {
         public Property create() {
             return new Dtstart();
         }
     },
-    DUE {
+    Due {
         public Property create() {
             return new Due();
         }
     },
-    DURATION {
+    Duration {
         public Property create() {
             return new Duration();
         }
     },
-    EXDATE {
+    Exdate {
         public Property create() {
             return new Exdate();
         }
     },
-    EXRULE {
+    Exrule {
         public Property create() {
             return new Exrule();
         }
     },
-    FREEBUSY {
+    Freebusy {
         public Property create() {
             return new Freebusy();
         }
     },
-    GEO {
+    Geo {
         public Property create() {
             return new Geo();
         }
     },
-    LASTMOD {
+    Lastmod {
         public Property create() {
             return new Lastmod();
         }
     },
-    LOCATION {
+    Location {
         public Property create() {
             return new Location();
         }
     },
-    METHOD {
+    Method {
         public Property create() {
             return new Method();
         }
     },
-    ORGANIZER{
+    Organizer {
         public Property create() {
             return new Organizer();
         }
     },
-    PERCENT {
+    Percent {
         public Property create() {
             return new Percent();
         }
     },
-    PRIORITY {
+    Priority {
         public Property create() {
             return new Priority();
         }
     },
-    PRODID {
+    Prodid {
         public Property create() {
             return new Prodid();
         }
     },
-    RDATE {
+    Rdate {
         public Property create() {
             return new Rdate();
         }
     },
-    RECURID {
+    Recurid {
         public Property create() {
             return new Recurid();
         }
     },
-    RELATED {
+    Related {
         public Property create() {
             return new Related();
         }
     },
-    REPEAT {
+    Repeat {
         public Property create() {
             return new Repeat();
         }
     },
-    RESOURCES {
+    Resources {
         public Property create() {
             return new Resources();
         }
     },
-    RRULE {
+    Rrule {
         public Property create() {
             return new Rrule();
         }
     },
-    RSTATUS {
+    Rstatus {
         public Property create() {
             return new Rstatus();
         }
     },
-    SEQ {
+    Seq {
         public Property create() {
             return new Seq();
         }
     },
-    STATUS {
+    Status {
         public Property create() {
             return new Status();
         }
     },
-    SUMMARY {
+    Summary {
         public Property create() {
             return new Summary();
         }
     },
-    TRANSP {
+    Transp {
         public Property create() {
             return new Transp();
         }
     },
-    TRIGGER {
+    Trigger {
         public Property create() {
             return new Trigger();
         }
     },
-    TZID {
+    Tzid {
         public Property create() {
             return new Tzid();
         }
     },
-    TZNAME {
+    Tzname {
         public Property create() {
             return new Tzname();
         }
     },
-    TZOFFSETFROM {
+    Tzoffsetfrom {
         public Property create() {
             return new Tzoffsetfrom();
         }
     },
-    TZOFFSETTO {
+    Tzoffsetto {
         public Property create() {
             return new Tzoffsetto();
         }
     },
-    TZURL {
+    Tzurl {
         public Property create() {
             return new Tzurl();
         }
     },
-    UID {
+    Uid {
         public Property create() {
             return new Uid();
         }
     },
-    URL {
+    Url {
         public Property create() {
             return new Url();
         }
     },
-    VERSION {
+    Version {
         public Property create() {
             return new Version();
         }

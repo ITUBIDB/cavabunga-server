@@ -1,9 +1,11 @@
 package edu.itu.cavabunga.core.services;
 
 import edu.itu.cavabunga.core.entity.Component;
+import edu.itu.cavabunga.core.entity.Parameter;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
+import edu.itu.cavabunga.core.entity.parameter.ParameterType;
 import edu.itu.cavabunga.core.entity.property.PropertyType;
 import edu.itu.cavabunga.core.factory.ComponentFactory;
 import edu.itu.cavabunga.core.factory.ParameterFactory;
@@ -57,6 +59,18 @@ public class IcalServiceImpl {
         return componentRepository.findByOwner(participant);
     }
 
+    public List<Component> getAllSpecificComponent(ComponentType componentType){
+        return componentRepository.findByType(componentType.toString());
+    }
+
+    public List<Component> getComponentByParticipantAndType(Participant participant, ComponentType componentType){
+        return componentRepository.findByOwnerAndType(participant, componentType.toString());
+    }
+
+    public Iterable<Component> getAllComponent(){
+        return componentRepository.findAll();
+    }
+
     public void saveComponent(Component component){
         componentRepository.save(component);
     }
@@ -69,8 +83,31 @@ public class IcalServiceImpl {
         return propertyRepository.findOne(id);
     }
 
-
     public List<Property> getPropertyByComponent(Component component){
-         return propertyRepository.findByComponentToPropertyMap(component);
+         return propertyRepository.findByComponent(component);
+    }
+
+    public List<Property> getAllSpecificProperty(PropertyType propertyType){
+        return propertyRepository.findByType(propertyType.toString());
+    }
+
+    public List<Property> getPropertyByComponentAndType(Component component, PropertyType propertyType){
+        return propertyRepository.findByComponentAndType(component, propertyType.toString());
+    }
+
+    public Iterable<Property> getAllProperty(){
+        return propertyRepository.findAll();
+    }
+
+    public Parameter createParameter(ParameterType parameterType){
+        return parameterFactory.createParameter(parameterType);
+    }
+
+
+
+    public Parameter createParameterForProperty(ParameterType parameterType, Property property){
+        Parameter result = parameterFactory.createParameter(parameterType);
+        result.setProperty(property);
+        return result;
     }
 }

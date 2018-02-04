@@ -1,6 +1,7 @@
 package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import edu.itu.cavabunga.core.entity.component.*;
 import org.hibernate.annotations.DiscriminatorOptions;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,6 +18,17 @@ import java.util.List;
 @DiscriminatorOptions(force=true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Alarm.class, name = "Alarm"),
+        @JsonSubTypes.Type(value = Calendar.class, name = "Calendar"),
+        @JsonSubTypes.Type(value = Daylight.class, name = "Daylight"),
+        @JsonSubTypes.Type(value = Event.class, name = "Event"),
+        @JsonSubTypes.Type(value = Freebusy.class, name = "Freebusy"),
+        @JsonSubTypes.Type(value = Journal.class, name = "Journal"),
+        @JsonSubTypes.Type(value = Standard.class, name = "Standard"),
+        @JsonSubTypes.Type(value = Timezone.class, name = "Timezone"),
+        @JsonSubTypes.Type(value = Todo.class, name = "Todo")
+})
 public abstract class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +48,7 @@ public abstract class Component {
     @JsonManagedReference
     private List<Component> components = new ArrayList<Component>();
 
-    @OneToMany(mappedBy = "componentToPropertyMap")
+    @OneToMany(mappedBy = "component")
     @JsonManagedReference
     private List<Property> properties = new ArrayList<Property>();
 
@@ -97,7 +109,7 @@ public abstract class Component {
     }
 
     public void addProperty(Property property){
-        property.setComponentToPropertyMap(this);
+        property.setComponent(this);
         properties.add(property);
     }
 
