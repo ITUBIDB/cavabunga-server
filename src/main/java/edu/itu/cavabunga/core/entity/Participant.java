@@ -34,10 +34,6 @@ public class Participant {
 
     }
 
-    public Participant(String user_name){
-        this.userName = user_name;
-    }
-
     public List<Component> getComponents() {
         return components;
     }
