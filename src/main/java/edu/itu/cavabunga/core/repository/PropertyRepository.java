@@ -9,8 +9,6 @@ import java.util.List;
 
 @Component
 public interface PropertyRepository extends CrudRepository<Property, Long> {
-    Property findById(Long id);
-
     List<Property> findByComponent(edu.itu.cavabunga.core.entity.Component component);
 
     @Query("select a from Property a where type = ?1")

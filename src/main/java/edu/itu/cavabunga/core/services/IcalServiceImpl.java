@@ -21,25 +21,25 @@ import java.util.List;
 @Service
 public class IcalServiceImpl {
     @Autowired
-    public ParticipantServiceImpl participantServiceImpl;
+    private ParticipantServiceImpl participantServiceImpl;
 
     @Autowired
-    public ComponentFactory componentFactory;
+    private ComponentFactory componentFactory;
 
     @Autowired
-    public ComponentRepository componentRepository;
+    private ComponentRepository componentRepository;
 
     @Autowired
-    public PropertyFactory propertyFactory;
+    private PropertyFactory propertyFactory;
 
     @Autowired
-    public PropertyRepository propertyRepository;
+    private PropertyRepository propertyRepository;
 
     @Autowired
-    public ParameterFactory parameterFactory;
+    private ParameterFactory parameterFactory;
 
     @Autowired
-    public ParameterRepository parameterRepository;
+    private ParameterRepository parameterRepository;
 
     public Component createComponent(ComponentType componentType){
         return componentFactory.createComponent(componentType);
@@ -55,11 +55,19 @@ public class IcalServiceImpl {
         return componentRepository.findOne(id);
     }
 
+    public List<Component> getComponentByParent(Component component){
+        return componentRepository.findByParent(component);
+    }
+
+    public List<Component> getComponentByParentAndType(Component component, ComponentType componentType){
+        return componentRepository.findByParentAndType(component, componentType.toString());
+    }
+
     public List<Component> getComponentByParticipant(Participant participant){
         return componentRepository.findByOwner(participant);
     }
 
-    public List<Component> getAllSpecificComponent(ComponentType componentType){
+    public List<Component> getAllComponentByType(ComponentType componentType){
         return componentRepository.findByType(componentType.toString());
     }
 
@@ -75,8 +83,23 @@ public class IcalServiceImpl {
         componentRepository.save(component);
     }
 
+    public void deleteComponentById(Long id){
+        componentRepository.delete(id);
+    }
+
+    public void deleteComponent(Component component){
+        componentRepository.delete(component.getId());
+    }
+
+
     public Property createProperty(PropertyType propertyType){
        return  propertyFactory.createProperty(propertyType);
+    }
+
+    public Property createPropertyForComponent(PropertyType propertyType, Component component){
+        Property result = propertyFactory.createProperty(propertyType);
+        result.setComponent(component);
+        return result;
     }
 
     public Property getPropertyById(Long id){
@@ -87,7 +110,7 @@ public class IcalServiceImpl {
          return propertyRepository.findByComponent(component);
     }
 
-    public List<Property> getAllSpecificProperty(PropertyType propertyType){
+    public List<Property> getAllPropertyByType(PropertyType propertyType){
         return propertyRepository.findByType(propertyType.toString());
     }
 
@@ -99,15 +122,58 @@ public class IcalServiceImpl {
         return propertyRepository.findAll();
     }
 
-    public Parameter createParameter(ParameterType parameterType){
-        return parameterFactory.createParameter(parameterType);
+    public void saveProperty(Property property){
+        propertyRepository.save(property);
+    }
+
+    public void deletePropertyById(Long id){
+        propertyRepository.delete(id);
+    }
+
+    public void deleteProperty(Property property){
+        propertyRepository.delete(property.getId());
     }
 
 
+    public Parameter createParameter(ParameterType parameterType){
+        return parameterFactory.createParameter(parameterType);
+    }
 
     public Parameter createParameterForProperty(ParameterType parameterType, Property property){
         Parameter result = parameterFactory.createParameter(parameterType);
         result.setProperty(property);
         return result;
+    }
+
+    public Parameter getParameterById(Long id){
+        return parameterRepository.findOne(id);
+    }
+
+    public List<Parameter> getParameterByProperty(Property property){
+        return parameterRepository.findByProperty(property);
+    }
+
+    public List<Parameter> getAllParameterByType(ParameterType parameterType){
+        return parameterRepository.findByType(parameterType.toString());
+    }
+
+    public List<Parameter> getParameterByPropertyAndType(Property property, ParameterType parameterType){
+        return parameterRepository.findByPropertyAndType(property, parameterType.toString());
+    }
+
+    public Iterable<Parameter> getAllParameter(){
+        return parameterRepository.findAll();
+    }
+
+    public void saveParameter(Parameter parameter){
+        parameterRepository.save(parameter);
+    }
+
+    public void deleteParameterById(Long id){
+        parameterRepository.delete(id);
+    }
+
+    public void deleteParameter(Parameter parameter){
+        parameterRepository.delete(parameter.getId());
     }
 }

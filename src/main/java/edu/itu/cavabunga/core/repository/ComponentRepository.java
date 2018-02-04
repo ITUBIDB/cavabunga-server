@@ -9,13 +9,16 @@ import java.util.List;
 
 @org.springframework.stereotype.Component
 public interface ComponentRepository extends CrudRepository<Component, Long> {
-    Component findById (Long id);
-
     List<Component> findByOwner(Participant owner);
 
-    @Query("select a from Component a where owner=?1 and type = ?2")
-    List<Component> findByOwnerAndType(Participant owner, String type);
+    List<Component> findByParent(Component component);
+
+    @Query("select c from Component c where parent=?1 and type=?2")
+    List<Component> findByParentAndType(Component component, String type);
 
     @Query("select b from Component b where type = ?1")
     List<Component> findByType(String type);
+
+    @Query("select a from Component a where owner=?1 and type = ?2")
+    List<Component> findByOwnerAndType(Participant owner, String type);
 }
