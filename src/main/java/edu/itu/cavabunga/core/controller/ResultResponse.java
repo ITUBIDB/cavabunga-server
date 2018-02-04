@@ -5,6 +5,12 @@ public class ResultResponse {
     private String message;
     private Object data;
 
+    public ResultResponse(Integer status, String message, Object data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
     public Integer getStatus() {
         return status;
     }
