@@ -48,7 +48,7 @@ public class CalendarController {
 
     @GetMapping("/{userName}")
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse getCalendar(@PathVariable String userName){
+    ResultResponse getCalendar(@PathVariable("userName") String userName){
         Participant participant = participantService.getParticipantByUserName(userName);
         if(participant == null){
             throw new ParticipantNotFoundException("kullanici bulunamdı " + userName);
@@ -63,7 +63,7 @@ public class CalendarController {
 
     @DeleteMapping("/{calendarId}")
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse deleteCalendar(@PathVariable Long id){
+    ResultResponse deleteCalendar(@PathVariable("calendarId") Long id){
         Component calendar = icalService.getComponentById(id);
         if(calendar == null){
             throw new IcalNotFoundException(id + " ile bir takvim bulunamadı");
@@ -75,7 +75,7 @@ public class CalendarController {
 
     @PutMapping("/{calendarId}")
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse updateCalendar(@RequestBody Component calendar, @PathVariable Long id){
+    ResultResponse updateCalendar(@RequestBody Component calendar, @PathVariable("calendarId") Long id){
         Component checkCalendar = icalService.getComponentById(id);
         if(checkCalendar == null){
             throw new IcalNotFoundException(id + " ile bir takvim bulunamadı.");

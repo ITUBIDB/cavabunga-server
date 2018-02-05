@@ -27,7 +27,7 @@ public interface IcalService {
 
     List<Component> getComponentByParticipantAndType(Participant participant, ComponentType componentType);
 
-    Iterable<Component> getAllComponent();
+    List<Component> getAllComponent();
 
     void saveComponent(Component component);
 
@@ -47,7 +47,7 @@ public interface IcalService {
 
     List<Property> getPropertyByComponentAndType(Component component, PropertyType propertyType);
 
-    Iterable<Property> getAllProperty();
+    List<Property> getAllProperty();
 
     void saveProperty(Property property);
 
@@ -67,7 +67,7 @@ public interface IcalService {
 
     List<Parameter> getParameterByPropertyAndType(Property property, ParameterType parameterType);
 
-    Iterable<Parameter> getAllParameter();
+    List<Parameter> getAllParameter();
 
     void saveParameter(Parameter parameter);
 
