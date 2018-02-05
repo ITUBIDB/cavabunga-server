@@ -3,8 +3,8 @@ package edu.itu.cavabunga.core.controller;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.exception.IcalNotFoundException;
-import edu.itu.cavabunga.core.exception.ParticipantNotFoundException;
+import edu.itu.cavabunga.core.exception.IcalNotFound;
+import edu.itu.cavabunga.core.exception.ParticipantNotFound;
 import edu.itu.cavabunga.core.services.IcalService;
 import edu.itu.cavabunga.core.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CalendarController {
     ResultResponse saveCalendar(@RequestBody edu.itu.cavabunga.core.entity.Component calendar, @PathVariable String userName){
         Participant participant = participantService.getParticipantByUserName(userName);
         if(participant == null){
-            throw new ParticipantNotFoundException("kullanici bulunamadi " + userName);
+            throw new ParticipantNotFound("kullanici bulunamadi " + userName);
         }
 
         calendar.setOwner(participant);
@@ -40,7 +40,7 @@ public class CalendarController {
     ResultResponse getAllCalendars(){
         List<Component> calendars = icalService.getAllComponentByType(ComponentType.Calendar);
         if(calendars.isEmpty()){
-            throw new IcalNotFoundException("sistemde kayıtlı takvim yok");
+            throw new IcalNotFound("sistemde kayıtlı takvim yok");
         }
 
         return new ResultResponse(0,null, calendars);
@@ -51,12 +51,12 @@ public class CalendarController {
     ResultResponse getCalendar(@PathVariable("userName") String userName){
         Participant participant = participantService.getParticipantByUserName(userName);
         if(participant == null){
-            throw new ParticipantNotFoundException("kullanici bulunamdı " + userName);
+            throw new ParticipantNotFound("kullanici bulunamdı " + userName);
         }
 
         List<Component> calendar = icalService.getComponentByParticipantAndType(participant, ComponentType.Calendar);
         if(calendar == null){
-            throw new IcalNotFoundException(userName + " icin takvim bulunamadi");
+            throw new IcalNotFound(userName + " icin takvim bulunamadi");
         }
         return new ResultResponse(0, null, calendar);
     }
@@ -66,7 +66,7 @@ public class CalendarController {
     ResultResponse deleteCalendar(@PathVariable("calendarId") Long id){
         Component calendar = icalService.getComponentById(id);
         if(calendar == null){
-            throw new IcalNotFoundException(id + " ile bir takvim bulunamadı");
+            throw new IcalNotFound(id + " ile bir takvim bulunamadı");
         }
 
         icalService.deleteComponent(calendar);
@@ -78,7 +78,7 @@ public class CalendarController {
     ResultResponse updateCalendar(@RequestBody Component calendar, @PathVariable("calendarId") Long id){
         Component checkCalendar = icalService.getComponentById(id);
         if(checkCalendar == null){
-            throw new IcalNotFoundException(id + " ile bir takvim bulunamadı.");
+            throw new IcalNotFound(id + " ile bir takvim bulunamadı.");
         }
 
         calendar.setId(id);
