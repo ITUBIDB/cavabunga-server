@@ -55,7 +55,7 @@ public class CalendarController {
         }
 
         List<Component> calendar = icalService.getComponentByParticipantAndType(participant, ComponentType.Calendar);
-        if(calendar == null){
+        if(calendar.isEmpty()){
             throw new IcalNotFound(userName + " icin takvim bulunamadi");
         }
         return new ResultResponse(0, null, calendar);
