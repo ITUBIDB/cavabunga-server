@@ -1,5 +1,6 @@
 package edu.itu.cavabunga.core.controller;
 
+import edu.itu.cavabunga.core.controller.wrapper.CalendarResponse;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
@@ -26,7 +27,7 @@ public class CalendarController {
 
     @PostMapping("/{userName}")
     @ResponseStatus(HttpStatus.CREATED)
-    ResultResponse saveCalendar(@RequestBody edu.itu.cavabunga.core.entity.Component calendar, @PathVariable String userName){
+    CalendarResponse saveCalendar(@RequestBody edu.itu.cavabunga.core.entity.Component calendar, @PathVariable String userName){
         Participant participant = participantService.getParticipantByUserName(userName);
         if(participant == null){
             throw new ParticipantNotFound("kullanici bulunamadi " + userName);
@@ -34,24 +35,23 @@ public class CalendarController {
 
         calendar.setOwner(participant);
         icalService.saveComponent(calendar);
-        return new ResultResponse(0,"takvim basari ile kaydedildi", null);
+        return new CalendarResponse(0,"takvim basari ile kaydedildi", null);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse getAllCalendars(){
+    CalendarResponse getAllCalendars(){
         List<Component> calendars = icalService.getAllComponentByType(ComponentType.Calendar);
         if(calendars.isEmpty()){
             throw new IcalNotFound("sistemde kayıtlı takvim yok");
         }
 
-        return new ResultResponse(0,null, calendars);
+        return new CalendarResponse(0,null, calendars);
     }
 
     @GetMapping("/{userName}")
     @ResponseStatus(HttpStatus.OK)
-
-    TestResult getCalendar(@PathVariable("userName") String userName){
+    CalendarResponse getCalendar(@PathVariable("userName") String userName){
         Participant participant = participantService.getParticipantByUserName(userName);
         if(participant == null){
             throw new ParticipantNotFound("kullanici bulunamdı " + userName);
@@ -62,24 +62,24 @@ public class CalendarController {
             throw new IcalNotFound(userName + " icin takvim bulunamadi");
         }
 
-        return new TestResult("s","s",calendar);
+        return new CalendarResponse(0,null,calendar);
     }
 
     @DeleteMapping("/{calendarId}")
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse deleteCalendar(@PathVariable("calendarId") Long id){
+    CalendarResponse deleteCalendar(@PathVariable("calendarId") Long id){
         Component calendar = icalService.getComponentById(id);
         if(calendar == null){
             throw new IcalNotFound(id + " ile bir takvim bulunamadı");
         }
 
         icalService.deleteComponent(calendar);
-        return new ResultResponse(0,"takvim basari ile silindi", null);
+        return new CalendarResponse(0,"takvim basari ile silindi", null);
     }
 
     @PutMapping("/{calendarId}")
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse updateCalendar(@RequestBody Component calendar, @PathVariable("calendarId") Long id){
+    CalendarResponse updateCalendar(@RequestBody Component calendar, @PathVariable("calendarId") Long id){
         Component checkCalendar = icalService.getComponentById(id);
         if(checkCalendar == null){
             throw new IcalNotFound(id + " ile bir takvim bulunamadı.");
@@ -87,7 +87,7 @@ public class CalendarController {
 
         calendar.setId(id);
         icalService.saveComponent(calendar);
-        return new ResultResponse(0,"takvim basari ile guncellendi",null);
+        return new CalendarResponse(0,"takvim basari ile guncellendi",null);
     }
 
     @GetMapping("/testcalendarcelikd")

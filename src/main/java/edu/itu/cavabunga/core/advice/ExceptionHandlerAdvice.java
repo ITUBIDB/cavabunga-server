@@ -1,6 +1,6 @@
 package edu.itu.cavabunga.core.advice;
 
-import edu.itu.cavabunga.core.controller.ResultResponse;
+import edu.itu.cavabunga.core.controller.wrapper.ErrorResponse;
 import edu.itu.cavabunga.core.exception.IcalNotFound;
 import edu.itu.cavabunga.core.exception.ParticipantConflict;
 import edu.itu.cavabunga.core.exception.ParticipantNotFound;
@@ -14,26 +14,26 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(IcalNotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResultResponse handleIcalNotFound(IcalNotFound e){
-        return new ResultResponse(1,e.getMessage(), null);
+    public ErrorResponse handleIcalNotFound(IcalNotFound e){
+        return new ErrorResponse(1,e.getMessage(), null);
     }
 
     @ExceptionHandler(ParticipantNotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResultResponse handleParticipantNotFound(ParticipantNotFound e){
-        return new ResultResponse(1,e.getMessage(), null);
+    public ErrorResponse handleParticipantNotFound(ParticipantNotFound e){
+        return new ErrorResponse(1,e.getMessage(), null);
     }
 
     @ExceptionHandler(ParticipantConflict.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResultResponse handleParticipantConflict(ParticipantConflict e){
-        return new ResultResponse(1,e.getMessage(),null);
+    public ErrorResponse handleParticipantConflict(ParticipantConflict e){
+        return new ErrorResponse(1,e.getMessage(),null);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResultResponse handleException(Exception e){
-        return new ResultResponse(1,e.getMessage(), null);
+    public ErrorResponse handleException(Exception e){
+        return new ErrorResponse(1,e.getMessage(), null);
     }
 
 
