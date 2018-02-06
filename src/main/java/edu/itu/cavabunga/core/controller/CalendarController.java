@@ -2,7 +2,9 @@ package edu.itu.cavabunga.core.controller;
 
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.entity.Property;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
+import edu.itu.cavabunga.core.entity.property.PropertyType;
 import edu.itu.cavabunga.core.exception.IcalNotFound;
 import edu.itu.cavabunga.core.exception.ParticipantNotFound;
 import edu.itu.cavabunga.core.services.IcalService;
@@ -48,7 +50,8 @@ public class CalendarController {
 
     @GetMapping("/{userName}")
     @ResponseStatus(HttpStatus.OK)
-    ResultResponse getCalendar(@PathVariable("userName") String userName){
+
+    TestResult getCalendar(@PathVariable("userName") String userName){
         Participant participant = participantService.getParticipantByUserName(userName);
         if(participant == null){
             throw new ParticipantNotFound("kullanici bulunamdı " + userName);
@@ -58,7 +61,8 @@ public class CalendarController {
         if(calendar.isEmpty()){
             throw new IcalNotFound(userName + " icin takvim bulunamadi");
         }
-        return new ResultResponse(0, null, calendar);
+
+        return new TestResult("s","s",calendar);
     }
 
     @DeleteMapping("/{calendarId}")
@@ -84,5 +88,33 @@ public class CalendarController {
         calendar.setId(id);
         icalService.saveComponent(calendar);
         return new ResultResponse(0,"takvim basari ile guncellendi",null);
+    }
+
+    @GetMapping("/testcalendarcelikd")
+    @ResponseStatus(HttpStatus.OK)
+    void testCalendar(){
+        Participant participant = participantService.getParticipantByUserName("celikd");
+
+
+        Component calendar = icalService.createComponent(ComponentType.Calendar);
+        Property calscale = icalService.createProperty(PropertyType.Calscale);
+            calscale.setValue("GREGODIAN");
+        Property prodid = icalService.createProperty(PropertyType.Prodid);
+            prodid.setValue("CAVabunga caldav server 0.1");
+        calendar.addProperty(calscale);
+        calendar.addProperty(prodid);
+
+        Component event = icalService.createComponent(ComponentType.Event);
+        Property dtstamp = icalService.createProperty(PropertyType.Dtstamp);
+            dtstamp.setValue("1234201803Z");
+        Property location = icalService.createProperty(PropertyType.Location);
+            location.setValue("BIDB");
+
+            event.addProperty(dtstamp);
+            event.addProperty(location);
+
+            calendar.addComponent(event);
+            calendar.setOwner(participant);
+        icalService.saveComponent(calendar);
     }
 }

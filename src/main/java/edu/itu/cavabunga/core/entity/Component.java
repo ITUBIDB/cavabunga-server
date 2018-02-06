@@ -29,6 +29,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = Timezone.class, name = "Timezone"),
         @JsonSubTypes.Type(value = Todo.class, name = "Todo")
 })
+
 public abstract class Component {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +49,7 @@ public abstract class Component {
     @JsonManagedReference
     private List<Component> components = new ArrayList<Component>();
 
-    @OneToMany(mappedBy = "component")
+    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Property> properties = new ArrayList<Property>();
 
