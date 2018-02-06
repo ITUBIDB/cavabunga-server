@@ -79,7 +79,7 @@ public abstract class Property {
     @JsonBackReference
     private Component component;
 
-    @OneToMany(mappedBy = "property")
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Parameter> parameters = new ArrayList<Parameter>();
 

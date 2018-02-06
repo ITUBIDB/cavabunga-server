@@ -1,6 +1,7 @@
 package edu.itu.cavabunga.core.services;
 
 import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.entity.participant.ParticipantType;
 import edu.itu.cavabunga.core.factory.ParticipantFactory;
 import edu.itu.cavabunga.core.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     private ParticipantFactory participantFactory;
 
     @Override
-    public Participant createParticipant(String user_name){
-        Participant temp = participantFactory.createUser();
-        temp.setUserName(user_name);
+    public Participant createParticipant(String userName, ParticipantType participantType){
+        Participant temp = participantFactory.createParticipant(participantType);
+        temp.setUserName(userName);
         participantRepository.save(temp);
         return temp;
     }
@@ -42,5 +43,10 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public List<Participant> getAllParticipant(){
         return participantRepository.findAll();
+    }
+
+    @Override
+    public List<Participant> getAllParticipantByType(ParticipantType participantType){
+        return participantRepository.findByType(participantType.toString());
     }
 }

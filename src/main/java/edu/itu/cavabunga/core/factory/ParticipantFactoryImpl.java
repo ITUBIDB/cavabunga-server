@@ -1,12 +1,13 @@
 package edu.itu.cavabunga.core.factory;
 
 import edu.itu.cavabunga.core.entity.Participant;
-import org.springframework.context.annotation.Configuration;
+import edu.itu.cavabunga.core.entity.participant.ParticipantType;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 public class ParticipantFactoryImpl implements ParticipantFactory {
     @Override
-    public Participant createUser(){
-        return new Participant();
+    public Participant createParticipant(ParticipantType participantType){
+        return participantType.create();
     }
 }

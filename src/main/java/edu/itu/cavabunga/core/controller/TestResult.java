@@ -1,23 +1,26 @@
 package edu.itu.cavabunga.core.controller;
 
+import edu.itu.cavabunga.core.entity.Component;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ResultResponse {
-    private Integer status;
+public class TestResult {
+    private String status;
     private String message;
-    private Object data;
+    private List<Component> data = new ArrayList<Component>();
 
-    public ResultResponse(Integer status, String message, Object data) {
+    public TestResult(String status, String message, List<Component> data) {
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -29,14 +32,11 @@ public class ResultResponse {
         this.message = message;
     }
 
-    public Object getData() {
+    public List<Component> getData() {
         return data;
     }
 
-    public void setData(List data) {
+    public void setData(List<Component> data) {
         this.data = data;
-    }
-
-    public ResultResponse() {
     }
 }
