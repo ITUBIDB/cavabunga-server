@@ -1,13 +1,13 @@
-package edu.itu.cavabunga.core.controller;
+package edu.itu.cavabunga.core.controller.wrapper;
 
 import java.util.List;
 
-public class ResultResponse {
+public class ErrorResponse {
     private Integer status;
     private String message;
     private Object data;
 
-    public ResultResponse(Integer status, String message, Object data) {
+    public ErrorResponse(Integer status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -37,6 +37,6 @@ public class ResultResponse {
         this.data = data;
     }
 
-    public ResultResponse() {
+    public ErrorResponse() {
     }
 }
