@@ -98,6 +98,7 @@ public abstract class Component {
 
     public void addComponent(Component component){
         component.setParent(this);
+        component.setOwner(this.owner);
         components.add(component);
     }
 

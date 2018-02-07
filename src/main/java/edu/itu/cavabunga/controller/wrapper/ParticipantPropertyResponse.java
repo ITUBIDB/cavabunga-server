@@ -1,16 +1,16 @@
-package edu.itu.cavabunga.core.controller.wrapper;
+package edu.itu.cavabunga.controller.wrapper;
 
-import edu.itu.cavabunga.core.entity.ComponentProperty;
+import edu.itu.cavabunga.core.entity.ParticipantProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentPropertyResponse {
-    public Integer status;
-    public String message;
-    public List<ComponentProperty> data = new ArrayList<ComponentProperty>();
+public class ParticipantPropertyResponse {
+    private Integer status;
+    private String message;
+    private List<ParticipantProperty> data = new ArrayList<ParticipantProperty>();
 
-    public ComponentPropertyResponse(Integer status, String message, List<ComponentProperty> data) {
+    public ParticipantPropertyResponse(Integer status, String message, List<ParticipantProperty> data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -32,11 +32,11 @@ public class ComponentPropertyResponse {
         this.message = message;
     }
 
-    public List<ComponentProperty> getData() {
+    public List<ParticipantProperty> getData() {
         return data;
     }
 
-    public void setData(List<ComponentProperty> data) {
+    public void setData(List<ParticipantProperty> data) {
         this.data = data;
     }
 }

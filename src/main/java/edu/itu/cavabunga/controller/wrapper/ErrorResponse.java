@@ -1,16 +1,13 @@
-package edu.itu.cavabunga.core.controller.wrapper;
+package edu.itu.cavabunga.controller.wrapper;
 
-import edu.itu.cavabunga.core.entity.Component;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class CalendarResponse {
+public class ErrorResponse {
     private Integer status;
     private String message;
-    private List<Component> data = new ArrayList<Component>();
+    private Object data;
 
-    public CalendarResponse(Integer status, String message, List<Component> data) {
+    public ErrorResponse(Integer status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -32,11 +29,14 @@ public class CalendarResponse {
         this.message = message;
     }
 
-    public List<Component> getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(List<Component> data) {
+    public void setData(List data) {
         this.data = data;
+    }
+
+    public ErrorResponse() {
     }
 }

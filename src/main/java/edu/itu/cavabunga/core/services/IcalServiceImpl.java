@@ -89,6 +89,36 @@ public class IcalServiceImpl implements IcalService {
     }
 
     @Override
+    public Long countComponentById(Long componentId){
+        return componentRepository.countComponentById(componentId);
+    }
+
+    @Override
+    public Long countComponentByParentId(Long componentParentId){
+        return componentRepository.countComponentByParentId(componentParentId);
+    }
+
+    @Override
+    public Long countComponentByParentIdAndType(Long parentComponentId, ComponentType componentType){
+        return componentRepository.countComponentByParentIdAndType(parentComponentId, componentType.toString());
+    }
+
+    @Override
+    public Long countComponentByIdAndOwnerAndParentIdAndType(Long componentId, Participant owner, Long parentId, ComponentType componentType){
+        return componentRepository.countComponentByIdAndOwnerAndType(componentId, owner,parentId,componentType.toString());
+    }
+
+    @Override
+    public Long countComponentByOwnerAndType(Participant owner, ComponentType componentType){
+        return componentRepository.countComponentByOwnerAndType(owner, componentType.toString());
+    }
+
+    @Override
+    public Long countComponentByIdAndParticipant(Long componetnId, Participant participant){
+        return componentRepository.countComponentByIdAndOwner(componetnId, participant);
+    }
+
+    @Override
     public void saveComponent(Component component){
         componentRepository.save(component);
     }
@@ -135,6 +165,22 @@ public class IcalServiceImpl implements IcalService {
     public List<Property> getPropertyByComponentAndType(Component component, PropertyType propertyType){
         return propertyRepository.findByComponentAndType(component, propertyType.toString());
     }
+
+    @Override
+    public Long countPropertyById(Long propertyId){
+        return propertyRepository.countPropertiesById(propertyId);
+    }
+
+    @Override
+    public Long countPropertyByIdAndComponentId(Long propertyId, Long parentComponentId){
+        return propertyRepository.countPropertyByIdAndParentId(propertyId, parentComponentId);
+    }
+
+    @Override
+    public Long countPropertyByComponentId(Long parentComponentId){
+        return propertyRepository.countPropertyByParentId(parentComponentId);
+    }
+
 
     @Override
     public List<Property> getAllProperty(){
@@ -192,6 +238,21 @@ public class IcalServiceImpl implements IcalService {
     @Override
     public List<Parameter> getAllParameter(){
         return parameterRepository.findAll();
+    }
+
+    @Override
+    public Long countParameterById(Long parameterId){
+        return parameterRepository.countParametersById(parameterId);
+    }
+
+    @Override
+    public Long countParameterByIdAndPropertyId(Long parameterId, Long parentPropertyId){
+        return parameterRepository.countParameterByIdAndParentId(parameterId,parentPropertyId);
+    }
+
+    @Override
+    public Long countParameterByPropertyId(Long parentPropertyId){
+        return parameterRepository.countParameterByParentId(parentPropertyId);
     }
 
     @Override
