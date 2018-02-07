@@ -3,11 +3,11 @@ package edu.itu.cavabunga.core.repository;
 import edu.itu.cavabunga.core.entity.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public interface ParticipantRepository extends JpaRepository<Participant, String> {
     Participant findByUserName(String name);
 

@@ -3,11 +3,11 @@ package edu.itu.cavabunga.core.repository;
 import edu.itu.cavabunga.core.entity.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public interface PropertyRepository extends JpaRepository<Property, Long> {
     List<Property> findByComponent(edu.itu.cavabunga.core.entity.Component component);
 
