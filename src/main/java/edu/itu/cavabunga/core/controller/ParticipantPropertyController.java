@@ -41,7 +41,7 @@ public class ParticipantPropertyController {
         return new ParticipantPropertyResponse(0,null,result);
     }
 
-    @PostMapping("/{participantUuid")
+    @PostMapping("/{participantUuid}")
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipantPropertyResponse saveParticipantProperty(@PathVariable(value = "participantUuid") String uuid, @RequestBody ParticipantProperty participantProperty){
         Participant checkParticipant = participantService.getParticipantByUuid(uuid);
@@ -53,7 +53,7 @@ public class ParticipantPropertyController {
         return new ParticipantPropertyResponse(0,"basari ile kaydedildi",null);
     }
 
-    @PutMapping("/{participantUuid}")
+    @DeleteMapping("/{participantUuid}")
     @ResponseStatus(HttpStatus.OK)
     public ParticipantPropertyResponse deleteParticipantProperty(@PathVariable(value = "participantUuid") String uuid){
         Participant checkParticipant = participantService.getParticipantByUuid(uuid);
