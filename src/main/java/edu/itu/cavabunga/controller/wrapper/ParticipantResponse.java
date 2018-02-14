@@ -1,13 +1,16 @@
-package edu.itu.cavabunga.core.controller.wrapper;
+package edu.itu.cavabunga.controller.wrapper;
 
+import edu.itu.cavabunga.core.entity.Participant;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ErrorResponse {
+public class ParticipantResponse {
     private Integer status;
     private String message;
-    private Object data;
+    private List<Participant> data = new ArrayList<Participant>();
 
-    public ErrorResponse(Integer status, String message, Object data) {
+    public ParticipantResponse(Integer status, String message, List<Participant> data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -29,14 +32,11 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public Object getData() {
+    public List<Participant> getData() {
         return data;
     }
 
-    public void setData(List data) {
+    public void setData(List<Participant> data) {
         this.data = data;
-    }
-
-    public ErrorResponse() {
     }
 }

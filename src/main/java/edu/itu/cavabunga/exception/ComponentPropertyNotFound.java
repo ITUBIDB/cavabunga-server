@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.core.exception;
+package edu.itu.cavabunga.exception;
 
 public class ComponentPropertyNotFound extends RuntimeException {
     public ComponentPropertyNotFound(){

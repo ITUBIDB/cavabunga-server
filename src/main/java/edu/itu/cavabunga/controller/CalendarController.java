@@ -1,13 +1,13 @@
-package edu.itu.cavabunga.core.controller;
+package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.core.controller.wrapper.CalendarResponse;
+import edu.itu.cavabunga.controller.wrapper.CalendarResponse;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
 import edu.itu.cavabunga.core.entity.property.PropertyType;
-import edu.itu.cavabunga.core.exception.IcalNotFound;
-import edu.itu.cavabunga.core.exception.ParticipantNotFound;
+import edu.itu.cavabunga.exception.IcalNotFound;
+import edu.itu.cavabunga.exception.ParticipantNotFound;
 import edu.itu.cavabunga.core.services.IcalService;
 import edu.itu.cavabunga.core.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;

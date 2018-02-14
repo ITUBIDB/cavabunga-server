@@ -1,10 +1,10 @@
-package edu.itu.cavabunga.core.controller;
+package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.core.controller.wrapper.ComponentPropertyResponse;
+import edu.itu.cavabunga.controller.wrapper.ComponentPropertyResponse;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.ComponentProperty;
-import edu.itu.cavabunga.core.exception.ComponentPropertyNotFound;
-import edu.itu.cavabunga.core.exception.IcalNotFound;
+import edu.itu.cavabunga.exception.ComponentPropertyNotFound;
+import edu.itu.cavabunga.exception.IcalNotFound;
 import edu.itu.cavabunga.core.services.ComponentPropertyService;
 import edu.itu.cavabunga.core.services.IcalService;
 import org.springframework.beans.factory.annotation.Autowired;

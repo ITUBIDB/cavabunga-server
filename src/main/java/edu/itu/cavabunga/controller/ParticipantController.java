@@ -1,9 +1,9 @@
-package edu.itu.cavabunga.core.controller;
+package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.core.controller.wrapper.ParticipantResponse;
+import edu.itu.cavabunga.controller.wrapper.ParticipantResponse;
 import edu.itu.cavabunga.core.entity.Participant;
-import edu.itu.cavabunga.core.exception.ParticipantConflict;
-import edu.itu.cavabunga.core.exception.ParticipantNotFound;
+import edu.itu.cavabunga.exception.ParticipantConflict;
+import edu.itu.cavabunga.exception.ParticipantNotFound;
 import edu.itu.cavabunga.core.services.IcalService;
 import edu.itu.cavabunga.core.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;

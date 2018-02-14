@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.core.controller.wrapper;
+package edu.itu.cavabunga.controller.wrapper;
 
 import edu.itu.cavabunga.core.entity.Authentication;
 

@@ -1,10 +1,10 @@
-package edu.itu.cavabunga.core.controller;
+package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.core.controller.wrapper.ParticipantPropertyResponse;
+import edu.itu.cavabunga.controller.wrapper.ParticipantPropertyResponse;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.ParticipantProperty;
-import edu.itu.cavabunga.core.exception.ParticipantNotFound;
-import edu.itu.cavabunga.core.exception.ParticipantPropertyNotFound;
+import edu.itu.cavabunga.exception.ParticipantNotFound;
+import edu.itu.cavabunga.exception.ParticipantPropertyNotFound;
 import edu.itu.cavabunga.core.services.ParticipantPropertyService;
 import edu.itu.cavabunga.core.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
