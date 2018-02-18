@@ -4,9 +4,9 @@ import edu.itu.cavabunga.core.entity.ComponentProperty;
 import edu.itu.cavabunga.core.factory.ComponentPropertyFactory;
 import edu.itu.cavabunga.core.repository.ComponentPropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ComponentPropertyServiceImpl implements ComponentPropertyService {
     @Autowired
     private ComponentPropertyFactory componentPropertyFactory;

@@ -5,9 +5,9 @@ import edu.itu.cavabunga.core.entity.ParticipantProperty;
 import edu.itu.cavabunga.core.factory.ParticipantPropertyFactorty;
 import edu.itu.cavabunga.core.repository.ParticipantPropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ParticipantPropertyServiceImpl implements ParticipantPropertyService {
     @Autowired
     private ParticipantPropertyFactorty participantPropertyFactorty;
