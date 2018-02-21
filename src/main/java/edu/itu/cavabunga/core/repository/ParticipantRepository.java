@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ParticipantRepository extends JpaRepository<Participant, String> {
+public interface ParticipantRepository extends JpaRepository<Participant, Long> {
     Participant findByUserName(String name);
-
-    Participant findByUuid(String uuid);
 
     @Query("select a from Participant a where type=?1")
     List<Participant> findByType(String type);
+
+    void deleteByUserName(String userName);
+
 }

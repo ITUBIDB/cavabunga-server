@@ -36,8 +36,8 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Participant getParticipantByUuid(String uuid){
-        return participantRepository.findByUuid(uuid);
+    public Participant getParticipantById(Long id){
+        return participantRepository.findOne(id);
     }
 
     @Override
@@ -48,5 +48,15 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public List<Participant> getAllParticipantByType(ParticipantType participantType){
         return participantRepository.findByType(participantType.toString());
+    }
+
+    @Override
+    public void deleteParticipantById(Long id){
+        participantRepository.delete(id);
+    }
+
+    @Override
+    public void deleteParticipantByUserName(String userName){
+        participantRepository.deleteByUserName(userName);
     }
 }

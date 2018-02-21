@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.itu.cavabunga.core.entity.participant.Group;
 import edu.itu.cavabunga.core.entity.participant.User;
 import org.hibernate.annotations.DiscriminatorOptions;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -29,10 +28,8 @@ import java.util.List;
 })
 public abstract class Participant {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "uuid")
-    private String uuid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "user_name")
     private String userName;
@@ -57,12 +54,12 @@ public abstract class Participant {
         this.components = components;
     }
 
-    public String getUuid() {
-        return uuid;
+    public Long getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {

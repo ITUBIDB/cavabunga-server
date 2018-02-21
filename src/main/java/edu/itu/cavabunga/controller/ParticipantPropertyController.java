@@ -23,17 +23,17 @@ public class ParticipantPropertyController {
     @Autowired
     private ParticipantService participantService;
 
-    @GetMapping("/{participantUuid}")
+    @GetMapping("/{participantId}")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantPropertyResponse getParticipantProperty(@PathVariable(value = "participantUuid") String uuid){
-        Participant checkParticipant = participantService.getParticipantByUuid(uuid);
+    public ParticipantPropertyResponse getParticipantProperty(@PathVariable(value = "participantId") Long id){
+        Participant checkParticipant = participantService.getParticipantById(id);
         if(checkParticipant == null){
-            throw new ParticipantNotFound(uuid + "ile eslestirilen bir kullanici bulunamdi");
+            throw new ParticipantNotFound(id + "ile eslestirilen bir kullanici bulunamdi");
         }
 
         ParticipantProperty checkParticipantProperty = participantPropertyService.getParticipantPropertyByParticipant(checkParticipant);
         if(checkParticipantProperty == null){
-            throw new ParticipantPropertyNotFound(uuid + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
+            throw new ParticipantPropertyNotFound(id + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
         }
 
         List<ParticipantProperty> result = new ArrayList<ParticipantProperty>();
@@ -41,29 +41,29 @@ public class ParticipantPropertyController {
         return new ParticipantPropertyResponse(0,null,result);
     }
 
-    @PostMapping("/{participantUuid}")
+    @PostMapping("/{participantId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipantPropertyResponse saveParticipantProperty(@PathVariable(value = "participantUuid") String uuid, @RequestBody ParticipantProperty participantProperty){
-        Participant checkParticipant = participantService.getParticipantByUuid(uuid);
+    public ParticipantPropertyResponse saveParticipantProperty(@PathVariable(value = "participantId") Long id, @RequestBody ParticipantProperty participantProperty){
+        Participant checkParticipant = participantService.getParticipantById(id);
         if(checkParticipant == null){
-            throw new ParticipantNotFound(uuid + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
+            throw new ParticipantNotFound(id + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
         }
 
         participantPropertyService.saveParticipantProperty(participantProperty);
         return new ParticipantPropertyResponse(0,"basari ile kaydedildi",null);
     }
 
-    @DeleteMapping("/{participantUuid}")
+    @DeleteMapping("/{participantId}")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantPropertyResponse deleteParticipantProperty(@PathVariable(value = "participantUuid") String uuid){
-        Participant checkParticipant = participantService.getParticipantByUuid(uuid);
+    public ParticipantPropertyResponse deleteParticipantProperty(@PathVariable(value = "participantId") Long id){
+        Participant checkParticipant = participantService.getParticipantById(id);
         if(checkParticipant == null){
-            throw new ParticipantNotFound(uuid + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
+            throw new ParticipantNotFound(id + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
         }
 
         ParticipantProperty checkParticipantProperty = participantPropertyService.getParticipantPropertyByParticipant(checkParticipant);
         if(checkParticipantProperty == null){
-            throw new ParticipantPropertyNotFound(uuid + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
+            throw new ParticipantPropertyNotFound(id + "ile eslestirilmis kullanici icin bir ozellik bulunamadi");
         }
 
         participantPropertyService.deleteParticipantProperty(checkParticipantProperty);

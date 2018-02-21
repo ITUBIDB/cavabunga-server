@@ -6,7 +6,7 @@ import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
 import edu.itu.cavabunga.core.entity.property.PropertyType;
-import edu.itu.cavabunga.exception.IcalNotFound;
+import edu.itu.cavabunga.exception.ComponentNotFound;
 import edu.itu.cavabunga.exception.ParticipantNotFound;
 import edu.itu.cavabunga.core.services.IcalService;
 import edu.itu.cavabunga.core.services.ParticipantService;
@@ -38,13 +38,13 @@ public class CalendarController {
         return new CalendarResponse(0,"takvim basari ile kaydedildi", null);
     }
 
-    
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     CalendarResponse getAllCalendars(){
         List<Component> calendars = icalService.getAllComponentByType(ComponentType.Calendar);
         if(calendars.isEmpty()){
-            throw new IcalNotFound("sistemde kayıtlı takvim yok");
+            throw new ComponentNotFound("sistemde kayıtlı takvim yok");
         }
 
         return new CalendarResponse(0,null, calendars);
@@ -60,7 +60,7 @@ public class CalendarController {
 
         List<Component> calendar = icalService.getComponentByParticipantAndType(participant, ComponentType.Calendar);
         if(calendar.isEmpty()){
-            throw new IcalNotFound(userName + " icin takvim bulunamadi");
+            throw new ComponentNotFound(userName + " icin takvim bulunamadi");
         }
 
         return new CalendarResponse(0,null,calendar);
@@ -71,7 +71,7 @@ public class CalendarController {
     CalendarResponse deleteCalendar(@PathVariable("calendarId") Long id){
         Component calendar = icalService.getComponentById(id);
         if(calendar == null){
-            throw new IcalNotFound(id + " ile bir takvim bulunamadı");
+            throw new ComponentNotFound(id + " ile bir takvim bulunamadı");
         }
 
         icalService.deleteComponent(calendar);
@@ -83,7 +83,7 @@ public class CalendarController {
     CalendarResponse updateCalendar(@RequestBody Component calendar, @PathVariable("calendarId") Long id){
         Component checkCalendar = icalService.getComponentById(id);
         if(checkCalendar == null){
-            throw new IcalNotFound(id + " ile bir takvim bulunamadı.");
+            throw new ComponentNotFound(id + " ile bir takvim bulunamadı.");
         }
 
         calendar.setId(id);
