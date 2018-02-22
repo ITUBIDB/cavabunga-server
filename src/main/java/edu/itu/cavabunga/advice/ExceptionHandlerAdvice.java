@@ -15,7 +15,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(ComponentNotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleIcalNotFound(ComponentNotFound e){
-        return new ErrorResponse(1,e.getMessage(), null);
+        return new ErrorResponse(e.getErrorCode(),e.getMessage(), null);
     }
 
     @ExceptionHandler(ParticipantNotFound.class)

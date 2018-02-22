@@ -1,24 +1,22 @@
 package edu.itu.cavabunga.exception;
 
-public class ParticipantNotFound extends RuntimeException {
-    public ParticipantNotFound(){
+public class ParameterNotFound extends RuntimeException {
+    public ParameterNotFound(){
 
     }
 
-    public ParticipantNotFound(String message){
+    public ParameterNotFound(String message){
         super(message);
     }
 
-    public ParticipantNotFound(Throwable cause){
+    public ParameterNotFound(Throwable cause){
         super(cause);
     }
 
-    public ParticipantNotFound(Integer code, String message){
+    public ParameterNotFound(Integer code, String message){
         super(message);
         this.errorCode = code;
     }
-
-    private Integer errorCode;
 
     public Integer getErrorCode() {
         return errorCode;
@@ -27,4 +25,7 @@ public class ParticipantNotFound extends RuntimeException {
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
     }
+
+    private Integer errorCode;
+
 }

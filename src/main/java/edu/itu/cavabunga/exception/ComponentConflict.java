@@ -1,19 +1,19 @@
 package edu.itu.cavabunga.exception;
 
-public class ParticipantNotFound extends RuntimeException {
-    public ParticipantNotFound(){
+public class ComponentConflict extends RuntimeException {
+    public ComponentConflict(){
 
     }
 
-    public ParticipantNotFound(String message){
+    public ComponentConflict(String message){
         super(message);
     }
 
-    public ParticipantNotFound(Throwable cause){
+    public ComponentConflict(Throwable cause){
         super(cause);
     }
 
-    public ParticipantNotFound(Integer code, String message){
+    public ComponentConflict(Integer code, String message){
         super(message);
         this.errorCode = code;
     }
