@@ -60,6 +60,46 @@ public class CalendarController {
         return componentResponse.createComponentResponseForSingle(0,"delete", null);
     }
 
+    @GetMapping("/{user_key}/calendar/{calendar_id}/property")
+    @ResponseStatus(HttpStatus.OK)
+    public PropertyResponse getParticipantCalendarProperties(@PathVariable(value = "user_key") String userName, @PathVariable(value = "calendar_id")Long id){
+        return propertyResponse.createPropertyResponseForList(0,null,calendarManagerService.getPropertyForComponent(id));
+    }
+
+    @GetMapping("/{user_key}/calendar/{calendar_id}/property/{property_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PropertyResponse getParticipantCalendarProperty(@PathVariable(value = "user_key") String userName,
+                                                             @PathVariable(value = "calendar_id")Long id,
+                                                             @PathVariable(value = "property_id") Long propertyId){
+        return propertyResponse.createPropertyResponseForSingle(0,null,calendarManagerService.getProppertyById(propertyId));
+    }
+
+    @PostMapping("/{user_key}/calendar/{calendar_id}/property")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PropertyResponse newParticipantCalendarProperty(@PathVariable(value = "user_key") String userName, @PathVariable(value = "calendar_id") Long id, @RequestBody Property property){
+        calendarManagerService.addProperty(property, userName, id);
+        return propertyResponse.createPropertyResponseForSingle(0,"create", null);
+    }
+
+    @PutMapping("/{user_key}/calendar/{calendar_id}/property/{property_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PropertyResponse updateParticipantCalendarProperty(@PathVariable(value = "user_key") String userName,
+                                                              @PathVariable(value = "calendar_id") Long id,
+                                                              @PathVariable(value = "property_id") Long propertyId,
+                                                              @RequestBody Property property){
+        calendarManagerService.updateProperty(propertyId,property);
+        return propertyResponse.createPropertyResponseForSingle(0,"update", null);
+    }
+
+    @PutMapping("/{user_key}/calendar/{calendar_id}/property/{property_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PropertyResponse deleteParticipantCalendarProperty(@PathVariable(value = "user_key") String userName,
+                                                              @PathVariable(value = "calendar_id") Long id,
+                                                              @PathVariable(value = "property_id") Long propertyId){
+        calendarManagerService.deleteProperty(propertyId);
+        return propertyResponse.createPropertyResponseForSingle(0,"delete", null);
+    }
+
     @GetMapping("/{user_key}/calendar/{calendar_id}/{component_type}")
     @ResponseStatus(HttpStatus.OK)
     public ComponentResponse getParticipantCalendarComponents(@PathVariable(value = "user_key") String userName,
@@ -86,9 +126,20 @@ public class CalendarController {
         return componentResponse.createComponentResponseForSingle(0,null,calendarManagerService.getComponentById(componentId));
     }
 
+    @PostMapping("/{user_key}/calendar/{calendar_id}/{component_type}/{component_id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ComponentResponse newParticipantCalendarSubComponent(@PathVariable(value = "user_key") String userName,
+                                                                @PathVariable(value = "calendar_id") Long calendarId,
+                                                                @PathVariable(value = "component_type") String componentType,
+                                                                @PathVariable(value = "component_id") Long componentId,
+                                                                @RequestBody Component component){
+        calendarManagerService.addComponent(component,userName,componentId);
+        return componentResponse.createComponentResponseForSingle(0,"sub component added",null);
+    }
+
     @PutMapping("/{user_key}/calendar/{calendar_id}/{component_type}/{component_id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ComponentResponse newParticipantCalendarComponent(@PathVariable(value = "user_key") String userName,
+    public ComponentResponse updateParticipantCalendarComponent(@PathVariable(value = "user_key") String userName,
                                                              @PathVariable(value = "calendar_id") Long calendarId,
                                                              @PathVariable(value = "component_type") String componentType,
                                                              @PathVariable(value = "component_id") Long componentId,
