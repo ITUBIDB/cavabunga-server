@@ -1,16 +1,16 @@
 package edu.itu.cavabunga.controller.wrapper;
 
-import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.entity.Property;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ParticipantResponse {
+public class PropertyResponse {
     private Integer status;
     private String message;
-    private List<Participant> data = new ArrayList<Participant>();
+    private List<Property> data = new ArrayList<Property>();
 
     public Integer getStatus() {
         return status;
@@ -28,34 +28,35 @@ public class ParticipantResponse {
         this.message = message;
     }
 
-    public List<Participant> getData() {
+    public List<Property> getData() {
         return data;
     }
 
-    public void setData(List<Participant> data) {
+    public void setData(List<Property> data) {
         this.data = data;
     }
 
-    public void addData(Participant participant){
-        this.data.add(participant);
+    public void addData(Property property){
+        this.data.add(property);
     }
+
     public void setDataNull(){
         this.data = null;
     }
 
-    public ParticipantResponse createParticipantResponseForList(Integer code, String message, List<Participant> participants){
-        ParticipantResponse result = new ParticipantResponse();
+    public PropertyResponse createPropertyResponseForList(Integer code, String message, List<Property> properties){
+        PropertyResponse result = new PropertyResponse();
         result.setStatus(code);
         result.setMessage(message);
-        result.setData(participants);
+        result.setData(properties);
         return result;
     }
 
-    public ParticipantResponse createParticipantReponseForSingle(Integer code, String message, Participant participant){
-        ParticipantResponse result = new ParticipantResponse();
+    public PropertyResponse createPropertyResponseForSingle(Integer code, String message, Property property){
+        PropertyResponse result = new PropertyResponse();
         result.setStatus(code);
         result.setMessage(message);
-        result.addData(participant);
+        result.addData(property);
         return result;
     }
 

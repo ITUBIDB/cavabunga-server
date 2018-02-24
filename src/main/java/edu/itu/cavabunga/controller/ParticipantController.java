@@ -1,83 +1,54 @@
 package edu.itu.cavabunga.controller;
 
+import edu.itu.cavabunga.business.CalendarManagerService;
 import edu.itu.cavabunga.controller.wrapper.ParticipantResponse;
 import edu.itu.cavabunga.core.entity.Participant;
-import edu.itu.cavabunga.exception.ParticipantConflict;
-import edu.itu.cavabunga.exception.ParticipantNotFound;
-import edu.itu.cavabunga.core.services.IcalService;
-import edu.itu.cavabunga.core.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping(path = "/participant")
 public class ParticipantController {
-    @Autowired
-    IcalService icalService;
+   @Autowired
+   private CalendarManagerService calendarManagerService;
 
-    @Autowired
-    ParticipantService participantService;
+   @Autowired
+   private ParticipantResponse participantResponse;
+
+   @GetMapping
+   @ResponseStatus(HttpStatus.OK)
+   public ParticipantResponse getAllParticipants(){
+       return participantResponse.createParticipantResponseForList(0,null, calendarManagerService.getAllParticipants());
+   }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ParticipantResponse saveParticipant(@RequestBody Participant participant){
-        Participant checkParticipant = participantService.getParticipantByUserName(participant.getUserName());
-        if(checkParticipant != null){
-            throw new ParticipantConflict(participant.getUserName() + " kullanici adi ile bir kullanici mevcut");
-        }
-
-        participantService.saveParticipant(participant);
-        return new ParticipantResponse(0,"kullanici olusturuldu.", null);
+    public ParticipantResponse newParticipant(@RequestBody Participant participant){
+        calendarManagerService.addParticipant(participant);
+        return participantResponse.createParticipantReponseForSingle(0,"created", null);
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    ParticipantResponse getAllParticipants(){
-        List<Participant> participants = participantService.getAllParticipant();
-        if(participants.isEmpty()){
-            throw new ParticipantNotFound("sistemde kayıtlı kullanici yok");
-        }
+   @GetMapping("/{user_key}")
+   @ResponseStatus(HttpStatus.OK)
+   public ParticipantResponse getParticipant(@PathVariable(value = "user_key") String userKey){
+       return participantResponse.createParticipantReponseForSingle(0,null,calendarManagerService.getParticipantByKey(userKey));
+   }
 
-        return new ParticipantResponse(0,null,participants);
-    }
+   @DeleteMapping("/{user_id}")
+   @ResponseStatus(HttpStatus.OK)
+   public ParticipantResponse deleteParticipant(@PathVariable(value = "user_id") Long id){
+       calendarManagerService.deleteParticipantById(id);
+       return participantResponse.createParticipantReponseForSingle(0,"deleted", null);
+   }
 
-    @GetMapping("/{userName}")
-    @ResponseStatus(HttpStatus.OK)
-    ParticipantResponse getParticipant(@PathVariable("userName") String userName){
-        Participant participant = participantService.getParticipantByUserName(userName);
-        if(participant == null){
-            throw new ParticipantNotFound("kullanici bulunamdi " + userName);
-        }
+   @PutMapping("/{user_id}")
+   @ResponseStatus(HttpStatus.OK)
+   public ParticipantResponse updateParticipant(@PathVariable(value = "user_id") Long id, @RequestBody Participant participant){
+       calendarManagerService.updateParticipant(id, participant);
+       return participantResponse.createParticipantReponseForSingle(0,"update", null);
+   }
 
-        List<Participant> result = new ArrayList<>();
-        result.add(participant);
-        return new ParticipantResponse(0,null, result);
-    }
 
-    @PutMapping("/{userName}")
-    @ResponseStatus(HttpStatus.OK)
-    ParticipantResponse updateParticipant(@RequestBody Participant participant, @PathVariable("userName") String userName){
-        Participant checkParticipant = participantService.getParticipantByUserName(userName);
-        if(checkParticipant == null){
-            throw new ParticipantNotFound(userName + " ile daha önceden oluşturulmuş bir kullanıcı mevcut degil");
-        }
 
-        participantService.saveParticipant(participant);
-        return new ParticipantResponse(0,userName + " kullanici basari ile guncellendi", null);
-    }
-
-    @DeleteMapping("/{userName}")
-    @ResponseStatus(HttpStatus.OK)
-    ParticipantResponse deleteParticipant(@PathVariable("userName") String userName){
-        Participant participant = participantService.getParticipantByUserName(userName);
-        if(participant == null){
-            throw new ParticipantNotFound(userName + " ile oluşturulmus bir kullanici bulunamadi");
-        }
-
-        return new ParticipantResponse(0,"kullanici basari ile silindi", null);
-    }
 }

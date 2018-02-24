@@ -1,16 +1,16 @@
 package edu.itu.cavabunga.controller.wrapper;
 
-import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.entity.Parameter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ParticipantResponse {
+public class ParameterResponse {
     private Integer status;
     private String message;
-    private List<Participant> data = new ArrayList<Participant>();
+    private List<Parameter> data = new ArrayList<Parameter>();
 
     public Integer getStatus() {
         return status;
@@ -28,35 +28,35 @@ public class ParticipantResponse {
         this.message = message;
     }
 
-    public List<Participant> getData() {
+    public List<Parameter> getData() {
         return data;
     }
 
-    public void setData(List<Participant> data) {
+    public void setData(List<Parameter> data) {
         this.data = data;
     }
 
-    public void addData(Participant participant){
-        this.data.add(participant);
+    public void addData(Parameter parameter){
+        this.data.add(parameter);
     }
+
     public void setDataNull(){
         this.data = null;
     }
 
-    public ParticipantResponse createParticipantResponseForList(Integer code, String message, List<Participant> participants){
-        ParticipantResponse result = new ParticipantResponse();
+    public ParameterResponse createParameterResponseForList(Integer code, String message, List<Parameter> parameters){
+        ParameterResponse result = new ParameterResponse();
         result.setStatus(code);
         result.setMessage(message);
-        result.setData(participants);
+        result.setData(parameters);
         return result;
     }
 
-    public ParticipantResponse createParticipantReponseForSingle(Integer code, String message, Participant participant){
-        ParticipantResponse result = new ParticipantResponse();
+    public ParameterResponse createParameterReponseForSingle(Integer code, String message, Parameter parameter){
+        ParameterResponse result = new ParameterResponse();
         result.setStatus(code);
         result.setMessage(message);
-        result.addData(participant);
+        result.addData(parameter);
         return result;
     }
-
 }
