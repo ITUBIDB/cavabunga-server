@@ -68,7 +68,7 @@ public interface CalendarManagerService {
 
     Property createPropertyForComponent(PropertyType propertyType, Long componentId);
 
-    Property getProppertyById(Long propertyId);
+    Property getPropertyById(Long propertyId);
 
     List<Property> getPropertyForComponent(Long componentId);
 
@@ -105,4 +105,27 @@ public interface CalendarManagerService {
     void updateParameter(Parameter parameter, Long parameterId);
 
     void saveParameter(Parameter parameter);
+
+
+    boolean checkPropertyExistsById(Long propertyId);
+
+    boolean checkComponentExistsById(Long componentId);
+
+    boolean checkParticipantExistsByUserName(String userName);
+
+    boolean checkParticipantExistsById(Long participantId);
+
+    boolean checkComponentChildExistsByParentId(Long componentParentId);
+
+    boolean checkComponentExistsByParentIdAndType(Long parentComponentId, ComponentType componentType);
+
+    boolean checkComponentExistsByParticipantAndType(Participant participant, ComponentType componentType);
+
+    boolean checkComponentExistsByIdAndParticipant(Long componentId, Participant participant);
+
+    boolean checkPropertyExistsByComponentId(Long componentId);
+
+    boolean checkParameterExistsById(Long parameterId);
+
+    boolean checkParameterExistsByParentId(Long parentPropertyId);
 }

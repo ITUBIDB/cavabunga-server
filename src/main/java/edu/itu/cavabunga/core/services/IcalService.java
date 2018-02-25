@@ -29,6 +29,10 @@ public interface IcalService {
 
     List<Component> getAllComponent();
 
+    Long countComponentById(Long componentId);
+
+    Long countComponentByIdAndOwnerAndParentIdAndType(Long componentId, Participant owner, Long parentId, ComponentType componentType);
+
     void saveComponent(Component component);
 
     void deleteComponentById(Long id);
@@ -74,4 +78,24 @@ public interface IcalService {
     void deleteParameterById(Long id);
 
     void deleteParameter(Parameter parameter);
+
+    Long countParameterByIdAndPropertyId(Long parameterId, Long parentPropertyId);
+
+    Long countParameterById(Long parameterId);
+
+    Long countPropertyByIdAndComponentId(Long propertyId, Long parentComponentId);
+
+    Long countPropertyById(Long propertyId);
+
+    Long countComponentByParentId(Long componentParentId);
+
+    Long countComponentByParentIdAndType(Long parentComponentId, ComponentType componentType);
+
+    Long countComponentByOwnerAndType(Participant owner, ComponentType componentType);
+
+    Long countComponentByIdAndParticipant(Long componetnId, Participant participant);
+
+    Long countPropertyByComponentId(Long parentComponentId);
+
+    Long countParameterByPropertyId(Long parentPropertyId);
 }

@@ -34,8 +34,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
              throw new  ParticipantConflict(10001,"New participant cannot have id field, please use update methods");
          }
 
-         Participant checkParticipant = participantService.getParticipantByUserName(participant.getUserName());
-         if(checkParticipant == null){
+         //Participant checkParticipant = participantService.getParticipantByUserName(participant.getUserName());
+         if(checkParticipantExistsByUserName(participant.getUserName())){
              throw new  ParameterConflict(10002, "Participant with username: " + participant.getUserName() + " is already exists");
          }
 
@@ -44,8 +44,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public Participant createParticipant(String userName, ParticipantType participantType){
-        Participant checkParticipant = participantService.getParticipantByUserName(userName);
-        if(checkParticipant != null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(userName);
+        if(checkParticipantExistsByUserName(userName)){
             throw new ParticipantConflict(1001, "Participant with username: " + userName + " is already exists");
         }
 
@@ -54,22 +54,21 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public Participant getParticipantByUserName(String userName){
-        Participant checkParticipant = participantService.getParticipantByUserName(userName);
-        if(checkParticipant == null){
+        if(!checkParticipantExistsByUserName(userName)){
             throw new ParticipantNotFound(1002,"Participant with username: " + userName + " couldn't found");
         }
 
-        return checkParticipant;
+        return participantService.getParticipantByUserName(userName);
     }
 
     @Override
     public Participant getParticipantById(Long id){
-        Participant checkParticipant = participantService.getParticipantById(id);
-        if(checkParticipant == null){
+        //Participant checkParticipant =
+        if(!checkComponentExistsById(id)){
             throw new ParticipantNotFound(1003, "Participant with id: " + id + " couldn't found");
         }
 
-        return checkParticipant;
+        return participantService.getParticipantById(id);
     }
 
     @Override
@@ -110,8 +109,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void deleteParticipantById(Long id){
-        Participant checkParticipant = participantService.getParticipantById(id);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantById(id);
+        if(!checkParticipantExistsById(id)){
             throw new ParticipantNotFound(1006,"Participant with id: " + id + " couldn't found");
         }
 
@@ -120,8 +119,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void deleteParticipantByUserName(String userName){
-        Participant checkParticipant = participantService.getParticipantByUserName(userName);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(userName);
+        if(!checkParticipantExistsByUserName(userName)){
             throw new ParticipantNotFound(1007,"Participant with username: " + userName + " couldn't found");
         }
 
@@ -130,8 +129,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void updateParticipant(Long id, Participant participant){
-        Participant checkParticipant = participantService.getParticipantById(id);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantById(id);
+        if(!checkParticipantExistsById(id)){
             throw new ParticipantNotFound(1008,"Participant with id: " + id + " couldn't found");
         }
 
@@ -139,8 +138,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
             throw new ParticipantConflict(1009, "Participant data has id: " + participant.getId() + " but update id: " + id);
         }
 
-        checkParticipant.setId(id);
-        participantService.saveParticipant(checkParticipant);
+        participant.setId(id);
+        participantService.saveParticipant(participant);
     }
 
     @Override
@@ -154,18 +153,22 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
             throw new ComponentConflict(20001, "Owner of a component can't be empty");
         }
 
-        Participant checkParticipant = participantService.getParticipantByUserName(owner);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(owner);
+        if(!checkParticipantExistsByUserName(owner)){
             throw new ParticipantNotFound(20002,"Participant with username: " + owner + " couldn't found");
         }
 
-        Component checkComponent = icalService.getComponentById(parentComponentId);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(parentComponentId);
+        if(!checkComponentExistsById(parentComponentId) && parentComponentId != null){
             throw new ComponentNotFound(20003,"Parent component with id: " + parentComponentId + " couldn't found");
         }
 
-        component.setOwner(checkParticipant);
-        component.setParent(checkComponent);
+        component.setOwner(participantService.getParticipantByUserName(owner));
+        if(parentComponentId == null){
+            component.setParent(null);
+        }else{
+            component.setParent(icalService.getComponentById(parentComponentId));
+        }
         icalService.saveComponent(component);
     }
 
@@ -176,54 +179,53 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public Component createComponentForParticipant(ComponentType componentType, String userName){
-        Participant checkParticipant = participantService.getParticipantByUserName(userName);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(userName);
+        if(!checkParticipantExistsByUserName(userName)){
             throw new ParticipantNotFound(1010,"Participant with userName: " + userName + " couldn't found");
         }
 
-        Component component = icalService.createComponentForParticipant(componentType, checkParticipant);
-        return component;
+        return icalService.createComponentForParticipant(componentType, participantService.getParticipantByUserName(userName));
     }
 
     @Override
     public Component getComponentById(Long id){
-        Component checkComponent = icalService.getComponentById(id);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(id);
+        if(!checkComponentExistsById(id)){
             throw new ComponentNotFound(1011,"Component with id: " + id + " couldn't found");
         }
 
-        return checkComponent;
+        return icalService.getComponentById(id);
     }
 
     @Override
     public List<Component> getComponentsByParent(Long parentComponentId){
-        Component checkParent = icalService.getComponentById(parentComponentId);
-        if(checkParent == null){
+        //Component checkParent = icalService.getComponentById(parentComponentId);
+        if(!checkComponentExistsById(parentComponentId)){
             throw new ComponentNotFound(1012,"Parent component with id: " + parentComponentId + " couldn't found");
         }
 
 
-        List<Component> checkComponents = icalService.getComponentByParent(checkParent);
-        if(checkComponents.isEmpty()){
+        //List<Component> checkComponents = icalService.getComponentByParent(checkParent);
+        if(!checkComponentChildExistsByParentId(parentComponentId)){
             throw new ComponentNotFound(1013,"No child component found for parent id: " + parentComponentId);
         }
 
-        return checkComponents;
+        return icalService.getComponentByParent(icalService.getComponentById(parentComponentId));
     }
 
     @Override
     public List<Component> getComponentsByParentAndType(Long parentComponentId, ComponentType componentType){
-        Component checkParent = icalService.getComponentById(parentComponentId);
-        if(checkParent == null){
+        //Component checkParent = icalService.getComponentById(parentComponentId);
+        if(!checkComponentExistsById(parentComponentId)){
             throw new ComponentNotFound(1014,"Parent component with id: " + parentComponentId + " couldn't found");
         }
 
-        List<Component> checkComponents = icalService.getComponentByParentAndType(checkParent, componentType);
-        if(checkComponents.isEmpty()){
-            throw new ComponentNotFound(1015,"No child component found for parent id: " + checkParent.getId() + " and type of " + componentType.toString());
+        //List<Component> checkComponents = icalService.getComponentByParentAndType(checkParent, componentType);
+        if(!checkComponentExistsByParentIdAndType(parentComponentId,componentType)){
+            throw new ComponentNotFound(1015,"No child component found for parent id: " + parentComponentId + " and type of " + componentType.toString());
         }
 
-        return checkComponents;
+        return icalService.getComponentByParentAndType(icalService.getComponentById(parentComponentId), componentType);
     }
 
     @Override
@@ -243,17 +245,17 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public List<Component> getComponentsByParticipantAndType(String userName, ComponentType componentType){
-        Participant checkParticipant = participantService.getParticipantByUserName(userName);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(userName);
+        if(!checkParticipantExistsByUserName(userName)){
             throw new ParticipantNotFound(1018,"Participant with username: " + userName + " couldn't found");
         }
 
-        List<Component> checkComponents = icalService.getComponentByParticipantAndType(checkParticipant, componentType);
-        if(checkComponents.isEmpty()){
+        //List<Component> checkComponents = icalService.getComponentByParticipantAndType(checkParticipant, componentType);
+        if(!checkComponentExistsByParticipantAndType(participantService.getParticipantByUserName(userName), componentType)){
             throw new ComponentNotFound(1019,"No component found in type of: " + componentType.toString() + " for participant username: " + userName);
         }
 
-        return checkComponents;
+        return icalService.getComponentByParticipantAndType(participantService.getParticipantByUserName(userName), componentType);
     }
 
     @Override
@@ -278,8 +280,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void deleteComponentById(Long id){
-        Component checkComponent = icalService.getComponentById(id);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(id);
+        if(!checkComponentExistsById(id)){
             throw new ComponentNotFound(1022, "Component with id: " + id + " couldn't found");
         }
 
@@ -288,8 +290,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void updateComponent(Long id, Component component){
-        Component checkComponent = icalService.getComponentById(id);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(id);
+        if(!checkComponentExistsById(id)){
             throw new ComponentNotFound(1023,"Component with id: " + id + " couldn't found");
         }
 
@@ -297,8 +299,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
             throw new ComponentConflict(1024, "Participant data has id: " + component.getId() + " but update id: " + id);
         }
 
-        checkComponent.setId(id);
-        saveComponent(checkComponent);
+        component.setId(id);
+        saveComponent(component);
     }
 
     @Override
@@ -308,17 +310,17 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void addProperty(Property property, String owner, Long parentComponentId){
-        Participant checkParticipant = participantService.getParticipantByUserName(owner);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(owner);
+        if(!checkParticipantExistsByUserName(owner)){
             throw new ParticipantNotFound(30001,"Participant with username: " + owner + " couldn't found");
         }
 
-        Component checkComponent = icalService.getComponentById(parentComponentId);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(parentComponentId);
+        if(!checkComponentExistsById(parentComponentId)){
             throw new ComponentNotFound(30002,"Component with parent id: " + parentComponentId + " couldn't found");
         }
 
-        if(checkComponent.getOwner().getUserName() != owner){
+        if(!checkComponentExistsByIdAndParticipant(parentComponentId, participantService.getParticipantByUserName(owner))){
             throw new ComponentConflict(30003,"Parent component owner is different from what send: " + owner);
         }
 
@@ -326,13 +328,12 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
             throw new PropertyConflict(30004,"New property cannot have id field, please use update methods");
         }
 
-        property.setComponent(checkComponent);
+        property.setComponent(icalService.getComponentById(parentComponentId));
         icalService.saveProperty(property);
     }
 
     @Override
     public void createProperty(Property property){
-
     }
 
     @Override
@@ -342,38 +343,37 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public Property createPropertyForComponent(PropertyType propertyType, Long componentId){
-        Component checkComponent = icalService.getComponentById(componentId);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(componentId);
+        if(!checkComponentExistsById(componentId)){
             throw new ComponentNotFound(1025,"Component with id:" + componentId + " couldn't found");
         }
 
-        Property property = icalService.createPropertyForComponent(propertyType, checkComponent);
-        return property;
+        return  icalService.createPropertyForComponent(propertyType, icalService.getComponentById(componentId));
     }
 
     @Override
-    public Property getProppertyById(Long propertyId){
-        Property checkProperty = icalService.getPropertyById(propertyId);
-        if(checkProperty == null){
+    public Property getPropertyById(Long propertyId){
+        //Property checkProperty =
+        if(!checkPropertyExistsById(propertyId)){
             throw new PropertyNotFound(1026,"Property with id: " + propertyId + "cannot found");
         }
 
-        return checkProperty;
+        return icalService.getPropertyById(propertyId);
     }
 
     @Override
     public List<Property> getPropertyForComponent(Long componentId){
-        Component checkComponent = icalService.getComponentById(componentId);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(componentId);
+        if(!checkComponentExistsById(componentId)){
             throw new ComponentNotFound(1027,"Component with id: " + componentId + " couldn't found");
         }
 
-        List<Property> properties = icalService.getPropertyByComponent(checkComponent);
-        if(properties.isEmpty()){
+        //List<Property> properties = icalService.getPropertyByComponent(checkComponent);
+        if(!checkPropertyExistsByComponentId(componentId)){
             throw new PropertyNotFound(1028,"No property found for property parent id: " + componentId);
         }
 
-        return properties;
+        return icalService.getPropertyByComponent(icalService.getComponentById(componentId));
     }
 
     @Override
@@ -388,12 +388,12 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public List<Property> getPropertiesByComponentAndType(PropertyType propertyType, Long componentId){
-        Component checkComponent = icalService.getComponentById(componentId);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(componentId);
+        if(!checkComponentExistsById(componentId)){
             throw new ComponentNotFound(1030,"Component with id: " + componentId + " couldnt found");
         }
 
-        List<Property> properties = icalService.getPropertyByComponentAndType(checkComponent, propertyType);
+        List<Property> properties = icalService.getPropertyByComponentAndType(icalService.getComponentById(componentId), propertyType);
         if(properties.isEmpty()){
             throw new PropertyNotFound(1031,"No property found for parent component id: " + componentId + " in type of " + propertyType.toString());
         }
@@ -413,8 +413,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void deleteProperty(Long propertyId){
-        Property checkProperty = icalService.getPropertyById(propertyId);
-        if(checkProperty == null){
+        //Property checkProperty = icalService.getPropertyById(propertyId);
+        if(!checkPropertyExistsById(propertyId)){
             throw new PropertyNotFound(1033,"Property with id: " + propertyId + " couldnt find");
         }
 
@@ -423,8 +423,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void updateProperty(Long propertyId, Property property){
-        Property checkProperty = icalService.getPropertyById(propertyId);
-        if(checkProperty == null){
+        //Property checkProperty = icalService.getPropertyById(propertyId);
+        if(!checkPropertyExistsById(propertyId)){
             throw new PropertyNotFound(1034,"Property with id " + propertyId + " couldnt find");
         }
 
@@ -432,8 +432,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
             throw new PropertyConflict(1035,"Property data has id: " + property.getId() + " but update id: " + propertyId);
         }
 
-        checkProperty.setId(propertyId);
-        icalService.saveProperty(checkProperty);
+        property.setId(propertyId);
+        icalService.saveProperty(property);
     }
 
     @Override
@@ -443,34 +443,26 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void addParameter(Parameter parameter, String owner, Long parentComponentId, Long parentPropertyId){
-        Participant checkParticipant = participantService.getParticipantByUserName(owner);
-        if(checkParticipant == null){
+        //Participant checkParticipant = participantService.getParticipantByUserName(owner);
+        if(!checkParticipantExistsByUserName(owner)){
             throw new ParticipantNotFound(40001,"Participant with username: " + owner + " couldn't found");
         }
 
-        Component checkComponent = icalService.getComponentById(parentComponentId);
-        if(checkComponent == null){
+        //Component checkComponent = icalService.getComponentById(parentComponentId);
+        if(!checkComponentExistsById(parentComponentId)){
             throw new ComponentNotFound(40002,"Component with id: " + parentComponentId + " couldn't found");
         }
 
-        Property checkProperty = icalService.getPropertyById(parentPropertyId);
-        if(checkProperty == null){
+        //Property checkProperty = icalService.getPropertyById(parentPropertyId);
+        if(!checkPropertyExistsById(parentPropertyId)){
             throw new PropertyNotFound(40003,"Property with id: " + parentPropertyId + " couldn't found");
-        }
-
-        if(checkComponent.getOwner().getUserName() != owner){
-            throw new ComponentConflict(40004,"Parent component username is different from what send: " + owner);
-        }
-
-        if(checkProperty.getComponent().getId() != parentComponentId){
-            throw new PropertyConflict(40005,"Parent property id is different from what send: " + parentComponentId);
         }
 
         if(parameter.getId() != null){
             throw new  ParameterConflict(40006,"New paremeter cannot have id field, please use update methods");
         }
 
-        parameter.setProperty(checkProperty);
+        parameter.setProperty(icalService.getPropertyById(parentPropertyId));
         icalService.saveParameter(parameter);
     }
 
@@ -481,37 +473,37 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public Parameter createParameterForProperty(ParameterType parameterType, Long propertyId){
-        Property checkProperty = icalService.getPropertyById(propertyId);
-        if(checkProperty == null){
+        //Property checkProperty = icalService.getPropertyById(propertyId);
+        if(!checkPropertyExistsById(propertyId)){
             throw new PropertyNotFound(1036,"Property for id: " + propertyId + " couldnt find");
         }
 
-        return icalService.createParameterForProperty(parameterType, checkProperty);
+        return icalService.createParameterForProperty(parameterType, icalService.getPropertyById(propertyId));
     }
 
     @Override
     public Parameter getParameterById(Long parameterId){
-        Parameter checkParameter = icalService.getParameterById(parameterId);
-        if(checkParameter == null){
+        //Parameter checkParameter = icalService.getParameterById(parameterId);
+        if(!checkParameterExistsById(parameterId)){
             throw new ParameterNotFound(1037,"Parameter for id: " + parameterId +  " couldn't find");
         }
 
-        return checkParameter;
+        return icalService.getParameterById(parameterId);
     }
 
     @Override
     public List<Parameter> getParametersByProperty(Long propertyId){
-        Property checkProperty = icalService.getPropertyById(propertyId);
-        if(checkProperty == null){
+        //Property checkProperty = icalService.getPropertyById(propertyId);
+        if(!checkPropertyExistsById(propertyId)){
             throw new PropertyNotFound(1038,"Property for id: " + propertyId +  "couldn't find");
         }
 
-        List<Parameter> parameters = icalService.getParameterByProperty(checkProperty);
-        if(parameters.isEmpty()){
+        //List<Parameter> parameters = icalService.getParameterByProperty(checkProperty);
+        if(!checkParameterExistsByParentId(propertyId)){
             throw new ParameterNotFound(1039,"No parameter found for parent property id: " + propertyId);
         }
 
-        return parameters;
+        return icalService.getParameterByProperty(icalService.getPropertyById(propertyId));
     }
 
     @Override
@@ -551,8 +543,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void deleteParameter(Long parameterId){
-        Parameter parameter = icalService.getParameterById(parameterId);
-        if(parameter == null){
+        //Parameter parameter = icalService.getParameterById(parameterId);
+        if(!checkParameterExistsById(parameterId)){
             throw new ParameterNotFound(1044,"Parameter with id: " + parameterId + " couldn't found");
         }
 
@@ -561,8 +553,8 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void updateParameter(Parameter parameter, Long parameterId){
-        Parameter checkParameter = icalService.getParameterById(parameterId);
-        if(checkParameter == null){
+        //Parameter checkParameter = icalService.getParameterById(parameterId);
+        if(!checkParameterExistsById(parameterId)){
             throw new ParameterNotFound(1045,"Parameter with id: " + parameterId + " not found");
         }
 
@@ -579,4 +571,103 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveParameter(parameter);
     }
 
+
+    @Override
+    public boolean checkParticipantExistsById(Long participantId){
+        if(participantService.countParticipantById(participantId) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkParticipantExistsByUserName(String userName){
+        if(participantService.countParticipantByUserName(userName) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkComponentExistsById(Long componentId){
+        if(icalService.countComponentById(componentId) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkPropertyExistsById(Long propertyId){
+        if(icalService.countPropertyById(propertyId) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkComponentChildExistsByParentId(Long componentParentId){
+        if(icalService.countComponentByParentId(componentParentId) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkComponentExistsByParentIdAndType(Long parentComponentId, ComponentType componentType){
+        if(icalService.countComponentByParentIdAndType(parentComponentId,componentType) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkComponentExistsByParticipantAndType(Participant participant, ComponentType componentType){
+        if(icalService.countComponentByOwnerAndType(participant, componentType) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkComponentExistsByIdAndParticipant(Long componentId, Participant participant){
+        if(icalService.countComponentByIdAndParticipant(componentId,participant) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkPropertyExistsByComponentId(Long componentId){
+        if(icalService.countPropertyByComponentId(componentId) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkParameterExistsById(Long parameterId){
+        if(icalService.countParameterById(parameterId) < 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkParameterExistsByParentId(Long parentPropertyId){
+        if(icalService.countParameterByPropertyId(parentPropertyId) < 1){
+            return false;
+        }
+
+        return true;
+    }
 }

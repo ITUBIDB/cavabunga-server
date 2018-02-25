@@ -71,7 +71,7 @@ public class CalendarController {
     public PropertyResponse getParticipantCalendarProperty(@PathVariable(value = "user_key") String userName,
                                                              @PathVariable(value = "calendar_id")Long id,
                                                              @PathVariable(value = "property_id") Long propertyId){
-        return propertyResponse.createPropertyResponseForSingle(0,null,calendarManagerService.getProppertyById(propertyId));
+        return propertyResponse.createPropertyResponseForSingle(0,null,calendarManagerService.getPropertyById(propertyId));
     }
 
     @PostMapping("/{user_key}/calendar/{calendar_id}/property")
@@ -91,7 +91,7 @@ public class CalendarController {
         return propertyResponse.createPropertyResponseForSingle(0,"update", null);
     }
 
-    @PutMapping("/{user_key}/calendar/{calendar_id}/property/{property_id}")
+    @DeleteMapping("/{user_key}/calendar/{calendar_id}/property/{property_id}")
     @ResponseStatus(HttpStatus.OK)
     public PropertyResponse deleteParticipantCalendarProperty(@PathVariable(value = "user_key") String userName,
                                                               @PathVariable(value = "calendar_id") Long id,
@@ -105,7 +105,7 @@ public class CalendarController {
     public ComponentResponse getParticipantCalendarComponents(@PathVariable(value = "user_key") String userName,
                                                              @PathVariable(value = "calendar_id") Long id,
                                                              @PathVariable(value = "component_type") String componentType){
-        return componentResponse.createComponentResponseForList(0,null, calendarManagerService.getComponentsByParticipantAndType(userName,ComponentType.valueOf(Character.toLowerCase(componentType.charAt(0)) + componentType.substring(1))));
+        return componentResponse.createComponentResponseForList(0,null, calendarManagerService.getComponentsByParticipantAndType(userName,ComponentType.valueOf(Character.toUpperCase(componentType.charAt(0)) + componentType.substring(1))));
     }
 
     @PostMapping("/{user_key}/calendar/{calendar_id}/{component_type}")
@@ -185,7 +185,7 @@ public class CalendarController {
                                                                     @PathVariable(value = "component_type") String componentType,
                                                                     @PathVariable(value = "component_id") Long componentId,
                                                                     @PathVariable(value = "property_key") Long propertyId){
-        return propertyResponse.createPropertyResponseForSingle(0,null,calendarManagerService.getProppertyById(propertyId));
+        return propertyResponse.createPropertyResponseForSingle(0,null,calendarManagerService.getPropertyById(propertyId));
     }
 
     @PutMapping("/{user_key}/calendar/{calendar_id}/{component_type}/{component_id}/property/{property_key}")

@@ -59,4 +59,14 @@ public class ParticipantServiceImpl implements ParticipantService {
     public void deleteParticipantByUserName(String userName){
         participantRepository.deleteByUserName(userName);
     }
+
+    @Override
+    public Long countParticipantById(Long participantId){
+        return participantRepository.countParticipantById(participantId);
+    }
+
+    @Override
+    public Long countParticipantByUserName(String userName){
+        return participantRepository.countParticipantByUserName(userName);
+    }
 }

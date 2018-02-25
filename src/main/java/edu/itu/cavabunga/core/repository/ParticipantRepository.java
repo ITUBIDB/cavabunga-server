@@ -16,4 +16,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     void deleteByUserName(String userName);
 
+    Long countParticipantById(Long participantId);
+
+    Long countParticipantByUserName(String userName);
 }

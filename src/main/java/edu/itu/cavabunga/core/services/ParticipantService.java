@@ -21,4 +21,8 @@ public interface ParticipantService {
     void deleteParticipantById(Long id);
 
     void deleteParticipantByUserName(String userName);
+
+    Long countParticipantById(Long participantId);
+
+    Long countParticipantByUserName(String userName);
 }

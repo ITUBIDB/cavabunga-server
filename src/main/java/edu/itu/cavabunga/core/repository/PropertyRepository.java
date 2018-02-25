@@ -16,4 +16,14 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     @Query("select b from Property b where component=?1 and type =?2")
     List<Property> findByComponentAndType(edu.itu.cavabunga.core.entity.Component component, String type);
+
+    Long countPropertiesById(Long id);
+
+    @Query("select count(c) from Property c where id=?1 and component_id=?2")
+    Long countPropertyByIdAndParentId(Long propertyId, Long parentComponentId);
+
+    @Query("select count(d) from Property d where component_id=?1")
+    Long countPropertyByParentId(Long componentId);
+
+
 }
