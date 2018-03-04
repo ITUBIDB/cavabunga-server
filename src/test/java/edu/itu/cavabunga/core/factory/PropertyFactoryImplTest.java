@@ -73,7 +73,7 @@ public class PropertyFactoryImplTest {
                 {PropertyType.Tzoffsetfrom,Tzoffsetfrom.class},
                 {PropertyType.Tzoffsetto,Tzoffsetto.class},
                 {PropertyType.Tzurl,Tzurl.class},
-                {PropertyType.Uid,Uid	.class	},
+                {PropertyType.Uid,Uid.class},
                 {PropertyType.Url,Url.class},
                 {PropertyType.Version,Version.class},
         };
