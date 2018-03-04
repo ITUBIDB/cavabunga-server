@@ -1,15 +1,8 @@
 package edu.itu.cavabunga.core.factory;
 
 import edu.itu.cavabunga.core.entity.Participant;
-import org.springframework.context.annotation.Configuration;
+import edu.itu.cavabunga.core.entity.participant.ParticipantType;
 
-@Configuration
-public class ParticipantFactory {
-    public Participant createUser(String user_name){
-        return new Participant(user_name);
-    }
-
-    public Participant createUser(){
-        return new Participant();
-    }
+public interface ParticipantFactory {
+    Participant createParticipant(ParticipantType participantType);
 }
