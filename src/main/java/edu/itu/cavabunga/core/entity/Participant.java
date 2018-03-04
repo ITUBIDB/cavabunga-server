@@ -1,7 +1,12 @@
 package edu.itu.cavabunga.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import edu.itu.cavabunga.core.entity.participant.Group;
+import edu.itu.cavabunga.core.entity.participant.User;
+import org.hibernate.annotations.DiscriminatorOptions;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -11,13 +16,20 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @EntityListeners(AuditingEntityListener.class)
-public class Participant {
+@DiscriminatorOptions(force=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = User.class, name = "User"),
+        @JsonSubTypes.Type(value = Group.class, name = "Group"),
+})
+public abstract class Participant {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "uuid")
-    private String uuid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "user_name")
     private String userName;
@@ -34,10 +46,6 @@ public class Participant {
 
     }
 
-    public Participant(String user_name){
-        this.userName = user_name;
-    }
-
     public List<Component> getComponents() {
         return components;
     }
@@ -46,12 +54,12 @@ public class Participant {
         this.components = components;
     }
 
-    public String getUuid() {
-        return uuid;
+    public Long getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
