@@ -1,7 +1,9 @@
 package edu.itu.cavabunga.core.repository;
 
 import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.entity.participant.Group;
 import edu.itu.cavabunga.core.entity.participant.ParticipantType;
+import edu.itu.cavabunga.core.entity.participant.User;
 import edu.itu.cavabunga.core.factory.ParticipantFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
@@ -48,9 +50,9 @@ public class ParticipantRepositoryTest {
 
     @Test
     public void findByTypeTest(){
-        assertEquals(ParticipantType.User.create().getClass(), participantRepository.findByType(ParticipantType.User.toString()).get(0).getClass());
+        assertThat(participantRepository.findByType(ParticipantType.User.toString()), contains(instanceOf(User.class)));
 
-        assertEquals(ParticipantType.Group.create().getClass(), participantRepository.findByType(ParticipantType.Group.toString()).get(1).getClass());
+        assertThat(participantRepository.findByType(ParticipantType.Group.toString()), contains(instanceOf(Group.class)));
     }
 
     @Test
@@ -65,7 +67,7 @@ public class ParticipantRepositoryTest {
         Participant testUser = participantRepository.findByUserName("testuser");
         assertEquals(Long.valueOf("1"), participantRepository.countParticipantById(testUser.getId()));
 
-        Participant testGroup = participantRepository.findByUserName("group");
+        Participant testGroup = participantRepository.findByUserName("testgroup");
         assertEquals(Long.valueOf("1"), participantRepository.countParticipantById(testGroup.getId()));
     }
 
