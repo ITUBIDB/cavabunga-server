@@ -2,7 +2,7 @@ package edu.itu.cavabunga.core.services;
 
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.ParticipantProperty;
-import edu.itu.cavabunga.core.factory.ParticipantPropertyFactorty;
+import edu.itu.cavabunga.core.factory.ParticipantPropertyFactory;
 import edu.itu.cavabunga.core.repository.ParticipantPropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParticipantPropertyServiceImpl implements ParticipantPropertyService {
     @Autowired
-    private ParticipantPropertyFactorty participantPropertyFactorty;
+    private ParticipantPropertyFactory participantPropertyFactory;
 
     @Autowired
     private ParticipantPropertyRepository participantPropertyRepository;
 
     @Override
     public ParticipantProperty createParticipantProperty(){
-        return participantPropertyFactorty.create();
+        return participantPropertyFactory.create();
     }
 
     @Override
