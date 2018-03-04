@@ -28,7 +28,7 @@ public interface ComponentRepository extends JpaRepository<Component, Long> {
     Long countComponentByIdAndOwner(Long componentId, Participant owner);
 
     @Query("select count(d) from Component d where id=?1 and owner=?2 and parent_id=?3 and type=?4")
-    Long countComponentByIdAndOwnerAndType(Long componentId, Participant owner, Long parentComponentId, String componentType);
+    Long countComponentByIdAndOwnerAndParentIdAndType(Long componentId, Participant owner, Long parentComponentId, String componentType);
 
     @Query("select count(f) from Component f where parent_id=?1")
     Long countComponentByParentId(Long componentParentId);

@@ -105,7 +105,7 @@ public class IcalServiceImpl implements IcalService {
 
     @Override
     public Long countComponentByIdAndOwnerAndParentIdAndType(Long componentId, Participant owner, Long parentId, ComponentType componentType){
-        return componentRepository.countComponentByIdAndOwnerAndType(componentId, owner,parentId,componentType.toString());
+        return componentRepository.countComponentByIdAndOwnerAndParentIdAndType(componentId, owner,parentId,componentType.toString());
     }
 
     @Override

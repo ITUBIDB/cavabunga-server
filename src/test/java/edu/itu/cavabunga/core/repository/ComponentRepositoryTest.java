@@ -24,6 +24,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+
 public class ComponentRepositoryTest {
     @Autowired
     ParticipantFactory participantFactory;
@@ -218,4 +219,152 @@ public class ComponentRepositoryTest {
         assertThat(componentRepository.findByType(ComponentType.Timezone.toString()),contains(instanceOf(Timezone.class)));
         assertThat(componentRepository.findByType(ComponentType.Todo.toString()),contains(instanceOf(Todo.class)));
     }
+
+    @Test
+    public void findByOwnerAndTypeTest(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Calendar.toString()), contains(instanceOf(edu.itu.cavabunga.core.entity.component.Calendar.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Alarm.toString()), contains(instanceOf(Alarm.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Daylight.toString()), contains(instanceOf(Daylight.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Event.toString()), contains(instanceOf(Event.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Freebusy.toString()), contains(instanceOf(Freebusy.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Journal.toString()), contains(instanceOf(Journal.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Standard.toString()), contains(instanceOf(Standard.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Timezone.toString()), contains(instanceOf(Timezone.class)));
+        assertThat(componentRepository.findByOwnerAndType(testUser, ComponentType.Todo.toString()), contains(instanceOf(Todo.class)));
+    }
+
+    @Test
+    public void countComponentByIdTest(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        List<Component> componentList = componentRepository.findByOwner(testUser);
+        for(Component t: componentList){
+            assertEquals(Long.valueOf("1") , componentRepository.countComponentById(t.getId()));
+        }
+    }
+
+    @Test
+    public void countComponentByIdAndOwnerTest(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        List<Component> componentList = componentRepository.findByOwner(testUser);
+        for(Component t: componentList){
+            assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwner(t.getId(), testUser));
+        }
+    }
+
+    @Test
+    public void countComponentByIdAndOwnerAndParentIdAndTypeTest(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        List<Component> componentList = componentRepository.findByOwner(testUser);
+        Component parentCalendar = componentFactory.createComponent(ComponentType.Calendar);
+        Component parentEvent = componentFactory.createComponent(ComponentType.Event);
+        Component parentTodo = componentFactory.createComponent(ComponentType.Todo);
+        for(Component t : componentList){
+            if(t instanceof Calendar){
+                parentCalendar = t;
+            }
+
+            if(t instanceof  Event){
+                parentEvent = t;
+            }
+
+            if(t instanceof Todo){
+                parentTodo = t;
+            }
+        }
+
+        for(Component k : componentList){
+            System.out.println("TEST TEST TEST " + k.getId() + testUser.getUserName() + parentCalendar.getId() + k.getClass().getSimpleName());
+
+            /*
+            !!!PROBLEM
+            - Same problem, querying 'null' parent doest work? But Calendars has no parrent
+            if(k instanceof Calendar){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,null, ComponentType.Calendar.toString()));
+            } */
+
+            if(k instanceof Alarm){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentTodo.getId(), ComponentType.Alarm.toString()));
+            }
+
+            if(k instanceof Daylight){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentCalendar.getId(), ComponentType.Daylight.toString()));
+            }
+
+            if(k instanceof Event){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentCalendar.getId(), ComponentType.Event.toString()));
+            }
+
+            if(k instanceof Freebusy){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentCalendar.getId(), ComponentType.Freebusy.toString()));
+            }
+
+            if(k instanceof Journal){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentCalendar.getId(), ComponentType.Journal.toString()));
+            }
+
+            if(k instanceof Standard){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentCalendar.getId(), ComponentType.Standard.toString()));
+            }
+
+            if(k instanceof Timezone){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentEvent.getId(), ComponentType.Timezone.toString()));
+            }
+
+
+            if(k instanceof Todo){
+                assertEquals(Long.valueOf("1"), componentRepository.countComponentByIdAndOwnerAndParentIdAndType(k.getId(),testUser,parentCalendar.getId(), ComponentType.Todo.toString()));
+            }
+
+        }
+    }
+
+    @Test
+    public void countComponentByParentId(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        List<Component> componentList = componentRepository.findByOwner(testUser);
+        Component parentCalendar = componentFactory.createComponent(ComponentType.Calendar);
+        for(Component t : componentList){
+            if(t instanceof Calendar){
+                parentCalendar = t;
+            }
+        }
+
+        assertEquals(Long.valueOf("6"), componentRepository.countComponentByParentId(parentCalendar.getId()));
+    }
+
+    @Test
+    public void countComponentByParentIdAndType(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        List<Component> componentList = componentRepository.findByOwner(testUser);
+        Component parentCalendar = componentFactory.createComponent(ComponentType.Calendar);
+        for(Component t : componentList){
+            if(t instanceof Calendar){
+                parentCalendar = t;
+            }
+        }
+
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByParentIdAndType(parentCalendar.getId(), ComponentType.Event.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByParentIdAndType(parentCalendar.getId(), ComponentType.Journal.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByParentIdAndType(parentCalendar.getId(), ComponentType.Todo.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByParentIdAndType(parentCalendar.getId(), ComponentType.Daylight.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByParentIdAndType(parentCalendar.getId(), ComponentType.Freebusy.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByParentIdAndType(parentCalendar.getId(), ComponentType.Standard.toString()));
+
+    }
+
+    @Test
+    public void countComponentByOwnerAndType(){
+        Participant testUser = participantRepository.findByUserName("testuser");
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Alarm.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Calendar.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Daylight.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Event.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Freebusy.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Journal.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Standard.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Timezone.toString()));
+        assertEquals(Long.valueOf("1"), componentRepository.countComponentByOwnerAndType(testUser,ComponentType.Todo.toString()));
+    }
+
 }
