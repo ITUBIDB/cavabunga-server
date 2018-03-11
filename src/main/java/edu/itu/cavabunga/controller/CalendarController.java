@@ -2,17 +2,12 @@ package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
 import edu.itu.cavabunga.controller.response.ComponentResponse;
-import edu.itu.cavabunga.controller.response.GeneralResponse;
 import edu.itu.cavabunga.controller.response.ParameterResponse;
 import edu.itu.cavabunga.controller.response.PropertyResponse;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Parameter;
-import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.entity.parameter.ParameterType;
-import edu.itu.cavabunga.core.entity.participant.ParticipantType;
-import edu.itu.cavabunga.core.entity.property.PropertyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +27,10 @@ public class CalendarController {
     @Autowired
     private ParameterResponse parameterResponse;
 
-    @Autowired
-    private GeneralResponse generalResponse;
-
     @GetMapping("/{user_key}/calendar")
     @ResponseStatus(HttpStatus.OK)
-    public GeneralResponse getParticipantCalendars(@PathVariable(value = "user_key") String userName){
-        return generalResponse.createGeneralResponseForList(0,null, calendarManagerService.getComponentsByParticipantAndType(userName, ComponentType.Calendar));
+    public ComponentResponse getParticipantCalendars(@PathVariable(value = "user_key") String userName){
+        return componentResponse.createComponentResponseForList(0,null, calendarManagerService.getComponentsByParticipantAndType(userName, ComponentType.Calendar));
     }
 
     @PostMapping("/{user_key}/calendar")
@@ -275,56 +267,5 @@ public class CalendarController {
                                                                               @PathVariable(value = "parameter_key") Long parameterId){
         calendarManagerService.deleteParameter(parameterId);
         return parameterResponse.createParameterReponseForSingle(0,"delete", null);
-    }
-
-    @GetMapping(path = "/testcalendarcreate")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody String test(){
-        Participant celikd = calendarManagerService.createParticipant("testuser", ParticipantType.User);
-        Participant sdg = calendarManagerService.createParticipant("testgroup", ParticipantType.Group);
-        calendarManagerService.saveParticipant(celikd);
-        calendarManagerService.saveParticipant(sdg);
-
-
-        Component calendar = calendarManagerService.createComponentForParticipant(ComponentType.Calendar, "testuser");
-        Component event = calendarManagerService.createComponent(ComponentType.Event);
-        Component alarm = calendarManagerService.createComponent(ComponentType.Alarm);
-
-        Property uid = calendarManagerService.createProperty(PropertyType.Uid);
-        uid.setValue("23734BC-AD123DEF-CC-D123");
-
-        Property calscale = calendarManagerService.createProperty(PropertyType.Calscale);
-        calscale.setValue("GREGORIAN");
-
-        Property dtsamp = calendarManagerService.createProperty(PropertyType.Dtstamp);
-        dtsamp.setValue("160620018092822 UTC+3");
-
-        Property attach = calendarManagerService.createProperty(PropertyType.Attach);
-        attach.setValue("A FILE");
-
-        Parameter encoding = calendarManagerService.createParameter(ParameterType.Encoding);
-        encoding.setValue("UTF-8");
-
-
-        event.setOwner(celikd);
-        alarm.setOwner(celikd);
-        calendar.setOwner(celikd);
-
-        attach.addParameter(encoding);
-        event.addProperty(attach);
-        event.addProperty(dtsamp);
-        event.addComponent(alarm);
-
-
-        calendar.addComponent(event);
-        calendar.addProperty(uid);
-        calendar.addProperty(calscale);
-
-
-
-        calendarManagerService.saveComponent(calendar);
-
-
-        return "ok";
     }
 }

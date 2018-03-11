@@ -3,10 +3,9 @@ package edu.itu.cavabunga.controller;
 import edu.itu.cavabunga.controller.response.ComponentPropertyResponse;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.ComponentProperty;
-import edu.itu.cavabunga.exception.ComponentPropertyNotFound;
-import edu.itu.cavabunga.exception.ComponentNotFound;
 import edu.itu.cavabunga.core.services.ComponentPropertyService;
 import edu.itu.cavabunga.core.services.IcalService;
+import edu.itu.cavabunga.exception.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class ComponentPropertyController {
     ComponentPropertyResponse saveComponentProperty(@PathVariable("componentId") Long id, @RequestBody ComponentProperty componentProperty){
         Component checkComponent = icalService.getComponentById(id);
         if(checkComponent == null){
-            throw new ComponentNotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
+            throw new NotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
         }
 
         componentProperty.setComponent(checkComponent);
@@ -41,7 +40,7 @@ public class ComponentPropertyController {
     ComponentPropertyResponse getCalendarProperty(@PathVariable("componentId") Long id){
         Component checkComponent = icalService.getComponentById(id);
         if(checkComponent == null){
-            throw new ComponentNotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
+            throw new NotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
         }
 
         ComponentProperty calendarProperties = componentPropertyService.getComponentPropertyByComponent(checkComponent);
@@ -55,12 +54,12 @@ public class ComponentPropertyController {
     ComponentPropertyResponse deleteCalendarProperty(@PathVariable("componentId") Long id){
         Component checkComponent = icalService.getComponentById(id);
         if(checkComponent == null){
-            throw new ComponentNotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
+            throw new NotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
         }
 
         ComponentProperty checkProperty = componentPropertyService.getComponentPropertyByComponent(checkComponent);
         if(checkComponent == null){
-            throw new ComponentPropertyNotFound(id + "ile iliskilendirilmis bir bilesen ozelligi bulunamadi");
+            throw new NotFound(id + "ile iliskilendirilmis bir bilesen ozelligi bulunamadi");
         }
 
         componentPropertyService.deleteComponentProperty(checkProperty);
@@ -72,12 +71,12 @@ public class ComponentPropertyController {
     ComponentPropertyResponse updateCalendarProperty(@PathVariable("componentId") Long id){
         Component checkComponent = icalService.getComponentById(id);
         if(checkComponent == null){
-            throw new ComponentNotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
+            throw new NotFound(id + "ile iliskilendirilmis bir bilesen bulunamadi");
         }
 
         ComponentProperty checkProperty = componentPropertyService.getComponentPropertyByComponent(checkComponent);
         if(checkComponent == null){
-            throw new ComponentPropertyNotFound(id + "ile iliskilendirilmis bir bilesen ozelligi bulunamadi");
+            throw new NotFound(id + "ile iliskilendirilmis bir bilesen ozelligi bulunamadi");
         }
 
         componentPropertyService.saveComponentProperty(checkProperty);
