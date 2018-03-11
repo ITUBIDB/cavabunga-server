@@ -1,7 +1,7 @@
 package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
-import edu.itu.cavabunga.controller.wrapper.ParticipantResponse;
+import edu.itu.cavabunga.controller.response.ParticipantResponse;
 import edu.itu.cavabunga.core.entity.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

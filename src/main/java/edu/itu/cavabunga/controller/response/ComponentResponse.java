@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.controller.wrapper;
+package edu.itu.cavabunga.controller.response;
 
 import edu.itu.cavabunga.core.entity.Component;
 

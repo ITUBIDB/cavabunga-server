@@ -1,6 +1,6 @@
 package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.controller.wrapper.ComponentPropertyResponse;
+import edu.itu.cavabunga.controller.response.ComponentPropertyResponse;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.ComponentProperty;
 import edu.itu.cavabunga.exception.ComponentPropertyNotFound;

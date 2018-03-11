@@ -1,6 +1,6 @@
 package edu.itu.cavabunga.advice;
 
-import edu.itu.cavabunga.controller.wrapper.ErrorResponse;
+import edu.itu.cavabunga.controller.response.ErrorResponse;
 import edu.itu.cavabunga.exception.ComponentNotFound;
 import edu.itu.cavabunga.exception.ParticipantConflict;
 import edu.itu.cavabunga.exception.ParticipantNotFound;
@@ -15,7 +15,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(ComponentNotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleIcalNotFound(ComponentNotFound e){
-        return new ErrorResponse(e.getErrorCode(),e.getMessage(), null);
+        return new ErrorResponse(1,e.getMessage(), null);
     }
 
     @ExceptionHandler(ParticipantNotFound.class)
