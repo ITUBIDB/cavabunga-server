@@ -13,19 +13,6 @@ public class ParameterNotFound extends RuntimeException {
         super(cause);
     }
 
-    public ParameterNotFound(Integer code, String message){
-        super(message);
-        this.errorCode = code;
-    }
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    private Integer errorCode;
 
 }

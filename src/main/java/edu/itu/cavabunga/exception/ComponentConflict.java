@@ -13,18 +13,4 @@ public class ComponentConflict extends RuntimeException {
         super(cause);
     }
 
-    public ComponentConflict(Integer code, String message){
-        super(message);
-        this.errorCode = code;
-    }
-
-    private Integer errorCode;
-
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
 }

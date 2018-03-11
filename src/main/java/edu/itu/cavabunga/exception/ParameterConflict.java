@@ -13,19 +13,5 @@ public class ParameterConflict extends RuntimeException {
         super(cause);
     }
 
-    public ParameterConflict(Integer code, String message){
-        super(message);
-        this.errorCode = code;
-    }
-
-    private Integer errorCode;
-
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
 
 }

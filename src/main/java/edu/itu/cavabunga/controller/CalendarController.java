@@ -47,7 +47,7 @@ public class CalendarController {
     }
 
     @PutMapping("/{user_key}/calendar/{calendar_id}/")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public ComponentResponse updateParticipantCalendar(@PathVariable(value = "user_key") String userName, @PathVariable(value = "calendar_id") Long id, @RequestBody Component component){
         calendarManagerService.updateComponent(id,component);
         return componentResponse.createComponentResponseForSingle(0,"update", null);
@@ -82,7 +82,7 @@ public class CalendarController {
     }
 
     @PutMapping("/{user_key}/calendar/{calendar_id}/property/{property_id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public PropertyResponse updateParticipantCalendarProperty(@PathVariable(value = "user_key") String userName,
                                                               @PathVariable(value = "calendar_id") Long id,
                                                               @PathVariable(value = "property_id") Long propertyId,
@@ -245,7 +245,7 @@ public class CalendarController {
     }
 
     @PutMapping("/{user_key}/calendar/{calendar_id}/{component_type}/{component_id}/property/{property_key}/parameter/{parameter_key}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public ParameterResponse updateParticipantCalendarComponentPropertyParameter(@PathVariable(value = "user_key") String userName,
                                                                               @PathVariable(value = "calendar_id") Long calendarId,
                                                                               @PathVariable(value = "component_type") String componentType,
