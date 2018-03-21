@@ -3,6 +3,7 @@ package edu.itu.cavabunga.core.entity;
 import com.fasterxml.jackson.annotation.*;
 import edu.itu.cavabunga.core.entity.property.*;
 import edu.itu.cavabunga.core.entity.property.Class;
+import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -65,6 +66,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = Url.class, name = "Url"),
         @JsonSubTypes.Type(value = Version.class, name = "Version")
 })
+@Data
 public abstract class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,50 +83,10 @@ public abstract class Property {
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Parameter> parameters = new ArrayList<Parameter>();
-
-    public List<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(List<Parameter> parameters) {
-        this.parameters = parameters;
-    }
+    private List<Parameter> parameters = new ArrayList<>();
 
     public void addParameter(Parameter parameter){
         parameter.setProperty(this);
         parameters.add(parameter);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Component getComponent() {
-        return component;
-    }
-
-    public void setComponent(Component component) {
-        this.component = component;
     }
 }

@@ -1,8 +1,9 @@
 package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
-import edu.itu.cavabunga.controller.response.ParticipantResponse;
+import edu.itu.cavabunga.core.http.ParticipantResponse;
 import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.http.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,40 +14,37 @@ public class ParticipantController {
    @Autowired
    private CalendarManagerService calendarManagerService;
 
-   @Autowired
-   private ParticipantResponse participantResponse;
-
    @GetMapping
    @ResponseStatus(HttpStatus.OK)
    public ParticipantResponse getAllParticipants(){
-       return participantResponse.createParticipantResponseForList(0,null, calendarManagerService.getAllParticipants());
+       return new ParticipantResponse(0,null, calendarManagerService.getAllParticipants());
    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipantResponse newParticipant(@RequestBody Participant participant){
+    public Response newParticipant(@RequestBody Participant participant){
         calendarManagerService.addParticipant(participant);
-        return participantResponse.createParticipantReponseForSingle(0,"created", null);
+        return new Response(0,"created");
     }
 
    @GetMapping("/{user_key}")
    @ResponseStatus(HttpStatus.OK)
    public ParticipantResponse getParticipant(@PathVariable(value = "user_key") String userKey){
-       return participantResponse.createParticipantReponseForSingle(0,null,calendarManagerService.getParticipantByKey(userKey));
+       return new ParticipantResponse(0,null,calendarManagerService.getParticipantByKey(userKey));
    }
 
    @DeleteMapping("/{user_id}")
    @ResponseStatus(HttpStatus.OK)
-   public ParticipantResponse deleteParticipant(@PathVariable(value = "user_id") Long id){
+   public Response deleteParticipant(@PathVariable(value = "user_id") Long id){
        calendarManagerService.deleteParticipantById(id);
-       return participantResponse.createParticipantReponseForSingle(0,"deleted", null);
+       return new Response(0,"deleted");
    }
 
    @PutMapping("/{user_id}")
    @ResponseStatus(HttpStatus.OK)
-   public ParticipantResponse updateParticipant(@PathVariable(value = "user_id") Long id, @RequestBody Participant participant){
+   public Response updateParticipant(@PathVariable(value = "user_id") Long id, @RequestBody Participant participant){
        calendarManagerService.updateParticipant(id, participant);
-       return participantResponse.createParticipantReponseForSingle(0,"update", null);
+       return new Response(0,"updated");
    }
 
 

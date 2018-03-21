@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.itu.cavabunga.core.entity.participant.Group;
 import edu.itu.cavabunga.core.entity.participant.User;
+import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,6 +27,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = User.class, name = "User"),
         @JsonSubTypes.Type(value = Group.class, name = "Group"),
 })
+@Data
 public abstract class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,39 +47,4 @@ public abstract class Participant {
     public Participant(){
 
     }
-
-    public List<Component> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<Component> components) {
-        this.components = components;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-
-
 }

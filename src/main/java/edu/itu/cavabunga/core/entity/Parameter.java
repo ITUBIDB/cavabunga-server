@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.itu.cavabunga.core.entity.parameter.*;
+import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -37,6 +38,7 @@ import javax.persistence.*;
         @JsonSubTypes.Type(value = Tzid.class, name = "Tzid"),
         @JsonSubTypes.Type(value = Value.class, name = "Value")
 })
+@Data
 public abstract class Parameter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,36 +52,4 @@ public abstract class Parameter {
     @JoinColumn(name = "property_id")
     @JsonBackReference
     private Property property;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Property getProperty() {
-        return property;
-    }
-
-    public void setProperty(Property property) {
-        this.property = property;
-    }
 }

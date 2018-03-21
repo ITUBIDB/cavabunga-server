@@ -1,6 +1,6 @@
 package edu.itu.cavabunga.controller;
 
-import edu.itu.cavabunga.controller.response.ParticipantPropertyResponse;
+import edu.itu.cavabunga.core.http.ParticipantPropertyResponse;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.ParticipantProperty;
 import edu.itu.cavabunga.exception.NotFound;

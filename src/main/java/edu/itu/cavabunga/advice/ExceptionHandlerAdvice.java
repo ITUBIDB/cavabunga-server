@@ -1,6 +1,6 @@
 package edu.itu.cavabunga.advice;
 
-import edu.itu.cavabunga.controller.response.ErrorResponse;
+import edu.itu.cavabunga.core.http.ErrorResponse;
 import edu.itu.cavabunga.exception.Conflict;
 import edu.itu.cavabunga.exception.NotFound;
 import org.springframework.http.HttpStatus;
