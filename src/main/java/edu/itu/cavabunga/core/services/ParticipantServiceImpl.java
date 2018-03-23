@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParticipantServiceImpl implements ParticipantService {
@@ -19,10 +20,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public Participant createParticipant(String userName, ParticipantType participantType){
-        Participant temp = participantFactory.createParticipant(participantType);
-        temp.setUserName(userName);
-        participantRepository.save(temp);
-        return temp;
+        Participant newParticipant = participantFactory.createParticipant(participantType);
+        newParticipant.setUserName(userName);
+        participantRepository.save(newParticipant);
+        return newParticipant;
     }
 
     @Override
@@ -31,13 +32,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Participant getParticipantByUserName(String user_name){
+    public Optional<Participant> getParticipantByUserName(String user_name){
         return participantRepository.findByUserName(user_name);
     }
 
     @Override
-    public Participant getParticipantById(Long id){
-        return participantRepository.findOne(id);
+    public Optional<Participant> getParticipantById(Long id){
+        return participantRepository.findById(id);
     }
 
     @Override
@@ -46,27 +47,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<Participant> getAllParticipantByType(ParticipantType participantType){
-        return participantRepository.findByType(participantType.toString());
-    }
-
-    @Override
     public void deleteParticipantById(Long id){
         participantRepository.delete(id);
-    }
-
-    @Override
-    public void deleteParticipantByUserName(String userName){
-        participantRepository.deleteByUserName(userName);
-    }
-
-    @Override
-    public Long countParticipantById(Long participantId){
-        return participantRepository.countParticipantById(participantId);
-    }
-
-    @Override
-    public Long countParticipantByUserName(String userName){
-        return participantRepository.countParticipantByUserName(userName);
     }
 }

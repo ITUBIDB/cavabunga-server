@@ -6,17 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
-    Participant findByUserName(String name);
+    Optional<Participant> findByUserName(String name);
+
+    Optional<Participant> findById(Long Id);
 
     @Query("select a from Participant a where type=?1")
     List<Participant> findByType(String type);
-
-    void deleteByUserName(String userName);
-
-    Long countParticipantById(Long participantId);
-
-    Long countParticipantByUserName(String userName);
 }

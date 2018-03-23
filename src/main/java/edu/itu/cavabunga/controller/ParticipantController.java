@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/participant")
 public class ParticipantController {
-   @Autowired
    private CalendarManagerService calendarManagerService;
 
-   @GetMapping
-   @ResponseStatus(HttpStatus.OK)
-   public ParticipantResponse getAllParticipants(){
-       return new ParticipantResponse(0,null, calendarManagerService.getAllParticipants());
-   }
+    @Autowired
+    public ParticipantController(CalendarManagerService calendarManagerService) {
+        this.calendarManagerService = calendarManagerService;
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantResponse getAllParticipants(){
+        return new ParticipantResponse(0,null, calendarManagerService.getAllParticipants());
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -27,26 +31,23 @@ public class ParticipantController {
         return new Response(0,"created");
     }
 
-   @GetMapping("/{user_key}")
-   @ResponseStatus(HttpStatus.OK)
-   public ParticipantResponse getParticipant(@PathVariable(value = "user_key") String userKey){
-       return new ParticipantResponse(0,null,calendarManagerService.getParticipantByKey(userKey));
-   }
+    @GetMapping("/{user_name}")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantResponse getParticipant(@PathVariable(value = "user_name") String userName){
+        return new ParticipantResponse(0,null,calendarManagerService.getParticipantByUserName(userName));
+    }
 
-   @DeleteMapping("/{user_id}")
-   @ResponseStatus(HttpStatus.OK)
-   public Response deleteParticipant(@PathVariable(value = "user_id") Long id){
+    @DeleteMapping("/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response deleteParticipant(@PathVariable(value = "user_id") Long id){
        calendarManagerService.deleteParticipantById(id);
        return new Response(0,"deleted");
-   }
+    }
 
-   @PutMapping("/{user_id}")
-   @ResponseStatus(HttpStatus.OK)
-   public Response updateParticipant(@PathVariable(value = "user_id") Long id, @RequestBody Participant participant){
+    @PutMapping("/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response updateParticipant(@PathVariable(value = "user_id") Long id, @RequestBody Participant participant){
        calendarManagerService.updateParticipant(id, participant);
        return new Response(0,"updated");
-   }
-
-
-
+    }
 }

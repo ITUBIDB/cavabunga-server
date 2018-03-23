@@ -4,7 +4,7 @@ import edu.itu.cavabunga.core.entity.ParticipantProperty;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ParticipantPropertyFactortyImpl implements ParticipantPropertyFactory {
+public class ParticipantPropertyFactoryImpl implements ParticipantPropertyFactory {
     @Override
     public ParticipantProperty create(){
         return new ParticipantProperty();

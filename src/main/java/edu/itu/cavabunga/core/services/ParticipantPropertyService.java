@@ -12,5 +12,5 @@ public interface ParticipantPropertyService {
 
     void saveParticipantProperty(ParticipantProperty participantProperty);
 
-    public void deleteParticipantProperty(ParticipantProperty participantProperty);
+    void deleteParticipantProperty(ParticipantProperty participantProperty);
 }
