@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.core.services;
+package edu.itu.cavabunga.core.service;
 import java.util.Optional;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Parameter;

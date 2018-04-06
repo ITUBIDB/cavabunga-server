@@ -13,13 +13,25 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(NotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleParticipantNotFound(NotFound e){
+    public ErrorResponse handleNotFound(NotFound e){
         return new ErrorResponse(1,e.getMessage(), null);
     }
 
     @ExceptionHandler(Conflict.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleParticipantConflict(Conflict e){
+    public ErrorResponse handleConflict(Conflict e){
+        return new ErrorResponse(1,e.getMessage(),null);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIllegalState(IllegalStateException e){
+        return new ErrorResponse(1,e.getMessage(),null);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleIllegalArgument(IllegalArgumentException e){
         return new ErrorResponse(1,e.getMessage(),null);
     }
 

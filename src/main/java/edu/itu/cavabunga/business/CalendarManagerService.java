@@ -5,12 +5,9 @@ import edu.itu.cavabunga.core.entity.Parameter;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
 import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.entity.parameter.ParameterType;
 import edu.itu.cavabunga.core.entity.participant.ParticipantType;
-import edu.itu.cavabunga.core.entity.property.PropertyType;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CalendarManagerService {
     //Participant section
@@ -57,5 +54,5 @@ public interface CalendarManagerService {
 
     void deleteParameter(Long parameterId);
 
-    void updateParameter(Parameter parameter, Long parameterId);;
+    void updateParameter(Parameter parameter, Long parameterId);
 }

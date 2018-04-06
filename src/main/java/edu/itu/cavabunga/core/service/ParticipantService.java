@@ -1,4 +1,4 @@
-package edu.itu.cavabunga.core.services;
+package edu.itu.cavabunga.core.service;
 
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.participant.ParticipantType;
