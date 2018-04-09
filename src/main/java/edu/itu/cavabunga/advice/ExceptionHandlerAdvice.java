@@ -30,7 +30,7 @@ public class ExceptionHandlerAdvice {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIllegalArgument(IllegalArgumentException e){
         return new ErrorResponse(1,e.getMessage(),null);
     }

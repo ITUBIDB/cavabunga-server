@@ -1,7 +1,6 @@
 package edu.itu.cavabunga.core.http;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 @Data
 public class Response {

@@ -4,16 +4,12 @@ import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Parameter;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
-import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.entity.participant.ParticipantType;
 
 import java.util.List;
 
 public interface CalendarManagerService {
     //Participant section
     void addParticipant(Participant participant);
-
-    Participant createParticipant(String userName, ParticipantType participantType);
 
     Participant getParticipantByUserName(String userName);
 
@@ -26,8 +22,6 @@ public interface CalendarManagerService {
     //Component section
     void addComponent(Component component, String owner, Long parentComponentId);
 
-    Component createComponentForParticipant(ComponentType componentType, String userName);
-
     Component getComponentById(Long id);
 
     void deleteComponentById(Long id);
@@ -35,7 +29,7 @@ public interface CalendarManagerService {
     void updateComponent(Long id, Component component);
 
     //Property section
-    void addProperty(Property property, String owner, Long parentComponentId);
+    void addProperty(Property property, Long parentComponentId);
 
     Property getPropertyById(Long propertyId);
 
@@ -46,7 +40,7 @@ public interface CalendarManagerService {
     void updateProperty(Long propertyId, Property property);
 
     //Parameter section
-    void addParameter(Parameter parameter, String owner, Long parentComponentId, Long parentPropertyId);
+    void addParameter(Parameter parameter, Long parentPropertyId);
 
     Parameter getParameterById(Long parameterId);
 

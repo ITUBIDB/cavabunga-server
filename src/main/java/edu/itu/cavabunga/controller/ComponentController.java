@@ -20,10 +20,10 @@ public class ComponentController {
         this.calendarManagerService = calendarManagerService;
     }
 
-    @PostMapping("/{component_id}/participant/{user_name}")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Response createComponent(@PathVariable(value = "user_name") String userName,
-                                    @PathVariable(value = "component_id") Long ParentComponentId,
+    public Response createComponent(@RequestParam(value = "user_name") String userName,
+                                    @RequestParam(value = "parent_component_id") Long ParentComponentId,
                                     Component component) {
         calendarManagerService.addComponent(component, userName, ParentComponentId);
         return new Response(0,"created");
@@ -45,7 +45,7 @@ public class ComponentController {
 
     @DeleteMapping("/{component_id}/")
     @ResponseStatus(HttpStatus.OK)
-    public Response deleteParticipantCalendar(@PathVariable(value = "component_id")Long componentId) {
+    public Response deleteComponent(@PathVariable(value = "component_id")Long componentId) {
         calendarManagerService.deleteComponentById(componentId);
         return new Response(0,"deleted");
     }

@@ -4,8 +4,6 @@ import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Parameter;
 import edu.itu.cavabunga.core.entity.Participant;
 import edu.itu.cavabunga.core.entity.Property;
-import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.entity.participant.ParticipantType;
 import edu.itu.cavabunga.core.service.IcalService;
 import edu.itu.cavabunga.core.service.ParticipantService;
 import edu.itu.cavabunga.exception.*;
@@ -30,7 +28,7 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     @Override
     public void addParticipant(Participant participant){
-        Assert.notNull(participant.getUserName(), "Username must not be null!");
+        Assert.notNull(participant.getUserName(), "Participant must not be null!");
         Assert.state(
                 participant.getId() == null,
                 "New participant cannot have id field, please use update methods"
@@ -41,17 +39,6 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         }
 
         participantService.saveParticipant(participant);
-    }
-
-    @Override
-    public Participant createParticipant(String userName, ParticipantType participantType){
-        Assert.notNull(userName, "Username must not be null!");
-
-        if(participantService.getParticipantByUserName(userName).isPresent()) {
-            throw new Conflict("Participant with username: " + userName + " is already exist.");
-        }
-
-        return participantService.createParticipant(userName, participantType);
     }
 
     @Override
@@ -113,21 +100,6 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     }
 
     @Override
-    public Component createComponentForParticipant(ComponentType componentType, String userName){
-        Assert.notNull(componentType, "Component type must not be null!");
-        Assert.notNull(userName, "Username must not be null!");
-
-        if(!participantService.getParticipantByUserName(userName).isPresent()) {
-            throw new NotFound("owner: " + userName + " couldn't found");
-        }
-
-        return icalService.createComponentForParticipant(
-                componentType,
-                participantService.getParticipantByUserName(userName).get()
-        );
-    }
-
-    @Override
     public Component getComponentById(Long id){
         Assert.notNull(id, "Id must not be null!");
 
@@ -163,22 +135,14 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     }
 
     @Override
-    public void addProperty(Property property, String owner, Long parentComponentId){
+    public void addProperty(Property property, Long parentComponentId){
         Assert.notNull(property, "Property must not be null!");
-        Assert.notNull(owner, "Username must not be null!");
         Assert.notNull(parentComponentId, "ParentComponentId must not be null!");
-        Assert.isTrue(
-                parentComponentId.equals(participantService.getParticipantByUserName(owner).get().getId()),
-                "Parent component owner is different from what send: " + owner
-        );
         Assert.state(
                 property.getId() == null,
                 "New Property cannot have id field, please use update methods"
         );
 
-        if(!participantService.getParticipantByUserName(owner).isPresent()) {
-            throw new NotFound("owner: " + owner + " couldn't found");
-        }
         if(!icalService.getComponentById(parentComponentId).isPresent()) {
             throw new NotFound("Parent component not found");
         }
@@ -232,44 +196,19 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveProperty(property);
     }
 
-    /**TODO: what we need for add parameter**/
     @Override
-    public void addParameter(Parameter parameter, String owner, Long parentComponentId, Long parentPropertyId){
+    public void addParameter(Parameter parameter, Long parentPropertyId){
         Assert.notNull(parameter, "Parameter must not be null!");
-        Assert.notNull(owner, "Username must not be null!");
-        Assert.notNull(parentComponentId, "parentPropertyId must not be null!");
-        Assert.isTrue(
-                parentComponentId.equals(participantService.getParticipantByUserName(owner).get().getId()),
-                "Parent component owner is different from what send: " + owner
-        );
+        Assert.notNull(parentPropertyId, "ParentPropertyId must not be null!");
         Assert.state(
                 parameter.getId() == null,
                 "New Property cannot have id field, please use update methods"
         );
 
-        /*if(!participantService.getParticipantByUserName(owner).isPresent()) {
-            throw new NotFound("owner: " + owner + " couldn't found");
+        if(!icalService.getPropertyById(parentPropertyId).isPresent()) {
+            throw new NotFound("Parent property not found");
         }
-        if(!icalService.getComponentById(parentComponentId).isPresent()) {
-            throw new NotFound("Parent component not found");
-        }
-        if(!checkParticipantExistsByUserName(owner)){
-            throw new NotFound("Participant with username: " + owner + " couldn't found");
-        }
-
-        if(!checkComponentExistsById(parentComponentId)){
-            throw new NotFound("Component with id: " + parentComponentId + " couldn't found");
-        }
-
-        if(!checkPropertyExistsById(parentPropertyId)){
-            throw new NotFound("Property with id: " + parentPropertyId + " couldn't found");
-        }
-
-        if(parameter.getId() != null){
-            throw new  Conflict("New paremeter cannot have id field, please use update methods");
-        }
-
-        parameter.setProperty(icalService.getPropertyById(parentPropertyId));*/
+        parameter.setProperty(icalService.getPropertyById(parentPropertyId).get());
         icalService.saveParameter(parameter);
     }
 

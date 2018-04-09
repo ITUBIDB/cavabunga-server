@@ -20,12 +20,11 @@ public class PropertyController {
         this.calendarManagerService = calendarManagerService;
     }
 
-    @PostMapping("/participant/{user_name}/component/{component_id}")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Response createProperty(@PathVariable(value = "user_name") String userName,
-                                   @PathVariable(value = "component_id") Long componentId,
+    public Response createProperty(@RequestParam(value = "parent_component_id") Long parentComponentId,
                                    @RequestBody Property property) {
-        calendarManagerService.addProperty(property, userName, componentId);
+        calendarManagerService.addProperty(property, parentComponentId);
         return new Response(0,"created");
     }
 
