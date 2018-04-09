@@ -14,13 +14,13 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 
 @RunWith(DataProviderRunner.class)
 @SpringBootTest
-public class ComponentFactoryTest {
+public class ComponentFactoryImplTest {
 
     public ComponentFactory componentFactory;
 
     @Before
     public void setup() {
-        componentFactory = new ComponentFactory();
+        componentFactory = new ComponentFactoryImpl();
     }
 
     @DataProvider

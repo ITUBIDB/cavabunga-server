@@ -1,11 +1,14 @@
 package edu.itu.cavabunga.core.repository;
 
 import edu.itu.cavabunga.core.entity.Participant;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ParticipantRepository extends CrudRepository<Participant, String> {
-    Participant findByUserName(String name);
+import java.util.Optional;
 
-    Participant findByUuid(String uuid);
+@Repository
+public interface ParticipantRepository extends JpaRepository<Participant, Long> {
+    Optional<Participant> findByUserName(String name);
 
+    Optional<Participant> findById(Long Id);
 }
