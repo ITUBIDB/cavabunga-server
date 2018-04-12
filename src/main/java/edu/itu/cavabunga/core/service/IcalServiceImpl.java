@@ -16,6 +16,9 @@ import edu.itu.cavabunga.core.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 public class IcalServiceImpl implements IcalService {
     private ComponentFactory componentFactory;
@@ -30,6 +33,16 @@ public class IcalServiceImpl implements IcalService {
 
     private ParameterRepository parameterRepository;
 
+    /**
+     * constructor for dependency injection
+     *
+     * @param componentFactory to inject ComponentFactory
+     * @param componentRepository to inject ComponentRepository
+     * @param propertyFactory to inject PropertyFactory
+     * @param propertyRepository to inject PropertyRepository
+     * @param parameterFactory to inject ParameterFactory
+     * @param parameterRepository to inject ParameterRepository
+     */
     @Autowired
     public IcalServiceImpl(
         ComponentFactory componentFactory,
@@ -47,11 +60,17 @@ public class IcalServiceImpl implements IcalService {
         this.parameterRepository = parameterRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Component createComponent(ComponentType componentType){
         return componentFactory.createComponent(componentType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Component createComponentForParticipant(ComponentType componentType, Participant participant){
         Component result = componentFactory.createComponent(componentType);
@@ -59,58 +78,89 @@ public class IcalServiceImpl implements IcalService {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Component> getComponentById(Long id){
         return componentRepository.findById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void saveComponent(Component component){
         componentRepository.save(component);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteComponentById(Long id){
         componentRepository.delete(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Property createProperty(PropertyType propertyType){
         return  propertyFactory.createProperty(propertyType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Property> getPropertyById(Long id){
         return propertyRepository.findById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void saveProperty(Property property){
         propertyRepository.save(property);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deletePropertyById(Long id){
         propertyRepository.delete(id);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parameter createParameter(ParameterType parameterType){
         return parameterFactory.createParameter(parameterType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Parameter> getParameterById(Long id){
         return parameterRepository.findById(id);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void saveParameter(Parameter parameter){
         parameterRepository.save(parameter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteParameterById(Long id){
         parameterRepository.delete(id);

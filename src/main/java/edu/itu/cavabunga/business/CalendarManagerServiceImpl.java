@@ -13,6 +13,9 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 public class CalendarManagerServiceImpl implements CalendarManagerService {
 
@@ -26,6 +29,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         this.participantService = participantService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addParticipant(Participant participant){
         Assert.notNull(participant.getUserName(), "Participant must not be null!");
@@ -41,6 +47,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         participantService.saveParticipant(participant);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Participant getParticipantByUserName(String userName){
         Assert.notNull(userName, "Username must not be null!");
@@ -52,11 +61,17 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         return participantService.getParticipantByUserName(userName).get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Participant> getAllParticipants(){
         return participantService.getAllParticipant();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteParticipantById(Long id){
         Assert.notNull(id, "");
@@ -68,6 +83,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         participantService.deleteParticipantById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateParticipant(Long id, Participant participant){
         Assert.notNull(id, "Id must not be null!");
@@ -81,11 +99,19 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         participantService.saveParticipant(participant);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addComponent(Component component, String owner, Long parentComponentId){
         Assert.notNull(component, "Component must not be null!");
         Assert.notNull(owner, "Username must not be null!");
         Assert.notNull(parentComponentId, "ParentComponentId must not be null!");
+
+        Assert.state(
+                component.getId() == null,
+                "New component cannot have id field, please use update methods"
+        );
 
         if(!participantService.getParticipantByUserName(owner).isPresent()) {
             throw new NotFound("owner: " + owner + " couldn't found");
@@ -99,6 +125,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveComponent(component);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Component getComponentById(Long id){
         Assert.notNull(id, "Id must not be null!");
@@ -110,6 +139,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         return icalService.getComponentById(id).get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteComponentById(Long id){
         Assert.notNull(id, "Id must not be null!");
@@ -121,6 +153,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.deleteComponentById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateComponent(Long id, Component component){
         Assert.notNull(id, "Id must not be null!");
@@ -134,6 +169,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveComponent(component);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addProperty(Property property, Long parentComponentId){
         Assert.notNull(property, "Property must not be null!");
@@ -151,6 +189,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveProperty(property);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Property getPropertyById(Long propertyId){
         Assert.notNull(propertyId, "Id must not be null!");
@@ -162,6 +203,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         return icalService.getPropertyById(propertyId).get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Property> getPropertiesOfComponent(Long componentId){
         Assert.notNull(componentId, "Id must not be null!");
@@ -172,6 +216,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         return icalService.getComponentById(componentId).get().getProperties();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteProperty(Long propertyId){
         Assert.notNull(propertyId, "Id must not be null!");
@@ -183,6 +230,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.deletePropertyById(propertyId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateProperty(Long propertyId, Property property){
         Assert.notNull(propertyId, "Id must not be null!");
@@ -196,13 +246,16 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveProperty(property);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addParameter(Parameter parameter, Long parentPropertyId){
         Assert.notNull(parameter, "Parameter must not be null!");
         Assert.notNull(parentPropertyId, "ParentPropertyId must not be null!");
         Assert.state(
                 parameter.getId() == null,
-                "New Property cannot have id field, please use update methods"
+                "New parameter cannot have id field, please use update methods"
         );
 
         if(!icalService.getPropertyById(parentPropertyId).isPresent()) {
@@ -212,6 +265,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.saveParameter(parameter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parameter getParameterById(Long parameterId){
         Assert.notNull(parameterId, "Id must not be null!");
@@ -223,6 +279,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         return icalService.getParameterById(parameterId).get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Parameter> getParametersOfProperty(Long propertyId){
         Assert.notNull(propertyId, "Id must not be null!");
@@ -233,6 +292,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         return icalService.getPropertyById(propertyId).get().getParameters();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteParameter(Long parameterId){
         Assert.notNull(parameterId, "Id must not be null!");
@@ -244,6 +306,9 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         icalService.deleteParameterById(parameterId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateParameter(Parameter parameter, Long parameterId){
         Assert.notNull(parameter, "parameter must not be null!");
