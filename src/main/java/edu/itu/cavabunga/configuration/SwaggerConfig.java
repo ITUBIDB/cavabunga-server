@@ -41,9 +41,10 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
                 "https://www.apache.org/licenses/LICENSE-2.0",
 
-                "sdsd"
+                ""
         );
     }
+
 
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
