@@ -11,4 +11,5 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findByUserName(String name);
 
     Optional<Participant> findById(Long Id);
+
 }
