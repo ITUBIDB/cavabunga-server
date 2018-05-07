@@ -47,4 +47,8 @@ public abstract class Participant {
     public Participant(){
 
     }
+
+    public void validate(){
+
+    }
 }

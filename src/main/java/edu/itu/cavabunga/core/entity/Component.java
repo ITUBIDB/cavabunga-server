@@ -69,7 +69,7 @@ public abstract class Component {
         properties.add(property);
     }
 
-    public boolean validate(){
-        return true;
+    public void validate(){
+
     }
 }

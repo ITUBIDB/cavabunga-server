@@ -1,7 +1,6 @@
 package edu.itu.cavabunga.exception;
 
 public class Conflict extends RuntimeException {
-
     public Conflict(){
 
     }
@@ -12,7 +11,4 @@ public class Conflict extends RuntimeException {
     public Conflict(Throwable cause){
         super(cause);
     }
-
-
-
 }

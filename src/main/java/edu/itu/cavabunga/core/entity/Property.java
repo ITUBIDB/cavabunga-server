@@ -89,4 +89,8 @@ public abstract class Property {
         parameter.setProperty(this);
         parameters.add(parameter);
     }
+
+    public void validate(){
+
+    }
 }

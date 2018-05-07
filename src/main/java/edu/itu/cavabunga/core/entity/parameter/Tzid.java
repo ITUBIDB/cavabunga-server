@@ -6,4 +6,8 @@ import javax.persistence.Entity;
 
 @Entity
 public class Tzid extends Parameter {
+    @Override
+    public void validate(){
+        //TODO: RFC 5545 must implemented
+    }
 }

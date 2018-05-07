@@ -52,4 +52,8 @@ public abstract class Parameter {
     @JoinColumn(name = "property_id")
     @JsonBackReference
     private Property property;
+
+    public void validate(){
+
+    }
 }
