@@ -9,13 +9,7 @@ import javax.persistence.Entity;
 public class Cn extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() == ""){
-            throw new Validation("CN parameter cannot be empty");
-        }
-
-        if(this.getValue().substring(0,1) != "\"" || this.getValue().substring(this.getValue().length() -1) != "\""){
-            throw new Validation("CN parameter must start and end with DQUOTE char.");
-        }
-
+        //TODO: This parameter can be specified on properties with a CAL-ADDRESS value type
+        super.validate();
     }
 }

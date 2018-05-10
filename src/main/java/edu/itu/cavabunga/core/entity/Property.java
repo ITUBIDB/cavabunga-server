@@ -3,6 +3,7 @@ package edu.itu.cavabunga.core.entity;
 import com.fasterxml.jackson.annotation.*;
 import edu.itu.cavabunga.core.entity.property.*;
 import edu.itu.cavabunga.core.entity.property.Class;
+import edu.itu.cavabunga.exception.Validation;
 import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -91,6 +92,14 @@ public abstract class Property {
     }
 
     public void validate(){
-
+        if(!this.parameters.isEmpty()){
+            for(Parameter pr : this.parameters){
+                try{
+                    pr.validate();
+                }catch (Exception e){
+                    throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
+                }
+            }
+        }
     }
 }

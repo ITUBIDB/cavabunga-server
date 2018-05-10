@@ -9,10 +9,7 @@ import javax.persistence.Entity;
 public class Altrep extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() == ""){
-            throw new Validation("ALTREP parameter cannot be empty");
-        }
-
+        super.validate();
         if(this.getValue().substring(0,1) != "\"" || this.getValue().substring(this.getValue().length() -1) != "\""){
             throw new Validation("ALTREP parameter must start and end with DQUOTE char.");
         }
