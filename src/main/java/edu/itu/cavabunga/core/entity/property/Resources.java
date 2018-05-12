@@ -6,4 +6,8 @@ import javax.persistence.Entity;
 
 @Entity
 public class Resources extends Property {
+    @Override
+    public void validate(){
+
+    }
 }

@@ -92,10 +92,7 @@ public abstract class Property {
         parameters.add(parameter);
     }
 
-    public void validate(List<Parameter> mustHaveParameterList,
-                         List<Parameter> cannotHaveParameterList,
-                         PropertyValueType propertyValueType,
-                         Boolean checkWithValueParameter){
+    public void validate(){
         if(!this.parameters.isEmpty()){
             for(Parameter pr : this.parameters){
                 try{
@@ -105,10 +102,38 @@ public abstract class Property {
                 }
             }
         }
+
+        /*
+        if(mustHaveParameterList != null && !mustHaveParameterList.isEmpty()){
+            try{
+                validateMustHaveParameters(mustHaveParameterList);
+            }catch (Exception e){
+                throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
+            }
+        }
+
+        if(cannotHaveParameterList != null && !cannotHaveParameterList.isEmpty()){
+            try {
+                validateCannotHaveParameters(cannotHaveParameterList);
+            }catch (Exception e){
+                throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
+            }
+        }
+
+        if(propertyValueType != null){
+            try{
+                validateValueType(propertyValueType);
+            }catch (Exception e){
+                throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
+            }
+
+        }
+        */
+
     }
 
     public void validateMustHaveParameters(List<Parameter> parameterList){
-        if(!parameterList.isEmpty()) {
+        if(parameterList != null && !parameterList.isEmpty()) {
             Integer instanceCount = parameterList.size();
             Integer foundInstance = 0;
             for (Parameter pr : parameterList) {
@@ -126,7 +151,7 @@ public abstract class Property {
     }
 
     public void validateCannotHaveParameters(List<Parameter> parameterList){
-        if(!parameterList.isEmpty()) {
+        if(parameterList != null && !parameterList.isEmpty()) {
             for (Parameter pr : parameterList) {
                 for (Parameter search : parameters) {
                     if (pr.getClass().getName().equals(search.getClass().getName())) {
@@ -138,96 +163,98 @@ public abstract class Property {
     }
 
     public void validateValueType(PropertyValueType propertyValueType){
-        if(propertyValueType == PropertyValueType.BINARY){
-            if(!value.matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$")){
-                throw new Validation(this.getClass().getName() + " value is not valid BINARY type");
-            }
-        }
-
-        if(propertyValueType == PropertyValueType.BOOLEAN){
-            if(value != "TRUE" && value != "FALSE"){
-                throw new Validation(this.getClass().getName() + " value is not valid BOOLEAN type " + value);
-            }
-        }
-
-        if(propertyValueType == PropertyValueType.CALADDRESS){
-            //TODO: there is a full rfc about it: rfc3986
-        }
-
-        if(propertyValueType == PropertyValueType.DATE){
-            String[] parts = value.split(",");
-            for(String part : parts){
-                if(!part.matches("^[0-9]{8}$")){
-                    throw new Validation(this.getClass().getName() + " value is not valid DATE type " + value);
+        if(propertyValueType != null) {
+            if (propertyValueType == PropertyValueType.BINARY) {
+                if (!value.matches("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$")) {
+                    throw new Validation(this.getClass().getName() + " value is not valid BINARY type");
                 }
             }
-        }
 
-        if(propertyValueType == PropertyValueType.DATETIME){
-            String[] parts = value.split(",");
-            for(String part : parts){
-                if(!part.matches("^[0-9]{8}T[0-9]{6}|[0-9]{8}T[0-9]{6}Z")){
-                    throw new Validation(this.getClass().getName() + " value is not valid DATE-TIME type " + value);
+            if (propertyValueType == PropertyValueType.BOOLEAN) {
+                if (value != "TRUE" && value != "FALSE") {
+                    throw new Validation(this.getClass().getName() + " value is not valid BOOLEAN type " + value);
                 }
             }
-        }
 
-        if(propertyValueType == PropertyValueType.DURATION){
-            //TODO: rfc5545 pg 35
-        }
+            if (propertyValueType == PropertyValueType.CALADDRESS) {
+                //TODO: there is a full rfc about it: rfc3986
+            }
 
-        if(propertyValueType == PropertyValueType.FLOAT){
-            String[] parts = value.split(",");
-            for(String part : parts){
-                try{
-                    Float f = Float.parseFloat(value);
-                }catch (NumberFormatException e){
-                    throw new Validation(this.getClass().getName() + " value is not valid FLOAT type " + value);
+            if (propertyValueType == PropertyValueType.DATE) {
+                String[] parts = value.split(",");
+                for (String part : parts) {
+                    if (!part.matches("^[0-9]{8}$")) {
+                        throw new Validation(this.getClass().getName() + " value is not valid DATE type " + value);
+                    }
                 }
             }
-        }
 
-        if(propertyValueType == PropertyValueType.INTEGER){
-            String[] parts = value.split(",");
-            for(String part : parts) {
-                try {
-                    Integer i = Integer.parseInt(value);
-                } catch (NumberFormatException e) {
-                    throw new Validation(this.getClass().getName() + " value is not valid INTEGER type" + value);
+            if (propertyValueType == PropertyValueType.DATETIME) {
+                String[] parts = value.split(",");
+                for (String part : parts) {
+                    if (!part.matches("^[0-9]{8}T[0-9]{6}|[0-9]{8}T[0-9]{6}Z")) {
+                        throw new Validation(this.getClass().getName() + " value is not valid DATE-TIME type " + value);
+                    }
                 }
             }
-        }
 
-        if(propertyValueType == PropertyValueType.PERIOD){
-            //TODO: rfc5545 pg 36
-        }
+            if (propertyValueType == PropertyValueType.DURATION) {
+                //TODO: rfc5545 pg 35
+            }
 
-        if(propertyValueType == PropertyValueType.RECUR){
-            //TODO: rfc5545 pg 37-45
-        }
-
-        if(propertyValueType == PropertyValueType.TEXT){
-            //TODO: rfc5545 pg 45
-        }
-
-        if(propertyValueType == PropertyValueType.TIME){
-            String[] parts = value.split(",");
-            for(String part : parts){
-                if(!part.matches("^[0-9]{6}$|^[0-9]{6}Z$")){
-                    throw new Validation(this.getClass().getName() + " value is not valid TIME type " + value);
+            if (propertyValueType == PropertyValueType.FLOAT) {
+                String[] parts = value.split(",");
+                for (String part : parts) {
+                    try {
+                        Float f = Float.parseFloat(value);
+                    } catch (NumberFormatException e) {
+                        throw new Validation(this.getClass().getName() + " value is not valid FLOAT type " + value);
+                    }
                 }
             }
-        }
 
-        if(propertyValueType == PropertyValueType.URI){
-            //TODO: there is a full rfc about it: rfc3986
-        }
+            if (propertyValueType == PropertyValueType.INTEGER) {
+                String[] parts = value.split(",");
+                for (String part : parts) {
+                    try {
+                        Integer i = Integer.parseInt(value);
+                    } catch (NumberFormatException e) {
+                        throw new Validation(this.getClass().getName() + " value is not valid INTEGER type" + value);
+                    }
+                }
+            }
 
-        if(propertyValueType == PropertyValueType.UTCOFFSET){
-            String[] parts = value.split(",");
-            for(String part : parts){
-                if(!part.matches("^+[0-9]{4}$|^+[0-9]{4}Z$")){
-                    throw new Validation(this.getClass().getName() + " value is not valid TIME type " + value);
+            if (propertyValueType == PropertyValueType.PERIOD) {
+                //TODO: rfc5545 pg 36
+            }
+
+            if (propertyValueType == PropertyValueType.RECUR) {
+                //TODO: rfc5545 pg 37-45
+            }
+
+            if (propertyValueType == PropertyValueType.TEXT) {
+                //TODO: rfc5545 pg 45
+            }
+
+            if (propertyValueType == PropertyValueType.TIME) {
+                String[] parts = value.split(",");
+                for (String part : parts) {
+                    if (!part.matches("^[0-9]{6}$|^[0-9]{6}Z$")) {
+                        throw new Validation(this.getClass().getName() + " value is not valid TIME type " + value);
+                    }
+                }
+            }
+
+            if (propertyValueType == PropertyValueType.URI) {
+                //TODO: there is a full rfc about it: rfc3986
+            }
+
+            if (propertyValueType == PropertyValueType.UTCOFFSET) {
+                String[] parts = value.split(",");
+                for (String part : parts) {
+                    if (!part.matches("^+[0-9]{4}$|^+[0-9]{4}Z$")) {
+                        throw new Validation(this.getClass().getName() + " value is not valid TIME type " + value);
+                    }
                 }
             }
         }
