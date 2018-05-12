@@ -9,10 +9,7 @@ import javax.persistence.Entity;
 public class Fbtype extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() == ""){
-            throw new Validation("FBTYPE cannot be empty");
-        }
-
+        super.validate();
         if(this.getValue() != "FREE" &&
                 this.getValue() != "BUSY" &&
                 this.getValue() != "BUSY-UNAVAILABLE" &&

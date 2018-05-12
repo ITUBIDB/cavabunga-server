@@ -9,10 +9,8 @@ import javax.persistence.Entity;
 public class Related extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("RELATED parameter cannot be empty");
-        }
-
+        //TODO: This parameter can be specified on properties that specify an alarm trigger with a "DURATION" value type.
+        super.validate();
         if(this.getValue() != "START" && this.getValue() != "END"){
             throw new Validation("RELATED value is different from acceptable value range: " + this.getValue());
         }

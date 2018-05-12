@@ -9,13 +9,16 @@ import javax.persistence.Entity;
 public class Encoding extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() == ""){
-            throw new Validation("ENCODING value cannot be empty");
-        }
+        super.validate();
 
         if(this.getValue() != "BASE64" && this.getValue() != "8BIT"){
             throw new Validation("ENCODING value is different from acceptable value range: " + this.getValue());
         }
 
+        for(Parameter pr : this.getProperty().getParameters()){
+            if( (pr instanceof Value) && pr.getValue() == "BINARY" && this.getValue() != "BASE64"){
+                throw new Validation("While VALUE parameter described as BINARY, ENCODING parameter MUST set as BASE64");
+            }
+        }
     }
 }
