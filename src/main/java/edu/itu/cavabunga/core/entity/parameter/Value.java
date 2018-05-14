@@ -9,14 +9,12 @@ import javax.persistence.Entity;
 public class Value extends Parameter{
     @Override
     public void validate(){
-        if(this.getValue().trim() == ""){
-            throw new Validation("VALUE value cannot be empty");
-        }
-
+        super.validate();
         if(this.getValue() != "BINARY" &&
                 this.getValue() != "BOOLEAN" &&
                 this.getValue() != "CAL-ADDRESS" &&
                 this.getValue() != "DATE-TIME" &&
+                this.getValue() != "DATE" &&
                 this.getValue() != "DURATION" &&
                 this.getValue() != "FLOAT" &&
                 this.getValue() != "INTEGER" &&
@@ -28,6 +26,5 @@ public class Value extends Parameter{
                 this.getValue() != "UTC-OFFSET"){
             throw new Validation("VALUE value is different from acceptable value range: " + this.getValue());
         }
-
     }
 }

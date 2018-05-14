@@ -11,7 +11,6 @@ public class Member extends Parameter{
     public void validate(){
         //TODO: This parameter can be specified on properties with a CAL-ADDRESS value type
         super.validate();
-
         if(this.getValue().substring(0,1) != "\"" || this.getValue().substring(this.getValue().length() -1) != "\""){
             throw new Validation("MEMBER parameter must start and end with DQUOTE char.");
         }

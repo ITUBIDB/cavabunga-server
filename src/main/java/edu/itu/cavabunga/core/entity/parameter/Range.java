@@ -10,9 +10,8 @@ import javax.persistence.Entity;
 public class Range extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() == ""){
-            throw new Validation("RANGE parameter cannot be empty");
-        }
+        //TODO:  This parameter can be specified on a property that specifies a recurrence identifier.
+        super.validate();
 
         if(this.getValue() != "THISANDFUTURE"){
             throw new Validation("RANGE parameter can only have THISANDFUTURE value: " + this.getValue());

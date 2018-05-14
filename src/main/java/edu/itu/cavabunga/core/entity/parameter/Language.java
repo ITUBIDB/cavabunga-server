@@ -11,7 +11,6 @@ public class Language extends Parameter {
     @Override
     public void validate(){
         super.validate();
-
         try {
             LocaleUtils.toLocale(this.getValue());
         }catch (IllegalArgumentException e){

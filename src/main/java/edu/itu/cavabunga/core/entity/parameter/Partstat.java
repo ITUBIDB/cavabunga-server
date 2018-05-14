@@ -44,7 +44,5 @@ public class Partstat extends Parameter {
                 throw new Validation("PARTSTAT value is different from acceptable value range in a Journal component " + this.getValue());
             }
         }
-        // TODO: value of partstat may depend on component type which this parameter's property have used in
-        //       check RFC 5545
     }
 }

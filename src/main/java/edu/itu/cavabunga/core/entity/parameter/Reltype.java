@@ -9,10 +9,8 @@ import javax.persistence.Entity;
 public class Reltype extends Parameter{
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("RELTYPE parameter cannot be empty");
-        }
-
+        //TODO:  This parameter can be specified on properties with a CAL-ADDRESS value type
+        super.validate();
         if(this.getValue() != "PARENT" &&
                 this.getValue() != "CHILD" &&
                 this.getValue() != "SIBLING"){

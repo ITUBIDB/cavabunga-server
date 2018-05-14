@@ -10,19 +10,7 @@ import javax.persistence.Entity;
 public class Comment extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("COMMENT property cannot be empty");
-        }
-
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("COMMENT parameter validation failed: " + pr.getValue());
-                }
-            }
-        }
+        super.validate();
+        super.validateValueType(PropertyValueType.TEXT);
     }
 }

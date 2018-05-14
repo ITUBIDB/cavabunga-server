@@ -15,25 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class Description extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("DESCRIPTION property cannot be empty");
-        }
-
-        if (!(this.getComponent() instanceof Event ||
-                this.getComponent() instanceof Todo ||
-                this.getComponent() instanceof Journal ||
-                this.getComponent() instanceof Alarm)){
-            throw new Validation("DESCRIPTION property can only use in Event, Todo, Journal or Alarm components");
-        }
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("DESCRIPTION parameter validation failed: " + this.getValue());
-                }
-            }
-        }
+        super.validate();
+        super.validateValueType(PropertyValueType.TEXT);
     }
 }

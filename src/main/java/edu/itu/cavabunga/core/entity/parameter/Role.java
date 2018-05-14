@@ -9,10 +9,8 @@ import javax.persistence.Entity;
 public class Role extends Parameter {
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("ROLE parameter cannot be empty");
-        }
-
+        //TODO: This parameter can be specified on properties with a CAL-ADDRESS value type.
+        super.validate();
         if(this.getValue() != "CHAIR" &&
                 this.getValue() != "REQ-PARTICIPANT" &&
                 this.getValue() != "OPT-PARTICIPANT" &&
