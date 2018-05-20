@@ -11,18 +11,7 @@ import javax.persistence.Entity;
 public class Contact extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("CONTACT property cannot be empty");
-        }
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("CONTACT parameter validation failed: " + pr.getValue());
-                }
-            }
-        }
+        super.validate();
+        super.validateValueType(PropertyValueType.TEXT);
     }
 }

@@ -102,34 +102,6 @@ public abstract class Property {
                 }
             }
         }
-
-        /*
-        if(mustHaveParameterList != null && !mustHaveParameterList.isEmpty()){
-            try{
-                validateMustHaveParameters(mustHaveParameterList);
-            }catch (Exception e){
-                throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
-            }
-        }
-
-        if(cannotHaveParameterList != null && !cannotHaveParameterList.isEmpty()){
-            try {
-                validateCannotHaveParameters(cannotHaveParameterList);
-            }catch (Exception e){
-                throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
-            }
-        }
-
-        if(propertyValueType != null){
-            try{
-                validateValueType(propertyValueType);
-            }catch (Exception e){
-                throw new Validation(this.getClass().getName() + " property class validation failed: " + e.getMessage());
-            }
-
-        }
-        */
-
     }
 
     public void validateMustHaveParameters(List<Parameter> parameterList){
@@ -208,6 +180,7 @@ public abstract class Property {
                     try {
                         Float f = Float.parseFloat(value);
                     } catch (NumberFormatException e) {
+                        //TODO: GEO property has a value type in 'float;float' format !!
                         throw new Validation(this.getClass().getName() + " value is not valid FLOAT type " + value);
                     }
                 }

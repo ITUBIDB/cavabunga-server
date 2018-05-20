@@ -2,7 +2,10 @@ package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import edu.itu.cavabunga.core.entity.component.*;
+import edu.itu.cavabunga.core.entity.property.PropertyType;
+import edu.itu.cavabunga.exception.Validation;
 import lombok.Data;
+import org.apache.commons.lang.Validate;
 import org.hibernate.annotations.DiscriminatorOptions;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -70,6 +73,80 @@ public abstract class Component {
     }
 
     public void validate(){
+        if(!components.isEmpty()){
+            for (Component c : components){
+                try {
+                    c.validate();
+                }catch (Exception e){
+                    throw new Validation(this.getClass().getName() + " component's sub component validation failed: " + e.getMessage());
+                }
+            }
+        }
 
+        if(!properties.isEmpty()){
+            for(Property p : properties){
+                try {
+                    p.validate();
+                }catch (Exception e){
+                    throw new Validation(this.getClass().getName() + " component property validateion failed " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void validateOptionalOneProperties(List<PropertyType> propertyTypeList){
+        Integer propertyCount = 0;
+        for(PropertyType pt : propertyTypeList){
+            for(Property p : properties){
+                if(p.getClass().getName().equals(pt.create().getClass().getName())){
+                    propertyCount++;
+                }
+
+                if(propertyCount >= 2){
+                    throw new Validation("Component validation failed in optional-one properties check: " + p.getClass().getName());
+                }
+            }
+            propertyCount = 0;
+        }
+    }
+
+    public void validateOptionalManyProperties(){
+        //
+    }
+
+    public void validateRequiredOneProperties(List<PropertyType> propertyTypeList){
+        Integer propertyCount = 0;
+        for(PropertyType pt : propertyTypeList){
+            for(Property p : properties){
+                if(p.getClass().getName().equals(pt.create().getClass().getName())){
+                    propertyCount++;
+                }
+
+                if(propertyCount >= 2 ){
+                    throw new Validation("Component validation failed in required-one properties check. Count >= 2: " + p.getClass().getName());
+                }
+            }
+
+            if(propertyCount == 0){
+                throw new Validation("Component validation failed in required-one properties check. Count 0: " + pt.create().getClass().getName());
+            }
+
+        }
+    }
+
+    public void validateReqiredManyProperties(List<PropertyType> propertyTypeList){
+        Integer propertyCount = 0;
+        for(PropertyType pt : propertyTypeList){
+            for(Property p : properties){
+                if(p.getClass().getName().equals(pt.create().getClass().getName())){
+                    propertyCount++;
+                }
+            }
+
+            if(propertyCount == 0){
+                throw new Validation("Component validation failed in required-many properties check: " + pt.create().getClass().getName());
+            }
+
+        }
     }
 }

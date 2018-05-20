@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 public class Resources extends Property {
     @Override
     public void validate(){
-
+        super.validate();
+        super.validateValueType(PropertyValueType.TEXT);
     }
 }

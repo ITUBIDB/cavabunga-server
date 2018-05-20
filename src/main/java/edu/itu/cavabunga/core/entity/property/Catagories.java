@@ -11,18 +11,7 @@ import javax.persistence.Entity;
 public class Catagories extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() != ""){
-            throw new Validation("CATAGORIES property cannot be empty");
-        }
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("CATAGORIES parameter validation failed: " + pr.getValue());
-                }
-            }
-        }
+        super.validate();
+        super.validateValueType(PropertyValueType.TEXT);
     }
 }

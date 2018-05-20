@@ -13,8 +13,11 @@ import edu.itu.cavabunga.core.factory.PropertyFactory;
 import edu.itu.cavabunga.core.repository.ComponentRepository;
 import edu.itu.cavabunga.core.repository.ParameterRepository;
 import edu.itu.cavabunga.core.repository.PropertyRepository;
+import edu.itu.cavabunga.exception.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
 
 /**
  * {@inheritDoc}
@@ -91,6 +94,12 @@ public class IcalServiceImpl implements IcalService {
      */
     @Override
     public void saveComponent(Component component){
+        try {
+            component.validate();
+        }catch (Exception e){
+            throw new Validation("component couldnor send to repository, validation failed: " + e.getMessage());
+        }
+
         componentRepository.save(component);
     }
 
@@ -123,6 +132,12 @@ public class IcalServiceImpl implements IcalService {
      */
     @Override
     public void saveProperty(Property property){
+        try {
+            property.validate();
+        }catch (Exception e){
+            throw new Validation("Propererty couldnot send reposiyory, validation failed: " + e.getMessage());
+        }
+
         propertyRepository.save(property);
     }
 
@@ -155,6 +170,13 @@ public class IcalServiceImpl implements IcalService {
      */
     @Override
     public void saveParameter(Parameter parameter){
+        try {
+            parameter.validate();
+        }catch (Exception e){
+            throw new Validation("Parameter couldnot send to repository, validation failed: " + e.getMessage());
+
+        }
+
         parameterRepository.save(parameter);
     }
 

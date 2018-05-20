@@ -10,18 +10,11 @@ import javax.persistence.Entity;
 public class Dtend extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() == "" ){
-            throw new Validation("DTEND property cannot be empty");
-        }
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("DTEND parameter validation failed: " + this.getValue());
-                }
-            }
+        super.validate();
+        try {
+            super.validateValueType(PropertyValueType.DATETIME);
+        }catch (Validation e){
+            super.validateValueType(PropertyValueType.DATE);
         }
     }
 }

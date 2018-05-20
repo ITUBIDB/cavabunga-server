@@ -10,18 +10,7 @@ import javax.persistence.Entity;
 public class Dtstamp extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() == "" ){
-            throw new Validation("DTSTAMP property cannot be empty");
-        }
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("DTSTAMP parameter validation failed: " + this.getValue());
-                }
-            }
-        }
+        super.validate();
+        super.validateValueType(PropertyValueType.DATETIME);
     }
 }

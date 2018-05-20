@@ -6,4 +6,9 @@ import javax.persistence.Entity;
 
 @Entity
 public class Tzname extends Property {
+    @Override
+    public void validate(){
+        super.validate();
+        super.validateValueType(PropertyValueType.TEXT);
+    }
 }

@@ -10,18 +10,7 @@ import javax.persistence.Entity;
 public class Created extends Property {
     @Override
     public void validate(){
-        if(this.getValue().trim() == "" ){
-            throw new Validation("CREATED property cannot be empty");
-        }
-
-        if(!this.getParameters().isEmpty()){
-            for(Parameter pr : this.getParameters()){
-                try {
-                    pr.validate();
-                }catch (Exception e){
-                    throw new Validation("Created parameter validation failed: " + this.getValue());
-                }
-            }
-        }
+        super.validate();
+        super.validateValueType(PropertyValueType.DATETIME);
     }
 }
