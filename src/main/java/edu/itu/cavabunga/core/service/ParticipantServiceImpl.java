@@ -42,7 +42,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Participant createParticipant(String userName, ParticipantType participantType){
         Participant newParticipant = participantFactory.createParticipant(participantType);
         newParticipant.setUserName(userName);
-        participantRepository.save(newParticipant);
+        //participantRepository.save(newParticipant); //TODO: no need to create just create, while you saving: it will give error "New participant cannot have id field"
         return newParticipant;
     }
 

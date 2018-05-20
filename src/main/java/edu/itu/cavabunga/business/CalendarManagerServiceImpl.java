@@ -110,7 +110,7 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
 
         Assert.state(
                 component.getId() == null,
-                "New component cannot have id field, please use update methods"
+                "44New component cannot have id field, please use update methods"
         );
 
         if(!participantService.getParticipantByUserName(owner).isPresent()) {
@@ -178,7 +178,7 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         Assert.notNull(parentComponentId, "ParentComponentId must not be null!");
         Assert.state(
                 property.getId() == null,
-                "New Property cannot have id field, please use update methods"
+                "55New Property cannot have id field, please use update methods"
         );
 
         if(!icalService.getComponentById(parentComponentId).isPresent()) {
@@ -255,7 +255,7 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         Assert.notNull(parentPropertyId, "ParentPropertyId must not be null!");
         Assert.state(
                 parameter.getId() == null,
-                "New parameter cannot have id field, please use update methods"
+                "77New parameter cannot have id field, please use update methods"
         );
 
         if(!icalService.getPropertyById(parentPropertyId).isPresent()) {

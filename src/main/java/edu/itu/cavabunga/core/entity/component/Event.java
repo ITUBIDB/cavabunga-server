@@ -43,7 +43,6 @@ public class Event extends Component {
 
         List<PropertyType> requiredOneList = new ArrayList<PropertyType>();
         requiredOneList.add(PropertyType.Dtend);
-        requiredOneList.add(PropertyType.Duration);
         super.validateRequiredOneProperties(requiredOneList);
     }
 }

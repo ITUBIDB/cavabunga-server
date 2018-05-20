@@ -18,7 +18,6 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@EntityListeners(AuditingEntityListener.class)
 @DiscriminatorOptions(force=true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
@@ -121,16 +120,13 @@ public abstract class Component {
                 if(p.getClass().getName().equals(pt.create().getClass().getName())){
                     propertyCount++;
                 }
-
-                if(propertyCount >= 2 ){
-                    throw new Validation("Component validation failed in required-one properties check. Count >= 2: " + p.getClass().getName());
-                }
             }
 
-            if(propertyCount == 0){
-                throw new Validation("Component validation failed in required-one properties check. Count 0: " + pt.create().getClass().getName());
+            if(propertyCount != 1){
+                throw new Validation("Component validation failed in required-one properties check. Count " + propertyCount + ": " + pt.create().getClass().getName());
             }
 
+            propertyCount = 0;
         }
     }
 

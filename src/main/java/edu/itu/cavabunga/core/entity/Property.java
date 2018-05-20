@@ -225,7 +225,7 @@ public abstract class Property {
             if (propertyValueType == PropertyValueType.UTCOFFSET) {
                 String[] parts = value.split(",");
                 for (String part : parts) {
-                    if (!part.matches("^+[0-9]{4}$|^+[0-9]{4}Z$")) {
+                    if (!part.matches("^[-+][0-9]{4}$|^[-+][0-9]{4}Z$")) {
                         throw new Validation(this.getClass().getName() + " value is not valid TIME type " + value);
                     }
                 }
