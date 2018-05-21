@@ -69,12 +69,12 @@ public class ExceptionHandlerAdvice {
      * @param e caught exception
      * @return ErrorResponse with exception message with related HTTP status
      */
-    @ExceptionHandler(Exception.class)
+   /* @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e){
         System.out.printf(e.getMessage());
         return new ErrorResponse(1,e.getMessage(), null);
-    }
+    }*/
 
 
 }

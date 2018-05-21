@@ -1,3 +1,4 @@
+
 package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.*;

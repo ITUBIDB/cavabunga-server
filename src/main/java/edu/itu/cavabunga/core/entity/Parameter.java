@@ -49,7 +49,7 @@ public abstract class Parameter {
 
     private String value;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "property_id")
     @JsonBackReference
     private Property property;

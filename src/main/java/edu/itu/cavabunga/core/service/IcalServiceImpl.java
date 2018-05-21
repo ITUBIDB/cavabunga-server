@@ -16,6 +16,7 @@ import edu.itu.cavabunga.core.repository.PropertyRepository;
 import edu.itu.cavabunga.exception.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 
@@ -93,6 +94,7 @@ public class IcalServiceImpl implements IcalService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public void saveComponent(Component component){
         try {
             component.validate();

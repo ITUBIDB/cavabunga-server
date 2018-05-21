@@ -13,6 +13,7 @@ import edu.itu.cavabunga.core.entity.property.PropertyValueType;
 import edu.itu.cavabunga.core.service.IcalService;
 import edu.itu.cavabunga.core.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +35,10 @@ public class SeederController {
 
 
     @GetMapping
+    @Transactional
     public String seedDataBase(){
-        calendarManagerService.addParticipant(participantService.createParticipant("testuser", ParticipantType.User));
-        calendarManagerService.addParticipant(participantService.createParticipant("testgroup", ParticipantType.Group));
+        participantService.saveParticipant(participantService.createParticipant("testuser", ParticipantType.User));
+        participantService.saveParticipant(participantService.createParticipant("testgroup", ParticipantType.Group));
 
 
         Component calendar = icalService.createComponent(ComponentType.Calendar);
@@ -52,6 +54,7 @@ public class SeederController {
         calendar.addProperty(version);
         calendar.addProperty(calscale);
         calendar.addProperty(method);
+
         calendar.setOwner(calendarManagerService.getParticipantByUserName("testuser"));
 
 
