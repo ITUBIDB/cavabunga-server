@@ -78,6 +78,7 @@ public interface CalendarManagerService {
      */
     Component getComponentById(Long id);
 
+    Component getComponentByOwner(Participant owner);
     /**
      * delete a component
      *

@@ -43,7 +43,7 @@ public class ComponentController {
         return new Response(0,"created");
     }
 
-    @ApiOperation(value = "Get component with id = {component_id}")
+    @ApiOperation(value = "Get component with id or components owner username = {component_key}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully get component with id = {component_id}", response = ComponentResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = ErrorResponse.class),
@@ -51,10 +51,16 @@ public class ComponentController {
             @ApiResponse(code = 403, message = "Forbidden", response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "No component found with id = {component_id}", response = ErrorResponse.class),
     })
-    @GetMapping(value = "/{component_id}", produces = "application/json")
+    @GetMapping(value = "/{component_key}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ComponentResponse getComponent(@PathVariable(value = "component_id")Long componentId){
-        return new ComponentResponse(0,null,calendarManagerService.getComponentById(componentId));
+    public ComponentResponse getComponent(@PathVariable(value = "component_key")String componentKey){
+        Long componentIdLong;
+        try {
+            componentIdLong = Long.parseLong(componentKey);
+            return new ComponentResponse(0,null,calendarManagerService.getComponentById(componentIdLong));
+        }catch (Exception e){
+            return new ComponentResponse(0,null,calendarManagerService.getComponentByOwner(calendarManagerService.getParticipantByUserName(componentKey)));
+        }
     }
 
     @ApiOperation(value = "Update component with id = {component_id}")

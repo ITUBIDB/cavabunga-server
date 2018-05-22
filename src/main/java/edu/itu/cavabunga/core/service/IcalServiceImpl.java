@@ -89,6 +89,12 @@ public class IcalServiceImpl implements IcalService {
     /**
      * {@inheritDoc}
      */
+
+    @Override
+    public Optional<Component> getComponentByOwner(Participant owner){
+        return componentRepository.findByOwner(owner);
+    }
+
     @Override
     public void saveComponent(Component component){
         componentRepository.save(component);
