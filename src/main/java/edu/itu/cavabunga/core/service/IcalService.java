@@ -26,7 +26,6 @@ public interface IcalService {
      */
     Optional<Component> getComponentById(Long id);
 
-    Optional<Component> getComponentByOwner(Participant owner);
     /**
      * saves given component
      *
