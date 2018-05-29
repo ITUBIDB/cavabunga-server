@@ -143,6 +143,17 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
      * {@inheritDoc}
      */
     @Override
+    public Component getComponentByOwner(Participant owner){
+        Assert.notNull(owner, "Owner participant cannot be null");
+
+        if(!icalService.getComponentByOwner(owner).isPresent()){
+            throw new NotFound("No component found for participant: " + owner.getUserName());
+        }
+
+        return icalService.getComponentByOwner(owner).get();
+    }
+
+    @Override
     public void deleteComponentById(Long id){
         Assert.notNull(id, "Id must not be null!");
 
