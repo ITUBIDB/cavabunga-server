@@ -2,7 +2,6 @@ package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
 import edu.itu.cavabunga.core.entity.Participant;
-import edu.itu.cavabunga.core.http.ComponentResponse;
 import edu.itu.cavabunga.core.http.ErrorResponse;
 import edu.itu.cavabunga.core.http.ParticipantResponse;
 import edu.itu.cavabunga.core.http.Response;
@@ -96,11 +95,5 @@ public class ParticipantController {
     public Response updateParticipant(@PathVariable(value = "user_id") Long id, @RequestBody Participant participant){
        calendarManagerService.updateParticipant(id, participant);
        return new Response(0,"updated");
-    }
-
-    @GetMapping(value="/{user_name}/components", produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    public ComponentResponse getPartipantComponents(@PathVariable(value = "user_name")String userName){
-        return new ComponentResponse(0,null,calendarManagerService.getComponentByOwner(calendarManagerService.getParticipantByUserName(userName)));
     }
 }

@@ -53,8 +53,8 @@ public class ComponentController {
     })
     @GetMapping(value = "/{component_id}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ComponentResponse getComponent(@PathVariable(value = "component_id")Long component_id){
-        return new ComponentResponse(0,null,calendarManagerService.getComponentById(component_id));
+    public ComponentResponse getComponent(@PathVariable(value = "component_id")Long componentId){
+        return new ComponentResponse(0,null,calendarManagerService.getComponentById(componentId));
     }
 
     @ApiOperation(value = "Update component with id = {component_id}")

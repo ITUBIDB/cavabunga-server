@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ComponentRepository extends JpaRepository<Component, Long> {
     Optional<Component> findById(Long Id);
-    Optional<Component> findByOwner(Participant owner);
+    List<Component> findByOwner(Participant owner);
 }
