@@ -2,6 +2,7 @@ package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
 import edu.itu.cavabunga.core.entity.Participant;
+import edu.itu.cavabunga.core.http.ComponentResponse;
 import edu.itu.cavabunga.core.http.ErrorResponse;
 import edu.itu.cavabunga.core.http.ParticipantResponse;
 import edu.itu.cavabunga.core.http.Response;
@@ -64,6 +65,20 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public ParticipantResponse getParticipant(@PathVariable(value = "user_name") String userName){
         return new ParticipantResponse(0,null,calendarManagerService.getParticipantByUserName(userName));
+    }
+
+    @ApiOperation(value = "Get component which owned by participant with username = {user_name}", response = Object.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully retrieve a components owned by participant with username = {user_name}", response = ComponentResponse.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = "Unauthorized request", response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = "No component found which owned by participant with username = {user_name}", response = ErrorResponse.class)
+    })
+    @GetMapping(value = "/{user_name}/components", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ComponentResponse getComponentByOwner(@PathVariable(value = "user_name") String userName){
+        return new ComponentResponse(0, null, calendarManagerService.getComponentByOwner(userName));
     }
 
     @ApiOperation(value = "Delete participant with id = {user_id}")

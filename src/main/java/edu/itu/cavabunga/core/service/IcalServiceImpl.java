@@ -1,4 +1,5 @@
 package edu.itu.cavabunga.core.service;
+import java.util.List;
 import java.util.Optional;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Parameter;
@@ -84,6 +85,14 @@ public class IcalServiceImpl implements IcalService {
     @Override
     public Optional<Component> getComponentById(Long id){
         return componentRepository.findById(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Component> getComponentByOwner(Participant owner){
+        return componentRepository.findByOwner(owner);
     }
 
     /**
