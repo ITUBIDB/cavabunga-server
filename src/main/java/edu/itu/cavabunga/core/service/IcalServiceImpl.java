@@ -1,4 +1,5 @@
 package edu.itu.cavabunga.core.service;
+import java.util.List;
 import java.util.Optional;
 import edu.itu.cavabunga.core.entity.Component;
 import edu.itu.cavabunga.core.entity.Parameter;
@@ -13,12 +14,8 @@ import edu.itu.cavabunga.core.factory.PropertyFactory;
 import edu.itu.cavabunga.core.repository.ComponentRepository;
 import edu.itu.cavabunga.core.repository.ParameterRepository;
 import edu.itu.cavabunga.core.repository.PropertyRepository;
-import edu.itu.cavabunga.exception.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.Valid;
 
 /**
  * {@inheritDoc}
@@ -49,12 +46,12 @@ public class IcalServiceImpl implements IcalService {
      */
     @Autowired
     public IcalServiceImpl(
-        ComponentFactory componentFactory,
-        ComponentRepository componentRepository,
-        PropertyFactory propertyFactory,
-        PropertyRepository propertyRepository,
-        ParameterFactory parameterFactory,
-        ParameterRepository parameterRepository
+            ComponentFactory componentFactory,
+            ComponentRepository componentRepository,
+            PropertyFactory propertyFactory,
+            PropertyRepository propertyRepository,
+            ParameterFactory parameterFactory,
+            ParameterRepository parameterRepository
     ) {
         this.componentFactory = componentFactory;
         this.componentRepository = componentRepository;
@@ -94,14 +91,15 @@ public class IcalServiceImpl implements IcalService {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
-    public void saveComponent(Component component){
-        try {
-            component.validate();
-        }catch (Exception e){
-            throw new Validation("component couldnor send to repository, validation failed: " + e.getMessage());
-        }
+    public List<Component> getComponentByOwner(Participant owner){
+        return componentRepository.findByOwner(owner);
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void saveComponent(Component component){
         componentRepository.save(component);
     }
 
@@ -134,12 +132,6 @@ public class IcalServiceImpl implements IcalService {
      */
     @Override
     public void saveProperty(Property property){
-        try {
-            property.validate();
-        }catch (Exception e){
-            throw new Validation("Propererty couldnot send reposiyory, validation failed: " + e.getMessage());
-        }
-
         propertyRepository.save(property);
     }
 
@@ -172,13 +164,6 @@ public class IcalServiceImpl implements IcalService {
      */
     @Override
     public void saveParameter(Parameter parameter){
-        try {
-            parameter.validate();
-        }catch (Exception e){
-            throw new Validation("Parameter couldnot send to repository, validation failed: " + e.getMessage());
-
-        }
-
         parameterRepository.save(parameter);
     }
 
