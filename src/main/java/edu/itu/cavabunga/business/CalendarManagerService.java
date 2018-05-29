@@ -79,6 +79,16 @@ public interface CalendarManagerService {
     Component getComponentById(Long id);
 
     /**
+     * get component by owner
+     *
+     * @param owner requested component's owner username
+     * @return requested components
+     * @throws IllegalArgumentException when owner is null
+     * @throws NotFound when participant with given username not found
+     */
+    List<Component> getComponentByOwner(String owner);
+
+    /**
      * delete a component
      *
      * @param id component id to be deleted

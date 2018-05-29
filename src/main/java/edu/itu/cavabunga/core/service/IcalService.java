@@ -8,6 +8,7 @@ import edu.itu.cavabunga.core.entity.component.ComponentType;
 import edu.itu.cavabunga.core.entity.parameter.ParameterType;
 import edu.itu.cavabunga.core.entity.property.PropertyType;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,6 +26,13 @@ public interface IcalService {
      * @return related component record or null
      */
     Optional<Component> getComponentById(Long id);
+
+    /**
+     * find component which owned by a participant
+     *
+     * @param owner participant to find component which owned by
+     */
+    List<Component> getComponentByOwner(Participant owner);
 
     /**
      * saves given component
