@@ -6,6 +6,7 @@ import edu.itu.cavabunga.core.factory.ParticipantFactory;
 import edu.itu.cavabunga.core.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Participant createParticipant(String userName, ParticipantType participantType){
         Participant newParticipant = participantFactory.createParticipant(participantType);
         newParticipant.setUserName(userName);
-        participantRepository.save(newParticipant);
+        //participantRepository.save(newParticipant); //TODO: no need to create just create, while you saving: it will give error "New participant cannot have id field"
         return newParticipant;
     }
 
@@ -50,6 +51,7 @@ public class ParticipantServiceImpl implements ParticipantService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public void saveParticipant(Participant participant){
         participantRepository.save(participant);
     }

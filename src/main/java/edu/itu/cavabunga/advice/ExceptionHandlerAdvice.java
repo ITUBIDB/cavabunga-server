@@ -20,6 +20,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(NotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFound(NotFound e){
+        System.out.printf(e.getMessage());
         return new ErrorResponse(1,e.getMessage(), null);
     }
 
@@ -32,6 +33,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(Conflict.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleConflict(Conflict e){
+        System.out.printf(e.getMessage());
         return new ErrorResponse(1,e.getMessage(),null);
     }
 
@@ -44,6 +46,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIllegalState(IllegalStateException e){
+        System.out.printf(e.getMessage());
         return new ErrorResponse(1,e.getMessage(),null);
     }
 
@@ -56,6 +59,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIllegalArgument(IllegalArgumentException e){
+        System.out.printf(e.getMessage());
         return new ErrorResponse(1,e.getMessage(),null);
     }
 
@@ -65,11 +69,12 @@ public class ExceptionHandlerAdvice {
      * @param e caught exception
      * @return ErrorResponse with exception message with related HTTP status
      */
-    @ExceptionHandler(Exception.class)
+   /* @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e){
+        System.out.printf(e.getMessage());
         return new ErrorResponse(1,e.getMessage(), null);
-    }
+    }*/
 
 
 }

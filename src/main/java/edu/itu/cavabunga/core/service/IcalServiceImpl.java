@@ -46,12 +46,12 @@ public class IcalServiceImpl implements IcalService {
      */
     @Autowired
     public IcalServiceImpl(
-        ComponentFactory componentFactory,
-        ComponentRepository componentRepository,
-        PropertyFactory propertyFactory,
-        PropertyRepository propertyRepository,
-        ParameterFactory parameterFactory,
-        ParameterRepository parameterRepository
+            ComponentFactory componentFactory,
+            ComponentRepository componentRepository,
+            PropertyFactory propertyFactory,
+            PropertyRepository propertyRepository,
+            ParameterFactory parameterFactory,
+            ParameterRepository parameterRepository
     ) {
         this.componentFactory = componentFactory;
         this.componentRepository = componentRepository;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.itu.cavabunga.core.entity.parameter.*;
+import edu.itu.cavabunga.exception.Validation;
 import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -48,8 +49,14 @@ public abstract class Parameter {
 
     private String value;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "property_id")
     @JsonBackReference
     private Property property;
+
+    public void validate(){
+        if((this.value == null) || (this.value.trim().isEmpty())){
+            throw new Validation(this.getClass().getName() + " parameter cannot be empty");
+        }
+    }
 }

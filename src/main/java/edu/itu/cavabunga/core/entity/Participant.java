@@ -1,9 +1,7 @@
+
 package edu.itu.cavabunga.core.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import edu.itu.cavabunga.core.entity.participant.Group;
 import edu.itu.cavabunga.core.entity.participant.User;
 import lombok.Data;
@@ -21,7 +19,7 @@ import java.util.List;
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @EntityListeners(AuditingEntityListener.class)
 @DiscriminatorOptions(force=true)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true, value= {"components"}) //TODO: participants with no component will give error while building JSON
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = User.class, name = "User"),
@@ -40,11 +38,17 @@ public abstract class Participant {
     @CreatedDate
     private Date creationDate;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     @JsonManagedReference(value = "participantAndComponent")
+    @JsonIgnore
     private List<Component> components = new ArrayList<>();
 
     public Participant(){
+
+    }
+
+    public void validate(){
 
     }
 }
