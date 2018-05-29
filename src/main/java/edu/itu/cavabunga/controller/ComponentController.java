@@ -43,7 +43,7 @@ public class ComponentController {
         return new Response(0,"created");
     }
 
-    @ApiOperation(value = "Get component with id or components owner username = {component_id}")
+    @ApiOperation(value = "Get component with id = {component_id}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully get component with id = {component_id}", response = ComponentResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = ErrorResponse.class),
