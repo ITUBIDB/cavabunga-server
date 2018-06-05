@@ -3,6 +3,7 @@ package edu.itu.cavabunga.core.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import edu.itu.cavabunga.core.entity.participant.Group;
+import edu.itu.cavabunga.core.entity.participant.Resource;
 import edu.itu.cavabunga.core.entity.participant.User;
 import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
@@ -24,6 +25,7 @@ import java.util.List;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = User.class, name = "User"),
         @JsonSubTypes.Type(value = Group.class, name = "Group"),
+        @JsonSubTypes.Type(value = Resource.class, name = "Resource"),
 })
 @Data
 public abstract class Participant {

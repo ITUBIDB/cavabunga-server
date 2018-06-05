@@ -12,7 +12,11 @@ public enum ParticipantType {
         public Participant create(){
             return new Group();
         }
-    };
+    },
+    Resource {
+        public Participant create(){ return new Resource(); }
+    }
+    ;
 
     public Participant create() { return null; }
 }
