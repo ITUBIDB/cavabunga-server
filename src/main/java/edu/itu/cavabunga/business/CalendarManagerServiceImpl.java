@@ -1,12 +1,12 @@
 package edu.itu.cavabunga.business;
 
-import edu.itu.cavabunga.core.entity.Component;
-import edu.itu.cavabunga.core.entity.Parameter;
-import edu.itu.cavabunga.core.entity.Participant;
-import edu.itu.cavabunga.core.entity.Property;
-import edu.itu.cavabunga.core.service.IcalService;
-import edu.itu.cavabunga.core.service.ParticipantService;
-import edu.itu.cavabunga.exception.*;
+import edu.itu.cavabunga.lib.entity.Component;
+import edu.itu.cavabunga.lib.entity.Parameter;
+import edu.itu.cavabunga.lib.entity.Participant;
+import edu.itu.cavabunga.lib.entity.Property;
+import edu.itu.cavabunga.service.IcalService;
+import edu.itu.cavabunga.service.ParticipantService;
+import edu.itu.cavabunga.lib.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

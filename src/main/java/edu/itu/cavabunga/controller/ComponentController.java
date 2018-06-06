@@ -1,11 +1,11 @@
 package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
-import edu.itu.cavabunga.core.entity.Component;
-import edu.itu.cavabunga.core.http.ComponentResponse;
-import edu.itu.cavabunga.core.http.ErrorResponse;
-import edu.itu.cavabunga.core.http.PropertyResponse;
-import edu.itu.cavabunga.core.http.Response;
+import edu.itu.cavabunga.lib.entity.Component;
+import edu.itu.cavabunga.lib.http.ComponentResponse;
+import edu.itu.cavabunga.lib.http.ErrorResponse;
+import edu.itu.cavabunga.lib.http.PropertyResponse;
+import edu.itu.cavabunga.lib.http.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
