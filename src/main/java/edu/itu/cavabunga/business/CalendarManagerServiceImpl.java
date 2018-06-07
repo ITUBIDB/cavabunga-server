@@ -9,6 +9,7 @@ import edu.itu.cavabunga.service.ParticipantService;
 import edu.itu.cavabunga.lib.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * {@inheritDoc}
  */
 @Service
+@Transactional
 public class CalendarManagerServiceImpl implements CalendarManagerService {
 
     private IcalService icalService;
@@ -103,6 +105,7 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
      * {@inheritDoc}
      */
     @Override
+
     public void addComponent(Component component, String owner, Long parentComponentId){
         Assert.notNull(component, "Component must not be null!");
         Assert.notNull(owner, "Username must not be null!");
