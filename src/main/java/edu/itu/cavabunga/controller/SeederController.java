@@ -41,14 +41,14 @@ public class SeederController {
         Component calendar = icalService.createComponent(ComponentType.Calendar);
             Property prodid = icalService.createProperty(PropertyType.Prodid);
                 prodid.setValue("-//Test Inc//Cavabunga Calendar//");
-            Property version = icalService.createProperty(PropertyType.Version);
-                version.setValue("2.0");
+            //Property version = icalService.createProperty(PropertyType.Version);
+              //  version.setValue("2.0");
             Property calscale = icalService.createProperty(PropertyType.Calscale);
                 calscale.setValue("GREGORIAN");
             Property method = icalService.createProperty(PropertyType.Method);
                 method.setValue("PUBLISH");
         calendar.addProperty(prodid);
-        calendar.addProperty(version);
+        //calendar.addProperty(version); //TODO: THERE IS A BUG IN PROPERTY ABST. CLASS, VERSION MUST NOT BE JAVA.PERSISTENT CLASS
         calendar.addProperty(calscale);
         calendar.addProperty(method);
 
@@ -86,7 +86,7 @@ public class SeederController {
                 organizer.addParameter(cn);
             Property uid = icalService.createProperty(PropertyType.Uid);
                 uid.setValue("7kukuqrfedlm2f9t0vr42q2qc8cm9l3o7vn9g00q3j3s5mhdo2ovuahsd9hf54qk3j60");
-            Property attendee = icalService.createProperty(PropertyType.Attendee);
+            Property attendee = icalService.createProperty(PropertyType.Acknowledged); //TODO: ATTENDEE CLASS MUST ADD AS A JSON SUBTYPE IN SUPER CLASS
                 attendee.setValue("mailto:dgkncelik@gmail.com");
                 Parameter cutype = icalService.createParameter(ParameterType.Cutype);
                     cutype.setValue("INDIVIDUAL");
