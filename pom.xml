@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>tr.edu.itu</groupId>
 			<artifactId>cavabunga-lib</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/cavabunga-lib.jar</systemPath>
 		</dependency>
