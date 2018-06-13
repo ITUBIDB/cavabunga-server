@@ -1,23 +1,20 @@
 package edu.itu.cavabunga.controller;
 
 import edu.itu.cavabunga.business.CalendarManagerService;
-import edu.itu.cavabunga.core.entity.Component;
-import edu.itu.cavabunga.core.entity.Parameter;
-import edu.itu.cavabunga.core.entity.Participant;
-import edu.itu.cavabunga.core.entity.Property;
-import edu.itu.cavabunga.core.entity.component.ComponentType;
-import edu.itu.cavabunga.core.entity.parameter.ParameterType;
-import edu.itu.cavabunga.core.entity.participant.ParticipantType;
-import edu.itu.cavabunga.core.entity.property.PropertyType;
-import edu.itu.cavabunga.core.entity.property.PropertyValueType;
-import edu.itu.cavabunga.core.service.IcalService;
-import edu.itu.cavabunga.core.service.ParticipantService;
+import edu.itu.cavabunga.lib.entity.Component;
+import edu.itu.cavabunga.lib.entity.Parameter;
+import edu.itu.cavabunga.lib.entity.Property;
+import edu.itu.cavabunga.lib.entity.component.ComponentType;
+import edu.itu.cavabunga.lib.entity.parameter.ParameterType;
+import edu.itu.cavabunga.lib.entity.participant.ParticipantType;
+import edu.itu.cavabunga.lib.entity.property.PropertyType;
+import edu.itu.cavabunga.service.IcalService;
+import edu.itu.cavabunga.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.awt.geom.AreaOp;
 
 @RestController
 @RequestMapping(path="/seeddb")
@@ -44,14 +41,14 @@ public class SeederController {
         Component calendar = icalService.createComponent(ComponentType.Calendar);
             Property prodid = icalService.createProperty(PropertyType.Prodid);
                 prodid.setValue("-//Test Inc//Cavabunga Calendar//");
-            Property version = icalService.createProperty(PropertyType.Version);
-                version.setValue("2.0");
+            //Property version = icalService.createProperty(PropertyType.Version);
+              //  version.setValue("2.0");
             Property calscale = icalService.createProperty(PropertyType.Calscale);
                 calscale.setValue("GREGORIAN");
             Property method = icalService.createProperty(PropertyType.Method);
                 method.setValue("PUBLISH");
         calendar.addProperty(prodid);
-        calendar.addProperty(version);
+        //calendar.addProperty(version); //TODO: THERE IS A BUG IN PROPERTY ABST. CLASS, VERSION MUST NOT BE JAVA.PERSISTENT CLASS
         calendar.addProperty(calscale);
         calendar.addProperty(method);
 
@@ -89,7 +86,7 @@ public class SeederController {
                 organizer.addParameter(cn);
             Property uid = icalService.createProperty(PropertyType.Uid);
                 uid.setValue("7kukuqrfedlm2f9t0vr42q2qc8cm9l3o7vn9g00q3j3s5mhdo2ovuahsd9hf54qk3j60");
-            Property attendee = icalService.createProperty(PropertyType.Attendee);
+            Property attendee = icalService.createProperty(PropertyType.Acknowledged); //TODO: ATTENDEE CLASS MUST ADD AS A JSON SUBTYPE IN SUPER CLASS
                 attendee.setValue("mailto:dgkncelik@gmail.com");
                 Parameter cutype = icalService.createParameter(ParameterType.Cutype);
                     cutype.setValue("INDIVIDUAL");
