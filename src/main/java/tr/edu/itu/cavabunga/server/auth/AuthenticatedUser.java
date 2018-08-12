@@ -12,4 +12,12 @@ public class AuthenticatedUser {
 
     private List<ParticipantPermissionEnum> permissions;
 
+    public void addPermission(ParticipantPermissionEnum participantPermissionEnum){
+        this.permissions.add(participantPermissionEnum);
+    }
+
+    public void removePermession(ParticipantPermissionEnum participantPermissionEnum){
+        this.permissions.remove(participantPermissionEnum);
+    }
+
 }
