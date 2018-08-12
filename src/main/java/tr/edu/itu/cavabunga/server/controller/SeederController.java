@@ -8,7 +8,7 @@ import tr.edu.itu.cavabunga.lib.entity.component.ComponentType;
 import tr.edu.itu.cavabunga.lib.entity.parameter.ParameterType;
 import tr.edu.itu.cavabunga.lib.entity.participant.ParticipantType;
 import tr.edu.itu.cavabunga.lib.entity.property.PropertyType;
-import tr.edu.itu.cavabunga.server.service.IcalService;
+import tr.edu.itu.cavabunga.server.service.ElementService;
 import tr.edu.itu.cavabunga.server.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class SeederController {
     private ParticipantService participantService;
 
     @Autowired
-    private IcalService icalService;
+    private ElementService elementService;
 
     @GetMapping
     @Transactional
@@ -35,14 +35,14 @@ public class SeederController {
         participantService.saveParticipant(participantService.createParticipant("testgroup", ParticipantType.Group));
 
 
-        Component calendar = icalService.createComponent(ComponentType.Calendar);
-            Property prodid = icalService.createProperty(PropertyType.Prodid);
+        Component calendar = elementService.createComponent(ComponentType.Calendar);
+            Property prodid = elementService.createProperty(PropertyType.Prodid);
                 prodid.setValue("-//Test Inc//Cavabunga Calendar//");
-            //Property version = icalService.createProperty(PropertyType.Version);
+            //Property version = elementService.createProperty(PropertyType.Version);
               //  version.setValue("2.0");
-            Property calscale = icalService.createProperty(PropertyType.Calscale);
+            Property calscale = elementService.createProperty(PropertyType.Calscale);
                 calscale.setValue("GREGORIAN");
-            Property method = icalService.createProperty(PropertyType.Method);
+            Property method = elementService.createProperty(PropertyType.Method);
                 method.setValue("PUBLISH");
         calendar.addProperty(prodid);
         //calendar.addProperty(version); //TODO: THERE IS A BUG IN PROPERTY ABST. CLASS, VERSION MUST NOT BE JAVA.PERSISTENT CLASS
@@ -52,16 +52,16 @@ public class SeederController {
         calendar.setOwner(calendarManagerService.getParticipantByUserName("testuser"));
 
 
-        Component timezone = icalService.createComponent(ComponentType.Timezone);
-            Property tzid = icalService.createProperty(PropertyType.Tzid);
+        Component timezone = elementService.createComponent(ComponentType.Timezone);
+            Property tzid = elementService.createProperty(PropertyType.Tzid);
                 tzid.setValue("Europe/Istanbul");
             timezone.addProperty(tzid);
-                Component standard = icalService.createComponent(ComponentType.Standard);
-                    Property tzoffsetfrom = icalService.createProperty(PropertyType.Tzoffsetfrom);
+                Component standard = elementService.createComponent(ComponentType.Standard);
+                    Property tzoffsetfrom = elementService.createProperty(PropertyType.Tzoffsetfrom);
                         tzoffsetfrom.setValue("+0300");
-                    Property tzoffsetto = icalService.createProperty(PropertyType.Tzoffsetto);
+                    Property tzoffsetto = elementService.createProperty(PropertyType.Tzoffsetto);
                         tzoffsetto.setValue("+0300");
-                    Property tzname = icalService.createProperty(PropertyType.Tzname);
+                    Property tzname = elementService.createProperty(PropertyType.Tzname);
                         tzname.setValue("+03");
                     standard.addProperty(tzoffsetfrom);
                     standard.addProperty(tzoffsetto);
@@ -69,40 +69,40 @@ public class SeederController {
             timezone.addComponent(standard);
         calendar.addComponent(timezone);
 
-        Component event = icalService.createComponent(ComponentType.Event);
-            Property dtstart = icalService.createProperty(PropertyType.Dtstart);
+        Component event = elementService.createComponent(ComponentType.Event);
+            Property dtstart = elementService.createProperty(PropertyType.Dtstart);
                 dtstart.setValue("20160423T170000Z");
-            Property dtend = icalService.createProperty(PropertyType.Dtend);
+            Property dtend = elementService.createProperty(PropertyType.Dtend);
                 dtend.setValue("20160423T180000Z");
-            Property dtstamp = icalService.createProperty(PropertyType.Dtstamp);
+            Property dtstamp = elementService.createProperty(PropertyType.Dtstamp);
                 dtstamp.setValue("20180520T181535Z");
-            Property organizer = icalService.createProperty(PropertyType.Organizer);
+            Property organizer = elementService.createProperty(PropertyType.Organizer);
                 organizer.setValue("mailto:unknownorganizer@calendar.cavabunga.com");
-                    Parameter cn = icalService.createParameter(ParameterType.Cn);
+                    Parameter cn = elementService.createParameter(ParameterType.Cn);
                         cn.setValue("unknownorganizer@calendar.google.com");
                 organizer.addParameter(cn);
-            Property uid = icalService.createProperty(PropertyType.Uid);
+            Property uid = elementService.createProperty(PropertyType.Uid);
                 uid.setValue("7kukuqrfedlm2f9t0vr42q2qc8cm9l3o7vn9g00q3j3s5mhdo2ovuahsd9hf54qk3j60");
-            Property attendee = icalService.createProperty(PropertyType.Acknowledged); //TODO: ATTENDEE CLASS MUST ADD AS A JSON SUBTYPE IN SUPER CLASS
+            Property attendee = elementService.createProperty(PropertyType.Acknowledged); //TODO: ATTENDEE CLASS MUST ADD AS A JSON SUBTYPE IN SUPER CLASS
                 attendee.setValue("mailto:dgkncelik@gmail.com");
-                Parameter cutype = icalService.createParameter(ParameterType.Cutype);
+                Parameter cutype = elementService.createParameter(ParameterType.Cutype);
                     cutype.setValue("INDIVIDUAL");
-                Parameter role = icalService.createParameter(ParameterType.Role);
+                Parameter role = elementService.createParameter(ParameterType.Role);
                     role.setValue("REQ-PARTICIPANT");
-                Parameter partstat = icalService.createParameter(ParameterType.Partstat);
+                Parameter partstat = elementService.createParameter(ParameterType.Partstat);
                     partstat.setValue("ACCEPTED");
                 attendee.addParameter(cutype);
                 attendee.addParameter(role);
                 attendee.addParameter(partstat);
-            Property classs = icalService.createProperty(PropertyType.Class);
+            Property classs = elementService.createProperty(PropertyType.Class);
                 classs.setValue("PRIVATE");
-            Property created = icalService.createProperty(PropertyType.Created);
+            Property created = elementService.createProperty(PropertyType.Created);
                 created.setValue("20160111T065955Z");
-            Property description = icalService.createProperty(PropertyType.Description);
+            Property description = elementService.createProperty(PropertyType.Description);
                 description.setValue("---description_here---");
-            Property lastmod = icalService.createProperty(PropertyType.Lastmod);
+            Property lastmod = elementService.createProperty(PropertyType.Lastmod);
                 lastmod.setValue("20160112T053844Z");
-            Property seq = icalService.createProperty(PropertyType.Seq);
+            Property seq = elementService.createProperty(PropertyType.Seq);
                 seq.setValue("0");
             event.addProperty(dtstart);
             event.addProperty(dtend);
@@ -117,7 +117,7 @@ public class SeederController {
             event.addProperty(seq);
             calendar.addComponent(event);
 
-            icalService.saveComponent(calendar);
+            elementService.saveComponent(calendar);
 
             return "ok";
     }

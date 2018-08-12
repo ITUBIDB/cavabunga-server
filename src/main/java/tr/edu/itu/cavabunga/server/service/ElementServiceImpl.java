@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  * {@inheritDoc}
  */
 @Service
-public class IcalServiceImpl implements IcalService {
+public class ElementServiceImpl implements ElementService {
     private ComponentFactory componentFactory;
 
     private ComponentRepository componentRepository;
@@ -45,7 +45,7 @@ public class IcalServiceImpl implements IcalService {
      * @param parameterRepository to inject ParameterRepository
      */
     @Autowired
-    public IcalServiceImpl(
+    public ElementServiceImpl(
             ComponentFactory componentFactory,
             ComponentRepository componentRepository,
             PropertyFactory propertyFactory,
