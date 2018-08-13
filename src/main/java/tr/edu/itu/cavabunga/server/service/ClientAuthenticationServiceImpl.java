@@ -32,8 +32,6 @@ public class ClientAuthenticationServiceImpl implements ClientAuthenticationServ
     }
 
     @Override
-    @Bean
-    @Scope("request")
     public AuthenticatedClient authenticateClient(){
         AuthenticatedClient authenticatedClient = authenticatedClientFactory.createAuthenticatedClient();
         Client client;

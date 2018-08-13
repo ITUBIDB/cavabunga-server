@@ -20,12 +20,15 @@ import java.io.IOException;
 import java.util.Collections;
 
 @Component
-public class CavabungaClientAuthenticationFilter extends GenericFilterBean {
+public class CavabungaClientAuthenticationProvider extends GenericFilterBean {
     @Autowired
     private ClientAuthenticationService clientAuthenticationService;
 
     @Autowired
     private CavabungaAuthenticationConfiguration cavabungaAuthenticationConfiguration;
+
+    @Autowired
+    private AuthenticatedClient authenticatedClient;
 
     @Override
     public void doFilter(ServletRequest request,
@@ -33,7 +36,8 @@ public class CavabungaClientAuthenticationFilter extends GenericFilterBean {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String clientToken = httpRequest.getHeader(this.cavabungaAuthenticationConfiguration.getClientAuthHeaderName());
         this.clientAuthenticationService.setToken(clientToken);
-        this.clientAuthenticationService.authenticateClient();
+        this.authenticatedClient.setClient(this.clientAuthenticationService.authenticateClient().getClient());
+        this.authenticatedClient.setPermissions(this.clientAuthenticationService.authenticateClient().getPermissions());
         System.out.println(clientToken);
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("__client",clientToken, Collections.emptyList()));
         filterChain.doFilter(request, response);

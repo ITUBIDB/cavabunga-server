@@ -33,8 +33,6 @@ public class ParticipantAuthenticationServiceImpl implements ParticipantAuthenti
     }
 
     @Override
-    @Bean
-    @Scope("request")
     public AuthenticatedUser authenticateUser(){
         AuthenticatedUser authenticatedUser = authenticatedUserFactory.createAuthenticatedUser();
         Participant participant;

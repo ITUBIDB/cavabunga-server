@@ -21,18 +21,19 @@ import java.util.Base64;
 import java.util.Collections;
 
 @Component
-public class CavabungaAuthenticationProvider implements AuthenticationProvider {
+public class CavabungaUserAuthenticationProvider implements AuthenticationProvider {
     private ParticipantAuthenticationService participantAuthenticationService;
     private CavabungaAuthenticationConfiguration cavabungaAuthenticationConfiguration;
 
     @Autowired
-    public CavabungaAuthenticationProvider(ParticipantAuthenticationService participantAuthenticationService,
-                                           CavabungaAuthenticationConfiguration cavabungaAuthenticationConfiguration) {
+    private  AuthenticatedUser authenticatedUser;
 
+    @Autowired
+    public CavabungaUserAuthenticationProvider(ParticipantAuthenticationService participantAuthenticationService,
+                                               CavabungaAuthenticationConfiguration cavabungaAuthenticationConfiguration) {
         this.participantAuthenticationService = participantAuthenticationService;
         this.cavabungaAuthenticationConfiguration = cavabungaAuthenticationConfiguration;
     }
-
 
     @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
@@ -46,7 +47,8 @@ public class CavabungaAuthenticationProvider implements AuthenticationProvider {
     public void authenticateParticipant(String username, String password) {
         participantAuthenticationService.setUserName(username);
         participantAuthenticationService.setPassword(password);
-        //participantAuthenticationService.authenticateUser();
+        this.authenticatedUser.setParticipant(participantAuthenticationService.authenticateUser().getParticipant());
+        this.authenticatedUser.setPermissions(participantAuthenticationService.authenticateUser().getPermissions());
     }
 
     @Override
