@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import tr.edu.itu.cavabunga.lib.entity.Participant;
 import tr.edu.itu.cavabunga.server.auth.AuthenticatedUser;
 import tr.edu.itu.cavabunga.server.entity.ParticipantAuthorization;
-import tr.edu.itu.cavabunga.server.exception.AuthenticationException;
-import tr.edu.itu.cavabunga.server.exception.AuthorizationException;
+import tr.edu.itu.cavabunga.server.exception.CavabungaAuthenticationException;
+import tr.edu.itu.cavabunga.server.exception.CavabungaAuthorizationException;
 import tr.edu.itu.cavabunga.server.factory.AuthenticatedUserFactory;
 
 import java.util.List;
@@ -43,23 +43,22 @@ public class ParticipantAuthenticationServiceImpl implements ParticipantAuthenti
         try {
             participant = participantService.getParticipantByUserName(userName).get();
             if(!participant.getPassword().equals(password)){
-                throw new AuthenticationException("Username or password wrong");
+                throw new CavabungaAuthenticationException("Username or password wrong");
             }
         }catch (Exception e){
-            throw new AuthorizationException("Participant cannot be authenticate: " + userName);
+            throw new CavabungaAuthorizationException("Participant cannot be authenticate: " + userName);
         }
 
         try {
             participantAuthorizations = participantAuthorizationService.getParticipantAuthorizationByParticipant(participant);
         }catch (Exception e){
-            throw new AuthorizationException("Cannot authorize the participant with username:" + userName);
+            throw new CavabungaAuthorizationException("Cannot authorize the participant with username:" + userName);
         }
 
         authenticatedUser.setParticipant(participant);
         for(ParticipantAuthorization authorization: participantAuthorizations){
             authenticatedUser.addPermission(authorization.getPermission());
         }
-
         return authenticatedUser;
     }
 }

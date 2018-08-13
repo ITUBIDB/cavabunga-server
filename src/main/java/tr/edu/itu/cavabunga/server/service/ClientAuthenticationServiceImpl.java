@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import tr.edu.itu.cavabunga.server.auth.AuthenticatedClient;
 import tr.edu.itu.cavabunga.server.entity.Client;
 import tr.edu.itu.cavabunga.server.entity.ClientAuthorization;
-import tr.edu.itu.cavabunga.server.exception.AuthenticationException;
-import tr.edu.itu.cavabunga.server.exception.AuthorizationException;
+import tr.edu.itu.cavabunga.server.exception.CavabungaAuthenticationException;
+import tr.edu.itu.cavabunga.server.exception.CavabungaAuthorizationException;
 import tr.edu.itu.cavabunga.server.factory.AuthenticatedClientFactory;
 
 import java.util.List;
@@ -39,16 +39,24 @@ public class ClientAuthenticationServiceImpl implements ClientAuthenticationServ
         Client client;
         List<ClientAuthorization> clientAuthorizations;
 
+        System.out.println(token);
+
         try {
             client = clientService.getClientByAccessToken(token);
+            if(client == null){
+                throw new CavabungaAuthenticationException("Client cannot authenticated with token: " + token);
+            }
         }catch (Exception e){
-            throw new AuthenticationException("Client cannot authenticated with token: " + token);
+            throw new CavabungaAuthenticationException("Client cannot authenticated with token: " + token);
         }
 
          try {
              clientAuthorizations = clientAuthorizationService.getAuthorzationsByClient(client);
+             if(clientAuthorizations==null && clientAuthorizations.isEmpty()){
+                 throw new CavabungaAuthorizationException("Cannot authorize the client with token: " + token);
+             }
          }catch (Exception e){
-             throw new AuthorizationException("Cannot authorize the client with token: " + token);
+             throw new CavabungaAuthorizationException("Cannot authorize the client with token: " + token);
          }
 
          authenticatedClient.setClient(client);
@@ -58,6 +66,4 @@ public class ClientAuthenticationServiceImpl implements ClientAuthenticationServ
 
          return authenticatedClient;
     }
-
-
 }
