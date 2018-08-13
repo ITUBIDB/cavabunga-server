@@ -10,7 +10,6 @@ import tr.edu.itu.cavabunga.server.entity.ParticipantPermissionEnum;
 import java.util.List;
 
 @Component
-
 @Data
 public class AuthenticatedUser {
     private Participant participant;

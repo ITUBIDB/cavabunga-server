@@ -11,7 +11,6 @@ import tr.edu.itu.cavabunga.server.entity.ClientPermissionEnum;
 import java.util.List;
 
 @Component
-
 @Data
 public class AuthenticatedClient {
     private Client client;
