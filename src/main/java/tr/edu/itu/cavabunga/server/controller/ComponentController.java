@@ -1,5 +1,7 @@
 package tr.edu.itu.cavabunga.server.controller;
 
+import tr.edu.itu.cavabunga.server.auth.AuthenticatedClient;
+import tr.edu.itu.cavabunga.server.auth.AuthenticatedUser;
 import tr.edu.itu.cavabunga.server.business.CalendarManagerService;
 import tr.edu.itu.cavabunga.lib.entity.Component;
 import tr.edu.itu.cavabunga.lib.http.ComponentResponse;
@@ -18,6 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path="/component")
 @Api(value = "Component controller", description = "Operations about components")
 public class ComponentController {
+    @Autowired
+    private AuthenticatedClient authenticatedClient;
+
+    @Autowired
+    private AuthenticatedUser authenticatedUser;
 
     private CalendarManagerService calendarManagerService;
 

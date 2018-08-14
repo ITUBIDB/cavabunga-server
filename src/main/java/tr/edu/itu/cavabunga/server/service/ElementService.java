@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * CRUD service for all ICal elements
  */
-public interface IcalService {
+public interface ElementService {
     Component createComponent(ComponentType componentType);
 
     Component createComponentForParticipant(ComponentType componentType, Participant participant);

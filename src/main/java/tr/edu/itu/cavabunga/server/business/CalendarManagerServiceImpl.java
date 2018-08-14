@@ -4,7 +4,7 @@ import tr.edu.itu.cavabunga.lib.entity.Component;
 import tr.edu.itu.cavabunga.lib.entity.Parameter;
 import tr.edu.itu.cavabunga.lib.entity.Participant;
 import tr.edu.itu.cavabunga.lib.entity.Property;
-import tr.edu.itu.cavabunga.server.service.IcalService;
+import tr.edu.itu.cavabunga.server.service.ElementService;
 import tr.edu.itu.cavabunga.server.service.ParticipantService;
 import tr.edu.itu.cavabunga.lib.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ import java.util.List;
 @Transactional
 public class CalendarManagerServiceImpl implements CalendarManagerService {
 
-    private IcalService icalService;
+    private ElementService elementService;
 
     private ParticipantService participantService;
 
     @Autowired
-    public CalendarManagerServiceImpl(IcalService icalService, ParticipantService participantService) {
-        this.icalService = icalService;
+    public CalendarManagerServiceImpl(ElementService elementService, ParticipantService participantService) {
+        this.elementService = elementService;
         this.participantService = participantService;
     }
 
@@ -119,13 +119,13 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         if(!participantService.getParticipantByUserName(owner).isPresent()) {
             throw new NotFound("owner: " + owner + " couldn't found");
         }
-        if(!icalService.getComponentById(parentComponentId).isPresent()) {
+        if(!elementService.getComponentById(parentComponentId).isPresent()) {
             throw new NotFound("Parent component not found");
         }
 
         component.setOwner(participantService.getParticipantByUserName(owner).get());
-        component.setParent(icalService.getComponentById(parentComponentId).get());
-        icalService.saveComponent(component);
+        component.setParent(elementService.getComponentById(parentComponentId).get());
+        elementService.saveComponent(component);
     }
 
     /**
@@ -135,11 +135,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public Component getComponentById(Long id){
         Assert.notNull(id, "Id must not be null!");
 
-        if(!icalService.getComponentById(id).isPresent()) {
+        if(!elementService.getComponentById(id).isPresent()) {
             throw new NotFound("Component with ID: " + id + " couldn't found");
         }
 
-        return icalService.getComponentById(id).get();
+        return elementService.getComponentById(id).get();
     }
 
     /**
@@ -153,7 +153,7 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
             throw new NotFound("No participant found for username: " + owner);
         }
 
-        return icalService.getComponentByOwner(participantService.getParticipantByUserName(owner).get());
+        return elementService.getComponentByOwner(participantService.getParticipantByUserName(owner).get());
     }
 
     /**
@@ -163,11 +163,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public void deleteComponentById(Long id){
         Assert.notNull(id, "Id must not be null!");
 
-        if(!icalService.getComponentById(id).isPresent()) {
+        if(!elementService.getComponentById(id).isPresent()) {
             throw new NotFound("Component with ID: " + id + " couldn't found");
         }
 
-        icalService.deleteComponentById(id);
+        elementService.deleteComponentById(id);
     }
 
     /**
@@ -179,11 +179,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         Assert.notNull(component, "Component must not be null!");
         Assert.isTrue(id.equals(component.getId()), "ID doesn't match!");
 
-        if(!icalService.getComponentById(id).isPresent()) {
+        if(!elementService.getComponentById(id).isPresent()) {
             throw new NotFound("Component with ID: " + id + " couldn't found");
         }
 
-        icalService.saveComponent(component);
+        elementService.saveComponent(component);
     }
 
     /**
@@ -198,12 +198,12 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
                 "55New Property cannot have id field, please use update methods"
         );
 
-        if(!icalService.getComponentById(parentComponentId).isPresent()) {
+        if(!elementService.getComponentById(parentComponentId).isPresent()) {
             throw new NotFound("Parent component not found");
         }
 
-        property.setComponent(icalService.getComponentById(parentComponentId).get());
-        icalService.saveProperty(property);
+        property.setComponent(elementService.getComponentById(parentComponentId).get());
+        elementService.saveProperty(property);
     }
 
     /**
@@ -213,11 +213,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public Property getPropertyById(Long propertyId){
         Assert.notNull(propertyId, "Id must not be null!");
 
-        if(!icalService.getPropertyById(propertyId).isPresent()) {
+        if(!elementService.getPropertyById(propertyId).isPresent()) {
             throw new NotFound("Property with ID: " + propertyId + " couldn't found");
         }
 
-        return icalService.getPropertyById(propertyId).get();
+        return elementService.getPropertyById(propertyId).get();
     }
 
     /**
@@ -227,10 +227,10 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public List<Property> getPropertiesOfComponent(Long componentId){
         Assert.notNull(componentId, "Id must not be null!");
 
-        if(!icalService.getComponentById(componentId).isPresent()) {
+        if(!elementService.getComponentById(componentId).isPresent()) {
             throw new NotFound("Component with ID: " + componentId + " couldn't found");
         }
-        return icalService.getComponentById(componentId).get().getProperties();
+        return elementService.getComponentById(componentId).get().getProperties();
     }
 
     /**
@@ -240,11 +240,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public void deleteProperty(Long propertyId){
         Assert.notNull(propertyId, "Id must not be null!");
 
-        if(!icalService.getComponentById(propertyId).isPresent()) {
+        if(!elementService.getComponentById(propertyId).isPresent()) {
             throw new NotFound("Property with ID: " + propertyId + " couldn't found");
         }
 
-        icalService.deletePropertyById(propertyId);
+        elementService.deletePropertyById(propertyId);
     }
 
     /**
@@ -256,11 +256,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         Assert.notNull(property, "Property must not be null!");
         Assert.state(propertyId.equals(property.getId()), "ID doesn't match!");
 
-        if(!icalService.getComponentById(propertyId).isPresent()) {
+        if(!elementService.getComponentById(propertyId).isPresent()) {
             throw new NotFound("Property with ID: " + propertyId + " couldn't found");
         }
 
-        icalService.saveProperty(property);
+        elementService.saveProperty(property);
     }
 
     /**
@@ -275,11 +275,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
                 "77New parameter cannot have id field, please use update methods"
         );
 
-        if(!icalService.getPropertyById(parentPropertyId).isPresent()) {
+        if(!elementService.getPropertyById(parentPropertyId).isPresent()) {
             throw new NotFound("Parent property not found");
         }
-        parameter.setProperty(icalService.getPropertyById(parentPropertyId).get());
-        icalService.saveParameter(parameter);
+        parameter.setProperty(elementService.getPropertyById(parentPropertyId).get());
+        elementService.saveParameter(parameter);
     }
 
     /**
@@ -289,11 +289,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public Parameter getParameterById(Long parameterId){
         Assert.notNull(parameterId, "Id must not be null!");
 
-        if(!icalService.getParameterById(parameterId).isPresent()) {
+        if(!elementService.getParameterById(parameterId).isPresent()) {
             throw new NotFound("Parameter with ID: " + parameterId + " couldn't found");
         }
 
-        return icalService.getParameterById(parameterId).get();
+        return elementService.getParameterById(parameterId).get();
     }
 
     /**
@@ -303,10 +303,10 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public List<Parameter> getParametersOfProperty(Long propertyId){
         Assert.notNull(propertyId, "Id must not be null!");
 
-        if(!icalService.getPropertyById(propertyId).isPresent()) {
+        if(!elementService.getPropertyById(propertyId).isPresent()) {
             throw new NotFound("Property with ID: " + propertyId + " couldn't found");
         }
-        return icalService.getPropertyById(propertyId).get().getParameters();
+        return elementService.getPropertyById(propertyId).get().getParameters();
     }
 
     /**
@@ -316,11 +316,11 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
     public void deleteParameter(Long parameterId){
         Assert.notNull(parameterId, "Id must not be null!");
 
-        if(!icalService.getParameterById(parameterId).isPresent()) {
+        if(!elementService.getParameterById(parameterId).isPresent()) {
             throw new NotFound("Parameter with ID: " + parameterId + " couldn't found");
         }
 
-        icalService.deleteParameterById(parameterId);
+        elementService.deleteParameterById(parameterId);
     }
 
     /**
@@ -332,10 +332,10 @@ public class CalendarManagerServiceImpl implements CalendarManagerService {
         Assert.notNull(parameterId, "parameterId must not be null!");
         Assert.state(parameterId.equals(parameter.getId()), "ID doesn't match!");
 
-        if(!icalService.getParameterById(parameterId).isPresent()) {
+        if(!elementService.getParameterById(parameterId).isPresent()) {
             throw new NotFound("Parameter with ID: " + parameterId + " couldn't found");
         }
 
-        icalService.saveParameter(parameter);
+        elementService.saveParameter(parameter);
     }
 }
